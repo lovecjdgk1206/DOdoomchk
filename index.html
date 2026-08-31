@@ -2,386 +2,443 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>STORY DESIGN · PROMPT GUIDE</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>PROMPT BUILDER · 작품 제작 가이드</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 
 <style>
 :root{
-  --bg:#0c0d10;
-  --panel:#14161b;
-  --panel2:#1a1d24;
-  --panel3:#20242d;
-  --line:#2b303b;
-  --text:#eceef4;
-  --muted:#9299aa;
-  --accent:#9f82ff;
-  --accent2:#6e51db;
-  --green:#65d6aa;
-  --yellow:#e8ca70;
-  --red:#ef8795;
-  --blue:#78b7ff;
+  --bg:#0a0c0f;
+  --panel:#12151a;
+  --panel2:#181c22;
+  --border:#262b33;
+  --border-lit:#3a4250;
+  --text:#dfe4ea;
+  --muted:#7c8493;
+  --muted2:#565d6b;
+  --amber:#c9974a;
+  --amber-dim:#8a6b3a;
+  --amber-glow:rgba(201,151,74,0.12);
+  --slate:#6b8099;
+  --danger:#a85c5c;
+  --ok:#5c9a7c;
+  --mono:'JetBrains Mono',monospace;
+  --sans:'Noto Sans KR',sans-serif;
 }
 
-*{box-sizing:border-box}
-
-html{scroll-behavior:smooth}
+*{box-sizing:border-box;margin:0;padding:0}
 
 body{
-  margin:0;
   background:
-    radial-gradient(circle at 20% 0%,rgba(120,80,220,.12),transparent 32%),
+    radial-gradient(circle at 15% 0%,rgba(201,151,74,0.05),transparent 40%),
     var(--bg);
   color:var(--text);
-  font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans KR",sans-serif;
-  line-height:1.55;
+  font-family:var(--sans);
+  min-height:100vh;
+  padding-bottom:210px;
 }
 
-button{
-  font:inherit;
+::selection{
+  background:var(--amber);
+  color:#0a0c0f;
 }
+
+/* ---------- HEADER ---------- */
 
 header{
-  padding:30px 26px 22px;
-  border-bottom:1px solid var(--line);
-  background:linear-gradient(135deg,#11131a,#171426);
+  border-bottom:1px solid var(--border);
+  padding:22px 24px 18px;
+  position:relative;
+}
+
+header::before,
+header::after{
+  content:'';
+  position:absolute;
+  width:14px;
+  height:14px;
+  border:1px solid var(--amber-dim);
+  opacity:.6;
+}
+
+header::before{
+  top:8px;
+  left:8px;
+  border-right:none;
+  border-bottom:none;
+}
+
+header::after{
+  bottom:8px;
+  right:8px;
+  border-left:none;
+  border-top:none;
 }
 
 .eyebrow{
-  color:var(--accent);
-  font-size:12px;
-  font-weight:800;
-  letter-spacing:.14em;
+  font-family:var(--mono);
+  font-size:11px;
+  letter-spacing:.18em;
+  color:var(--amber);
+  text-transform:uppercase;
+  margin-bottom:6px;
 }
 
 h1{
-  margin:7px 0 8px;
-  font-size:clamp(25px,4vw,40px);
-  line-height:1.2;
+  font-size:22px;
+  font-weight:900;
+  letter-spacing:-.01em;
 }
 
 .sub{
-  max-width:900px;
   color:var(--muted);
-  font-size:14px;
+  font-size:13px;
+  margin-top:4px;
+  max-width:700px;
+  line-height:1.5;
 }
+
+/* ---------- TABS ---------- */
 
 .tabbar{
   display:flex;
-  gap:6px;
-  padding:12px 18px;
+  gap:2px;
+  padding:14px 24px 0;
+  border-bottom:1px solid var(--border);
   overflow-x:auto;
-  position:sticky;
-  top:0;
-  z-index:50;
-  background:rgba(12,13,16,.94);
-  backdrop-filter:blur(10px);
-  border-bottom:1px solid var(--line);
 }
 
 .tabbtn{
-  flex:0 0 auto;
-  border:1px solid var(--line);
-  background:var(--panel);
+  font-family:var(--mono);
+  font-size:12.5px;
+  letter-spacing:.04em;
+  background:transparent;
+  border:1px solid transparent;
+  border-bottom:none;
   color:var(--muted);
-  padding:9px 12px;
-  border-radius:9px;
+  padding:10px 16px;
   cursor:pointer;
+  border-radius:6px 6px 0 0;
   transition:.15s;
+  white-space:nowrap;
 }
 
-.tabbtn:hover{
-  color:var(--text);
-  border-color:#4a5060;
-}
+.tabbtn:hover{color:var(--text)}
 
 .tabbtn.active{
-  background:var(--accent2);
-  color:white;
-  border-color:var(--accent);
+  color:var(--amber);
+  background:var(--panel);
+  border-color:var(--border);
+  border-bottom:1px solid var(--panel);
+  transform:translateY(1px);
 }
 
 .tabbtn .n{
-  margin-right:5px;
-  opacity:.65;
-  font-size:11px;
+  color:var(--muted2);
+  margin-right:6px;
 }
+
+/* ---------- MAIN ---------- */
 
 main{
-  width:min(1180px,calc(100% - 28px));
-  margin:22px auto 180px;
+  max-width:820px;
+  margin:0 auto;
+  padding:22px 24px 40px;
 }
 
-.panel-view{
-  display:none;
+.panel-view{display:none}
+.panel-view.active{display:block}
+
+/* ---------- GUIDE ---------- */
+
+.guide-title{
+  font-size:17px;
+  font-weight:900;
+  margin-bottom:8px;
 }
 
-.panel-view.active{
-  display:block;
-}
-
-.section-title{
-  margin:0 0 7px;
-  font-size:21px;
-}
-
-.section-desc,
-.preset-desc{
+.guide-intro{
+  font-size:13px;
+  line-height:1.7;
   color:var(--muted);
-  font-size:14px;
   margin-bottom:18px;
 }
 
-.notice{
-  padding:14px 16px;
-  border:1px solid #3a3555;
-  background:#171424;
-  border-radius:12px;
-  color:#c5bddf;
-  margin:14px 0 20px;
-  font-size:13px;
+.guide-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:10px;
 }
+
+.guide-card{
+  border:1px solid var(--border);
+  background:var(--panel);
+  border-radius:7px;
+  padding:14px;
+}
+
+.guide-card .num{
+  font-family:var(--mono);
+  font-size:10px;
+  color:var(--amber);
+  margin-bottom:5px;
+}
+
+.guide-card strong{
+  display:block;
+  font-size:13px;
+  margin-bottom:5px;
+}
+
+.guide-card p{
+  color:var(--muted);
+  font-size:12.5px;
+  line-height:1.6;
+}
+
+.guide-note{
+  margin-top:16px;
+  padding:13px 14px;
+  border-left:2px solid var(--amber-dim);
+  background:var(--amber-glow);
+  color:var(--muted);
+  font-size:12.5px;
+  line-height:1.65;
+}
+
+/* ---------- PRESETS ---------- */
 
 .preset-grid{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
-  gap:9px;
-  margin:12px 0 15px;
+  grid-template-columns:repeat(auto-fill,minmax(130px,1fr));
+  gap:8px;
+  margin-bottom:12px;
 }
 
 .preset-card{
-  border:1px solid var(--line);
-  border-radius:11px;
-  padding:13px;
   background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:6px;
+  padding:11px 12px;
   cursor:pointer;
   transition:.15s;
+  min-height:44px;
+  display:flex;
+  align-items:center;
 }
 
 .preset-card:hover{
-  transform:translateY(-1px);
-  border-color:#4a5060;
+  border-color:var(--border-lit);
+  background:var(--panel2);
 }
 
 .preset-card.active{
-  border-color:var(--accent);
-  background:linear-gradient(135deg,#211d31,#191725);
+  border-color:var(--amber-dim);
+  background:var(--amber-glow);
 }
 
-.pname{
-  font-size:14px;
-  font-weight:750;
+.preset-card .pname{
+  font-size:12.5px;
+  font-weight:700;
 }
+
+.preset-card.active .pname{
+  color:var(--amber);
+}
+
+.preset-desc{
+  color:var(--muted);
+  font-size:12.5px;
+  line-height:1.65;
+  padding:10px 0 14px;
+  border-bottom:1px solid var(--border);
+  margin-bottom:4px;
+}
+
+/* ---------- FEATURES ---------- */
 
 .feature{
   padding:14px 0;
-  border-bottom:1px solid var(--line);
-}
-
-.feature:last-child{
-  border-bottom:0;
+  border-bottom:1px solid var(--border);
 }
 
 .feature-label{
-  font-size:13px;
-  color:#c5c9d5;
-  font-weight:750;
+  color:var(--text);
+  font-size:12.5px;
+  font-weight:700;
   margin-bottom:8px;
 }
 
 .opts{
   display:flex;
   flex-wrap:wrap;
-  gap:7px;
+  gap:6px;
 }
 
 .opt{
-  padding:7px 11px;
-  border:1px solid #373c48;
-  border-radius:8px;
-  background:var(--panel2);
-  color:#b9bfcc;
-  font-size:13px;
+  font-family:var(--mono);
+  font-size:11.5px;
+  line-height:1.35;
+  color:var(--muted);
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:5px;
+  padding:7px 10px;
   cursor:pointer;
-  user-select:none;
   transition:.12s;
+  user-select:none;
 }
 
 .opt:hover{
-  color:white;
-  border-color:#565d6c;
+  color:var(--text);
+  border-color:var(--border-lit);
 }
 
 .opt.sel{
-  color:white;
-  border-color:var(--accent);
-  background:#392b67;
+  color:var(--amber);
+  border-color:var(--amber-dim);
+  background:var(--amber-glow);
 }
 
 .opt.none-opt{
-  color:#8e95a4;
+  color:var(--muted2);
 }
 
-.content-card{
-  background:var(--panel);
-  border:1px solid var(--line);
-  border-radius:14px;
-  padding:18px;
-}
-
-.guide-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-  gap:11px;
-}
-
-.guide-card{
-  background:var(--panel);
-  border:1px solid var(--line);
-  border-radius:12px;
-  padding:16px;
-}
-
-.guide-card b{
-  color:white;
-}
-
-.guide-card p{
-  color:var(--muted);
-  font-size:13px;
-  margin:7px 0 0;
-}
-
-.subhead{
-  margin:25px 0 10px;
-  font-weight:800;
-  font-size:15px;
-  color:#d7dbe5;
-}
-
-.output-wrap{
-  position:fixed;
-  left:0;
-  right:0;
-  bottom:0;
-  z-index:60;
-  border-top:1px solid #383d49;
-  background:rgba(13,14,18,.97);
-  backdrop-filter:blur(12px);
-  box-shadow:0 -12px 35px rgba(0,0,0,.32);
-}
-
-.output-inner{
-  width:min(1180px,calc(100% - 28px));
-  margin:auto;
-  padding:11px 0 12px;
-}
-
-.output-head{
-  display:flex;
-  justify-content:space-between;
-  gap:10px;
-  align-items:center;
-  margin-bottom:7px;
-}
-
-.output-title{
-  font-size:12px;
-  font-weight:850;
-  letter-spacing:.1em;
-  color:var(--accent);
-}
-
-.output-actions{
-  display:flex;
-  gap:7px;
-}
-
-.small-btn{
-  padding:6px 10px;
-  border-radius:7px;
-  border:1px solid #3b414e;
-  background:#1c1f26;
-  color:#cdd1db;
-  cursor:pointer;
-  font-size:12px;
-}
-
-.small-btn:hover{
-  border-color:var(--accent);
-  color:white;
-}
-
-#outputBox{
-  white-space:pre-wrap;
-  max-height:210px;
-  overflow:auto;
-  border:1px solid #303541;
-  border-radius:9px;
-  padding:11px 13px;
-  background:#0b0c0f;
-  font-family:"SFMono-Regular",Consolas,"Liberation Mono",monospace;
-  font-size:12px;
-  line-height:1.55;
-  color:#daddE5;
-}
-
-#outputBox.empty{
-  color:#696f7c;
-}
-
-.prompt-tag{
-  color:var(--green);
-}
+/* ---------- CHECKLIST ---------- */
 
 .check-group{
-  margin-bottom:20px;
+  border-bottom:1px solid var(--border);
+  padding:14px 0;
 }
 
-.check-title{
+.check-group h3{
+  font-size:13px;
   margin-bottom:8px;
-  font-weight:800;
+  color:var(--amber);
 }
 
 .check-item{
   display:flex;
-  gap:9px;
   align-items:flex-start;
-  padding:7px 0;
-  color:#c2c7d1;
-  font-size:14px;
+  gap:8px;
+  color:var(--muted);
+  font-size:12.5px;
+  padding:5px 0;
+  line-height:1.55;
 }
 
 .check-item input{
-  margin-top:4px;
+  accent-color:var(--amber);
+  margin-top:3px;
 }
 
-.tip{
-  color:var(--yellow);
+/* ---------- OUTPUT ---------- */
+
+.output-wrap{
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  background:rgba(10,12,15,.97);
+  border-top:1px solid var(--border);
+  z-index:100;
+  backdrop-filter:blur(8px);
 }
 
-@media(max-width:640px){
-  main{
-    width:min(100% - 18px,1180px);
-    margin-top:14px;
-    margin-bottom:210px;
-  }
+.output-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:9px 16px;
+  border-bottom:1px solid var(--border);
+  max-width:820px;
+  margin:0 auto;
+}
 
-  header{
-    padding:22px 16px 18px;
-  }
+.output-head .lbl{
+  font-family:var(--mono);
+  font-size:11px;
+  letter-spacing:.14em;
+  color:var(--amber);
+  text-transform:uppercase;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
 
-  .tabbar{
-    padding-left:9px;
-    padding-right:9px;
-  }
+.dot{
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  background:var(--ok);
+  box-shadow:0 0 6px var(--ok);
+}
 
-  .output-inner{
-    width:calc(100% - 18px);
-  }
+.output-actions{
+  display:flex;
+  gap:6px;
+}
 
-  #outputBox{
-    max-height:250px;
-  }
+.copybtn,
+.clearbtn{
+  font-family:var(--mono);
+  font-size:11.5px;
+  border:none;
+  padding:6px 14px;
+  border-radius:5px;
+  cursor:pointer;
+  font-weight:700;
+  transition:.15s;
+}
+
+.copybtn{
+  background:var(--amber);
+  color:#12151a;
+}
+
+.clearbtn{
+  background:var(--panel2);
+  border:1px solid var(--border);
+  color:var(--muted);
+}
+
+.copybtn:active,
+.clearbtn:active{
+  transform:scale(.96);
+}
+
+.copybtn.copied{
+  background:var(--ok);
+}
+
+pre.output{
+  max-width:820px;
+  margin:0 auto;
+  padding:12px 16px 16px;
+  font-family:var(--mono);
+  font-size:12.5px;
+  line-height:1.7;
+  max-height:150px;
+  overflow-y:auto;
+  white-space:pre-wrap;
+  word-break:break-word;
+  color:var(--text);
+}
+
+pre.output.empty{
+  color:var(--muted2);
+  font-style:normal;
+}
+
+@media(max-width:600px){
+  main{padding:16px}
+  .tabbar{padding:12px 16px 0}
+  header{padding:18px 16px}
+  .guide-grid{grid-template-columns:1fr}
+  body{padding-bottom:235px}
+  pre.output{max-height:175px}
 }
 </style>
 </head>
@@ -389,12 +446,11 @@ main{
 <body>
 
 <header>
-  <div class="eyebrow">STORY DESIGN · PROMPT GUIDE</div>
-  <h1>작품 제작 가이드</h1>
+  <div class="eyebrow">DOOMCHIT · STORY DESIGN GUIDE</div>
+  <h1>세계관 / 캐릭터 설계 콘솔</h1>
   <div class="sub">
-    세계관·캐릭터·심리·관계·문체·이벤트 등을 선택하면
-    가벼운 범용 Prompt와 작품별로 직접 채울 Design Guide가 하단에 표시됩니다.
-    모든 항목을 사용할 필요는 없습니다.
+    작품에 필요한 설정을 선택하면 하단에 범용 Prompt와 간단한 제작 Guide가 표시됩니다.
+    예시는 참고용이며 작품에 맞게 수정해서 사용하세요.
   </div>
 </header>
 
@@ -405,7 +461,7 @@ main{
   <button class="tabbtn" data-tab="psych"><span class="n">04</span>심리</button>
   <button class="tabbtn" data-tab="consent"><span class="n">05</span>관계·합의</button>
   <button class="tabbtn" data-tab="style"><span class="n">06</span>문체</button>
-  <button class="tabbtn" data-tab="voice"><span class="n">07</span>문체프리셋</button>
+  <button class="tabbtn" data-tab="voicepreset"><span class="n">07</span>문체프리셋</button>
   <button class="tabbtn" data-tab="events"><span class="n">08</span>관계이벤트</button>
   <button class="tabbtn" data-tab="commands"><span class="n">09</span>커맨드</button>
   <button class="tabbtn" data-tab="base"><span class="n">10</span>공통베이스</button>
@@ -414,233 +470,190 @@ main{
 
 <main>
 
-<!-- 01 GUIDE -->
 <section class="panel-view active" id="panel-guide">
-  <h2 class="section-title">작품 제작 순서</h2>
-  <div class="section-desc">
-    아래 순서는 예시입니다. 작품 규모와 장르에 맞게 필요한 항목만 사용하세요.
-  </div>
-
-  <div class="notice">
-    이 도구는 완성된 작품 프롬프트를 대신 작성하기보다,
-    제작자가 빠뜨리기 쉬운 항목과 간단한 작성 방향을 확인하기 위한 범용 가이드입니다.
+  <div class="guide-title">작품 제작 가이드</div>
+  <div class="guide-intro">
+    모든 설정을 채울 필요는 없습니다. 작품에서 실제로 사용할 항목을 먼저 고르고,
+    필요한 부분만 구체화하는 방식으로 사용하세요.
   </div>
 
   <div class="guide-grid">
     <div class="guide-card">
-      <b>1. 콘셉트</b>
-      <p>장르, 주제, 핵심 갈등, 한 줄 로그라인을 먼저 정합니다.</p>
+      <div class="num">01</div>
+      <strong>콘셉트</strong>
+      <p>장르·주제·핵심 갈등·로그라인을 먼저 정합니다.</p>
     </div>
+
     <div class="guide-card">
-      <b>2. 세계관</b>
-      <p>작품에 영향을 주는 사회·능력·종족·기관·규칙만 선택합니다.</p>
+      <div class="num">02</div>
+      <strong>세계관</strong>
+      <p>사회·능력·기관·종족 등 서사에 영향을 주는 규칙을 선택합니다.</p>
     </div>
+
     <div class="guide-card">
-      <b>3. 캐릭터</b>
-      <p>성격보다 동기·행동·말투·관계에서 실제로 보이는 차이를 정합니다.</p>
+      <div class="num">03</div>
+      <strong>캐릭터</strong>
+      <p>목표·행동·말투·관계를 중심으로 인물의 차이를 만듭니다.</p>
     </div>
+
     <div class="guide-card">
-      <b>4. 심리</b>
-      <p>감정 처리, 욕구, 두려움, 스트레스 반응 등을 필요한 수준까지만 설정합니다.</p>
+      <div class="num">04</div>
+      <strong>심리</strong>
+      <p>욕구·두려움·감정 처리·스트레스 반응을 필요한 만큼 설정합니다.</p>
     </div>
+
     <div class="guide-card">
-      <b>5. 관계</b>
-      <p>관계 시작점, 발전 속도, 경계, 갈등과 회복 방식을 정합니다.</p>
+      <div class="num">05</div>
+      <strong>관계</strong>
+      <p>시작점·변화 속도·갈등·경계·회복 방식을 정합니다.</p>
     </div>
+
     <div class="guide-card">
-      <b>6. 문체</b>
-      <p>POV, 시제, 묘사 밀도, 대사 비중, 장면 속도를 정합니다.</p>
+      <div class="num">06</div>
+      <strong>문체</strong>
+      <p>POV·시제·묘사·대사·장면 속도를 작품 분위기에 맞춥니다.</p>
     </div>
+
     <div class="guide-card">
-      <b>7. 이벤트</b>
-      <p>작품에서 실제 사용할 관계 변화 계기만 골라 추가합니다.</p>
+      <div class="num">07</div>
+      <strong>이벤트</strong>
+      <p>관계나 사건을 실제로 변화시킬 장면 아이디어만 선택합니다.</p>
     </div>
+
     <div class="guide-card">
-      <b>8. 검수</b>
-      <p>설정 충돌, 캐릭터 중복, 불필요한 규칙을 마지막에 정리합니다.</p>
+      <div class="num">08</div>
+      <strong>검수</strong>
+      <p>설정 충돌·중복 지침·불필요한 규칙을 마지막에 정리합니다.</p>
     </div>
   </div>
 
-  <div class="subhead">Prompt와 Guide의 차이</div>
-  <div class="content-card">
-    <b>Prompt</b>는 AI에게 바로 넣을 수 있는 짧은 기본 지침입니다.<br>
-    <b>Guide</b>는 작품 제작자가 직접 정해야 할 항목과 가벼운 예시를 제공합니다.<br><br>
-    <span class="tip">TIP:</span> Guide의 예시는 그대로 사용할 필요가 없습니다.
+  <div class="guide-note">
+    <b>PROMPT</b>=AI에 바로 사용할 수 있는 짧은 기본 지침<br>
+    <b>GUIDE</b>=작품에 맞게 직접 정해야 할 항목과 가벼운 예시
   </div>
 </section>
 
-<!-- 02 WORLD -->
 <section class="panel-view" id="panel-world">
-  <h2 class="section-title">세계관</h2>
-  <div class="section-desc">
-    장르 또는 시스템을 선택한 뒤 필요한 설정만 고르세요.
-  </div>
   <div class="preset-grid" id="worldGrid"></div>
-  <div class="preset-desc" id="worldDesc"></div>
-  <div class="content-card" id="worldFeatures"></div>
+  <div class="preset-desc" id="worldDesc">장르 또는 세계 시스템을 선택하세요.</div>
+  <div id="worldFeatureList"></div>
 </section>
 
-<!-- 03 CHARACTER -->
 <section class="panel-view" id="panel-char">
-  <h2 class="section-title">캐릭터</h2>
-  <div class="section-desc">
-    캐릭터의 성격표보다 실제 장면에서 드러날 정보부터 정하는 것을 권장합니다.
-  </div>
   <div class="preset-grid" id="charGrid"></div>
-  <div class="preset-desc" id="charDesc"></div>
-  <div class="content-card" id="charFeatures"></div>
+  <div class="preset-desc" id="charDesc">캐릭터 제작 항목을 선택하세요.</div>
+  <div id="charFeatureList"></div>
 </section>
 
-<!-- 04 PSYCH -->
 <section class="panel-view" id="panel-psych">
-  <h2 class="section-title">심리</h2>
-  <div class="section-desc">
-    심리 항목은 캐릭터 행동의 참고축입니다. 하나의 성향으로 모든 행동을 결정하지 마세요.
-  </div>
   <div class="preset-grid" id="psychGrid"></div>
-  <div class="preset-desc" id="psychDesc"></div>
-  <div class="content-card" id="psychFeatures"></div>
+  <div class="preset-desc" id="psychDesc">심리 항목을 선택하세요. 하나의 성향으로 모든 행동을 결정하지 않는 것을 권장합니다.</div>
+  <div id="psychFeatureList"></div>
 </section>
 
-<!-- 05 RELATION -->
 <section class="panel-view" id="panel-consent">
-  <h2 class="section-title">관계·합의</h2>
-  <div class="section-desc">
-    관계 발전과 개인 경계를 함께 설계합니다.
-  </div>
   <div class="preset-grid" id="consentGrid"></div>
-  <div class="preset-desc" id="consentDesc"></div>
-  <div class="content-card" id="consentFeatures"></div>
+  <div class="preset-desc" id="consentDesc">관계 진행·경계·갈등·회복 방식을 선택하세요.</div>
+  <div id="consentFeatureList"></div>
 </section>
 
-<!-- 06 STYLE -->
 <section class="panel-view" id="panel-style">
-  <h2 class="section-title">문체</h2>
-  <div class="section-desc">
-    이 탭은 일반적인 AI 서술 지침을 비교적 바로 사용할 수 있는 형태로 제공합니다.
-  </div>
   <div class="preset-grid" id="styleGrid"></div>
-  <div class="preset-desc" id="styleDesc"></div>
-  <div class="content-card" id="styleFeatures"></div>
+  <div class="preset-desc" id="styleDesc">POV·시제·묘사 등 기본 서술 지침을 선택하세요.</div>
+  <div id="styleFeatureList"></div>
 </section>
 
-<!-- 07 VOICE -->
-<section class="panel-view" id="panel-voice">
-  <h2 class="section-title">문체 프리셋</h2>
-  <div class="section-desc">
-    특정 작가나 작품을 복제하지 않고, 일반적인 분위기 조합만 제공합니다.
-  </div>
-  <div class="preset-grid" id="voiceGrid"></div>
-  <div class="preset-desc" id="voiceDesc"></div>
-  <div class="content-card" id="voiceFeatures"></div>
+<section class="panel-view" id="panel-voicepreset">
+  <div class="preset-grid" id="voicepresetGrid"></div>
+  <div class="preset-desc" id="voicepresetDesc">일반적인 분위기 조합을 선택하세요.</div>
+  <div id="voicepresetFeatureList"></div>
 </section>
 
-<!-- 08 EVENTS -->
 <section class="panel-view" id="panel-events">
-  <h2 class="section-title">관계 이벤트</h2>
-  <div class="section-desc">
-    관계 변화를 만드는 사건 아이디어입니다. 필요한 것만 선택하세요.
-  </div>
   <div class="preset-grid" id="eventsGrid"></div>
-  <div class="preset-desc" id="eventsDesc"></div>
-  <div class="content-card" id="eventsFeatures"></div>
+  <div class="preset-desc" id="eventsDesc">관계 변화에 사용할 가벼운 사건 아이디어를 선택하세요.</div>
+  <div id="eventsFeatureList"></div>
 </section>
 
-<!-- 09 COMMANDS -->
 <section class="panel-view" id="panel-commands">
-  <h2 class="section-title">커맨드</h2>
-  <div class="section-desc">
-    대화형 작품에서 사용할 수 있는 기본적인 보조 명령 예시입니다.
-  </div>
   <div class="preset-grid" id="commandsGrid"></div>
-  <div class="preset-desc" id="commandsDesc"></div>
-  <div class="content-card" id="commandsFeatures"></div>
+  <div class="preset-desc" id="commandsDesc">대화형 작품에서 사용할 수 있는 보조 명령 예시입니다.</div>
+  <div id="commandsFeatureList"></div>
 </section>
 
-<!-- 10 BASE -->
 <section class="panel-view" id="panel-base">
-  <h2 class="section-title">공통 베이스</h2>
-  <div class="section-desc">
-    장르와 무관하게 사용할 수 있는 기본적인 일관성 지침입니다.
-  </div>
   <div class="preset-grid" id="baseGrid"></div>
-  <div class="preset-desc" id="baseDesc"></div>
-  <div class="content-card" id="baseFeatures"></div>
+  <div class="preset-desc" id="baseDesc">장르와 무관하게 사용할 수 있는 기본적인 일관성 지침입니다.</div>
+  <div id="baseFeatureList"></div>
 </section>
 
-<!-- 11 CHECKLIST -->
 <section class="panel-view" id="panel-checklist">
-  <h2 class="section-title">최종 체크리스트</h2>
-  <div class="section-desc">
-    프롬프트를 길게 만드는 것보다 실제로 사용하지 않을 설정을 제거하는 것이 더 중요합니다.
+  <div class="preset-desc" style="margin-bottom:18px;">
+    작품 설정을 정리한 뒤 마지막으로 확인하는 범용 체크리스트입니다.
   </div>
-  <div id="checklistWrap"></div>
+  <div id="checklistBody"></div>
 </section>
 
 </main>
 
 <div class="output-wrap">
-  <div class="output-inner">
-    <div class="output-head">
-      <div class="output-title">PROMPT / DESIGN GUIDE</div>
-      <div class="output-actions">
-        <button class="small-btn" id="copyBtn">복사</button>
-        <button class="small-btn" id="clearBtn">선택 초기화</button>
-      </div>
+  <div class="output-head">
+    <div class="lbl">
+      <span class="dot"></span>PROMPT / DESIGN GUIDE
     </div>
-    <div id="outputBox" class="empty">// 항목을 선택하면 Prompt와 Guide가 표시됩니다.</div>
+
+    <div class="output-actions">
+      <button class="clearbtn" id="clearBtn">초기화</button>
+      <button class="copybtn" id="copyBtn">복사</button>
+    </div>
   </div>
+
+  <pre class="output empty" id="outputBox">// 항목을 선택하면 여기에 Prompt와 Guide가 표시됩니다.</pre>
 </div>
 
 <script>
-/*
-=============================================================
-PUBLIC STORY DESIGN GUIDE
-
-- 버튼:선택명만 표시
-- prompt:범용·간략 지침
-- guide:작품 제작자가 직접 정할 내용
-- 원본 제작 규칙/내부 연산/정밀 판정 로직 없음
-=============================================================
-*/
+/* ============================================================
+   PUBLIC GUIDE DATA
+   원본 제작 규칙을 요약하지 않고 범용 가이드로 별도 작성
+============================================================ */
 
 const DATA={
 
 world:{
   omega:{
     label:'오메가버스',
-    desc:'2차 성별·페로몬·주기·사회 구조 등 필요한 요소만 선택합니다.',
+    desc:'2차 성별·페로몬·Heat/Rut·가족 설정 등 필요한 요소만 선택합니다.',
     features:[
       {
         label:'사회 구조',
-        options:[
+        opts:[
           {
-            label:'위계 있음',
-            prompt:'2차성별→사회적대우·제도에 영향',
-            guide:'어떤 영역에서 차이가 발생하는지 정하세요. 예:직업/혼인/교육/법적 권한.'
+            v:'위계 있음',
+            prompt:'2차성별→사회적대우·제도에 영향 가능',
+            guide:'영향 범위를 정하세요. 예:직업/혼인/교육/법적 권한.'
           },
           {
-            label:'동등',
+            v:'동등',
             prompt:'2차성별에 따른 법적·사회적 우열 없음',
-            guide:'차이가 필요하다면 개인의 성격·직업·환경 등 다른 요인으로 구분하세요.'
+            guide:'개인 차이는 성격·직업·환경·경험 등으로 구분할 수 있습니다.'
           }
         ]
       },
       {
         label:'Heat/Rut',
-        options:[
+        opts:[
           {
-            label:'통제 가능',
-            prompt:'Heat/Rut=주기적 생리반응\\n증상 예:체온변화/감각민감/페로몬변화/집중력저하\\n자기통제=유지 가능\\n억제수단=설정 가능(예:억제제)',
-            guide:'발생 주기·지속시간·주요 증상·통제 수준을 작품에 맞게 정하세요. 필요하면 억제수단의 효과와 부작용도 추가하세요.'
+            v:'통제 가능',
+            prompt:'Heat/Rut=주기적 생리반응\n증상 예:체온변화/감각민감/페로몬변화/집중력저하\n자기통제=유지 가능\n억제수단=설정 가능(예:억제제)',
+            guide:'발생 주기·지속시간·증상 정도를 작품에 맞게 정하세요. 필요하면 억제수단의 효과와 부작용을 추가하세요.'
           },
           {
-            label:'통제 저하',
-            prompt:'Heat/Rut=주기적 생리반응\\n증상강도에 따라 집중력·판단력 저하 가능\\n억제수단=설정 가능(예:억제제/의료처치)',
-            guide:'통제가 어느 정도까지 어려워지는지 직접 정하세요. 캐릭터의 의사결정 전체가 자동으로 사라지도록 설정할 필요는 없습니다.'
+            v:'통제 저하',
+            prompt:'Heat/Rut=주기적 생리반응\n증상강도에 따라 집중력·판단력 저하 가능\n억제수단=설정 가능(예:억제제/의료처치)',
+            guide:'통제가 어느 정도 어려워지는지 정하세요. 인물별 차이를 둘 수도 있습니다.'
           },
           {
-            label:'미사용',
+            v:'미사용',
             prompt:'',
             guide:'Heat/Rut 요소를 사용하지 않습니다.'
           }
@@ -648,19 +661,19 @@ world:{
       },
       {
         label:'페로몬',
-        options:[
+        opts:[
           {
-            label:'감각 신호',
-            prompt:'페로몬=체향·감정·컨디션을 전달하는 감각정보\\n인지강도=거리·농도·민감도에 따라 차이',
-            guide:'페로몬으로 어떤 정보를 느낄 수 있는지 정하세요. 예:긴장/안정/컨디션 변화.'
+            v:'감각 신호',
+            prompt:'페로몬=체향·감정·컨디션을 전달하는 감각정보\n인지강도=거리·농도·민감도에 따라 차이',
+            guide:'어떤 정보를 느낄 수 있는지 정하세요. 예:긴장/안정/컨디션 변화.'
           },
           {
-            label:'생리 영향',
-            prompt:'페로몬=감각정보+생리반응 유발 가능\\n영향강도=거리·농도·개인차 반영',
-            guide:'가능한 반응 범위를 정하세요. 예:긴장/안정/각성/불쾌감. 지나치게 만능 효과가 되지 않도록 한계를 두는 편이 좋습니다.'
+            v:'생리 영향',
+            prompt:'페로몬=감각정보+생리반응 유발 가능\n영향강도=거리·농도·개인차 반영',
+            guide:'반응 범위를 정하세요. 예:긴장/안정/각성/불쾌감.'
           },
           {
-            label:'미사용',
+            v:'미사용',
             prompt:'',
             guide:'페로몬 요소를 사용하지 않습니다.'
           }
@@ -668,16 +681,16 @@ world:{
       },
       {
         label:'임신·가족',
-        options:[
+        opts:[
           {
-            label:'사용',
-            prompt:'임신·출산=작품 생물학 설정 준수\\n자녀=독립된 인물로 취급',
-            guide:'임신 가능한 조건, 기간, 의료 수준 등이 서사에 필요하다면 추가로 정하세요.'
+            v:'사용',
+            prompt:'임신·출산=작품 생물학 설정 준수\n자녀=독립된 인물로 취급',
+            guide:'임신 가능한 조건·기간·의료 수준 등이 중요하다면 추가로 정하세요.'
           },
           {
-            label:'미사용',
+            v:'미사용',
             prompt:'',
-            guide:'임신·가족 확장 요소를 주요 시스템으로 사용하지 않습니다.'
+            guide:'임신·가족 확장을 주요 설정으로 사용하지 않습니다.'
           }
         ]
       }
@@ -686,83 +699,83 @@ world:{
 
   fantasy:{
     label:'판타지',
-    desc:'마법·종족·계층·종교 등 판타지의 기본 구조를 설계합니다.',
+    desc:'마법·종족·계층·종교 등 판타지 세계의 기본 요소를 설정합니다.',
     features:[
       {
         label:'마법',
-        options:[
+        opts:[
           {
-            label:'사용',
-            prompt:'Magic=세계 내 실재현상\\n효과=설정된 범위·조건 준수\\n미설정 능력 임의생성 금지',
-            guide:'습득 방식과 자원을 정하세요. 예:선천/학습/계약, 마력/체력/매개체. 필요하면 사용 대가나 한계를 추가하세요.'
+            v:'사용',
+            prompt:'Magic=세계 내 실재현상\n효과=설정된 범위·조건 준수',
+            guide:'습득 방식과 자원을 정하세요. 예:선천/학습/계약, 마력/체력/매개체. 필요하면 한계나 사용 대가를 추가하세요.'
           },
           {
-            label:'미사용',
-            prompt:'초자연적 마법 없음\\n사건해결=세계관 내 현실적 수단 우선',
-            guide:'마법 대신 기술·정치·정보·물리적 수단으로 사건을 구성합니다.'
+            v:'미사용',
+            prompt:'초자연적 마법 없음',
+            guide:'사건은 기술·정치·정보·물리적 수단 등 세계관 내부의 방법으로 해결합니다.'
           }
         ]
       },
       {
         label:'마법 습득',
-        options:[
+        opts:[
           {
-            label:'선천',
-            prompt:'마법적성=선천\\n숙련=훈련·경험으로 성장',
-            guide:'선천적 재능의 범위와 훈련으로 성장 가능한 부분을 구분하세요.'
+            v:'선천',
+            prompt:'마법적성=선천\n숙련=훈련·경험으로 성장',
+            guide:'타고난 부분과 훈련으로 성장하는 부분을 구분해보세요.'
           },
           {
-            label:'학습',
-            prompt:'마법=지식+훈련으로 습득\\n숙련도=학습량·경험에 따라 차이',
-            guide:'교육 기관이나 마법서 등 학습 경로가 필요하다면 추가하세요.'
+            v:'학습',
+            prompt:'마법=지식+훈련으로 습득',
+            guide:'교육기관·스승·마법서 등 학습 경로가 필요하다면 추가하세요.'
           },
           {
-            label:'계약',
-            prompt:'마법=계약을 통해 획득\\n사용범위=계약조건 준수',
+            v:'계약',
+            prompt:'마법=계약을 통해 획득\n사용범위=계약조건 준수',
             guide:'계약 상대와 대가를 정하세요. 예:정령/신/악마/고대존재.'
           }
         ]
       },
       {
         label:'사회 계층',
-        options:[
+        opts:[
           {
-            label:'계급사회',
-            prompt:'신분→법·직업·교육·재산·사회적대우에 영향',
-            guide:'귀족·평민 등 어떤 계층이 있고 실제 생활에서 무엇이 달라지는지 정하세요.'
+            v:'계급사회',
+            prompt:'신분→법·직업·교육·재산·사회적대우에 영향 가능',
+            guide:'어떤 계층이 존재하고 일상에서 무엇이 달라지는지 정하세요.'
           },
           {
-            label:'평등사회',
+            v:'평등사회',
             prompt:'출생신분에 따른 법적 특권 없음',
-            guide:'권력 차이가 필요하면 재산·직업·정치권력 같은 다른 요인을 사용하세요.'
+            guide:'권력 차이가 필요하다면 재산·직업·정치권력 등 다른 요인을 사용할 수 있습니다.'
           }
         ]
       },
       {
         label:'종족',
-        options:[
+        opts:[
           {
-            label:'다종족',
-            prompt:'복수 지성종족 존재\\n종족별=생물학·수명·문화 차이 설정 가능',
-            guide:'등장 종족과 핵심 차이만 정하세요. 예:인간/엘프/수인/드워프.'
+            v:'다종족',
+            prompt:'복수 지성종족 존재\n종족별 생물학·수명·문화 차이 설정 가능',
+            guide:'등장 종족과 핵심 차이를 정하세요. 예:인간/엘프/수인/드워프.'
           },
           {
-            label:'인간 중심',
-            prompt:'주요 지성종족=인간',
-            guide:'비인간 존재가 나오더라도 주요 사회는 인간 중심으로 구성합니다.'
+            v:'인간 중심',
+            prompt:'주요 지성사회=인간 중심',
+            guide:'비인간 존재가 등장하더라도 주요 사회는 인간 중심으로 구성합니다.'
           }
         ]
       },
       {
         label:'종교',
-        options:[
+        opts:[
           {
-            label:'사용',
-            prompt:'종교·신앙조직 존재\\n신앙→문화·윤리·정치에 영향 가능',
-            guide:'신의 실재 여부, 주요 교리, 성직자 권한이 중요하다면 추가로 정하세요.'
+            v:'사용',
+            prompt:'종교·신앙조직 존재\n신앙→문화·윤리·정치에 영향 가능',
+            guide:'신의 실재 여부·주요 교리·성직자 권한이 중요하다면 추가하세요.'
           },
           {
-            label:'미사용',
+            v:'미사용',
             prompt:'',
             guide:'종교를 핵심 세계 시스템으로 다루지 않습니다.'
           }
@@ -773,18 +786,18 @@ world:{
 
   hunter:{
     label:'헌터·게이트',
-    desc:'각성자·등급·기관·게이트 등 현대 판타지형 구조를 설계합니다.',
+    desc:'각성자·등급·기관·던전 등 현대 판타지형 요소를 설정합니다.',
     features:[
       {
         label:'각성',
-        options:[
+        opts:[
           {
-            label:'선천',
-            prompt:'능력=선천적 보유\\n숙련=훈련·실전으로 성장',
-            guide:'능력이 언제 발견되는지와 성장 가능 범위를 정하세요.'
+            v:'선천',
+            prompt:'능력=선천적 보유\n숙련=훈련·실전으로 성장',
+            guide:'능력이 언제 발견되는지와 성장 가능한 범위를 정하세요.'
           },
           {
-            label:'후천',
+            v:'후천',
             prompt:'능력=특정 사건 이후 발현 가능',
             guide:'발현 계기를 정하세요. 예:게이트 노출/사고/의식/특수 조건.'
           }
@@ -792,14 +805,14 @@ world:{
       },
       {
         label:'등급',
-        options:[
+        opts:[
           {
-            label:'랭크제',
-            prompt:'각성자·위협대상=등급 분류\\n예:E<D<C<B<A<S\\n등급=위험도·임무 판단에 활용',
-            guide:'등급 수와 평가 기준을 작품에 맞게 정하세요. 전투력 외에 통제력·희귀도·경험을 포함할 수도 있습니다.'
+            v:'랭크제',
+            prompt:'각성자·위협대상=등급 분류\n예:E<D<C<B<A<S',
+            guide:'평가 기준을 정하세요. 예:전투력/통제력/희귀도/실전경험.'
           },
           {
-            label:'미사용',
+            v:'미사용',
             prompt:'공식 전투등급 없음',
             guide:'등급 대신 평판·경력·능력 특성 등으로 차이를 표현할 수 있습니다.'
           }
@@ -807,31 +820,31 @@ world:{
       },
       {
         label:'관리 기관',
-        options:[
+        opts:[
           {
-            label:'기관 관리',
-            prompt:'각성자=등록·관리 대상\\n기관업무=등록+평가+임무관리+사고대응',
-            guide:'기관의 법적 권한과 강제력을 어느 정도까지 허용할지 정하세요.'
+            v:'기관 관리',
+            prompt:'각성자=등록·관리 대상\n기관업무=등록+평가+임무관리+사고대응',
+            guide:'기관의 법적 권한과 강제력이 어느 정도인지 정하세요.'
           },
           {
-            label:'자유 활동',
-            prompt:'각성자 개인활동 가능\\n기관=지원·정보·중개 중심',
-            guide:'완전한 자유인지 최소 등록이 필요한지 추가로 정할 수 있습니다.'
+            v:'자유 활동',
+            prompt:'각성자 개인활동 가능\n기관=지원·정보·중개 중심',
+            guide:'최소 등록이 필요한지까지 작품에 맞게 정할 수 있습니다.'
           }
         ]
       },
       {
         label:'던전',
-        options:[
+        opts:[
           {
-            label:'고정 던전',
-            prompt:'Dungeon=고정 구조·규칙 보유\\n탐사정보·공략법 축적 가능',
-            guide:'위치, 난도, 보상, 리셋 여부를 작품에 맞게 정하세요.'
+            v:'고정 던전',
+            prompt:'Dungeon=고정 구조·규칙 보유\n탐사정보·공략법 축적 가능',
+            guide:'위치·난도·보상·리셋 여부가 필요하면 추가하세요.'
           },
           {
-            label:'랜덤 게이트',
-            prompt:'Gate=불규칙 발생 가능\\n내부구조·위험도=개별 차이',
-            guide:'발생 빈도와 방치 시 결과가 필요하면 추가하세요.'
+            v:'랜덤 게이트',
+            prompt:'Gate=불규칙 발생 가능\n내부구조·위험도=개별 차이',
+            guide:'발생 빈도와 방치했을 때의 결과를 정할 수 있습니다.'
           }
         ]
       }
@@ -840,18 +853,18 @@ world:{
 
   modern:{
     label:'현대',
-    desc:'현실과 유사한 사회에 초능력·권력·비밀 요소를 추가합니다.',
+    desc:'현실과 유사한 사회에 초능력·비밀·권력 구조 등을 추가합니다.',
     features:[
       {
         label:'초능력',
-        options:[
+        opts:[
           {
-            label:'사용',
-            prompt:'초능력=개인별 범위·한계 준수\\n능력보유≠사회적권력 자동획득',
-            guide:'발생 원인과 사용 한계가 필요하면 추가하세요.'
+            v:'사용',
+            prompt:'초능력=개인별 범위·한계 준수',
+            guide:'능력의 발생 원인과 사용 한계가 필요하다면 추가하세요.'
           },
           {
-            label:'미사용',
+            v:'미사용',
             prompt:'초자연능력 없음',
             guide:'현실적인 기술·직업·관계 중심으로 구성합니다.'
           }
@@ -859,29 +872,29 @@ world:{
       },
       {
         label:'사회 인지도',
-        options:[
+        opts:[
           {
-            label:'공개',
-            prompt:'특수능력 존재=공공정보\\n법·언론·직업·일상에 반영',
+            v:'공개',
+            prompt:'특수능력 존재=공공정보\n법·언론·직업·일상에 반영',
             guide:'일반인이 능력자를 얼마나 흔하게 접하는지 정하세요.'
           },
           {
-            label:'비공개',
-            prompt:'특수능력 존재=일반사회 비공개\\n관련사건=은폐·비밀유지 가능',
-            guide:'비밀을 관리하는 조직과 발각 시 결과가 필요하면 추가하세요.'
+            v:'비공개',
+            prompt:'특수능력 존재=일반사회 비공개\n관련사건=은폐·비밀유지 가능',
+            guide:'비밀을 관리하는 조직과 발각 시 결과가 필요하다면 추가하세요.'
           }
         ]
       },
       {
         label:'사회 권력',
-        options:[
+        opts:[
           {
-            label:'상류층 중심',
-            prompt:'재력·기업·가문·인맥→사회적 영향력 반영\\n금전≠무제한 권력',
-            guide:'법·언론·평판·기업 등 어떤 자원이 실제 권력으로 작동하는지 정하세요.'
+            v:'상류층 중심',
+            prompt:'재력·기업·가문·인맥→사회적 영향력 반영',
+            guide:'법·언론·평판·기업 등 어떤 자원이 권력으로 작동하는지 정하세요.'
           },
           {
-            label:'일반사회',
+            v:'일반사회',
             prompt:'주요인물=일반적 직업·경제환경 기반',
             guide:'특권 계층보다 일상적인 사회관계와 직업 환경을 중심으로 구성합니다.'
           }
@@ -896,46 +909,46 @@ world:{
     features:[
       {
         label:'추리 진행',
-        options:[
+        opts:[
           {
-            label:'자유 추리',
-            prompt:'추측≠정답확정\\n충분한 근거 전 핵심정답 자동공개 금지',
-            guide:'정답을 확정하려면 어떤 종류의 근거가 필요한지 정하세요.'
+            v:'자유 추리',
+            prompt:'추측≠정답확정\n충분한 근거 전 핵심정답 자동공개 금지',
+            guide:'정답을 확정하는 데 필요한 근거의 종류를 정하세요.'
           },
           {
-            label:'제출형',
-            prompt:'정답제출=명시적 시도\\n성공=정답+필수근거 충족',
+            v:'제출형',
+            prompt:'정답제출=명시적 시도\n성공=정답+필수근거 충족',
             guide:'제출 횟수나 오답의 결과를 사용할 경우 별도로 정하세요.'
           }
         ]
       },
       {
-        label:'단서',
-        options:[
+        label:'단서 배치',
+        opts:[
           {
-            label:'분산',
-            prompt:'핵심정보=복수 단서로 분산\\n단서발견=장면·행동·조사 결과 반영',
-            guide:'정보를 한 장면에 몰지 말고 서로 다른 경로로 배치해보세요.'
+            v:'분산',
+            prompt:'핵심정보=복수 단서로 분산',
+            guide:'정보를 한 장면에 몰지 말고 서로 다른 장소·인물·사건에 나누어 배치해보세요.'
           },
           {
-            label:'직선형',
+            v:'직선형',
             prompt:'단서=진행순서에 따라 단계 공개',
-            guide:'진행이 막히지 않도록 필수 단서는 비교적 명확하게 배치할 수 있습니다.'
+            guide:'필수 단서는 진행이 막히지 않을 정도로 명확하게 배치할 수 있습니다.'
           }
         ]
       },
       {
         label:'정체 확인',
-        options:[
+        opts:[
           {
-            label:'증거 필요',
-            prompt:'의심만으로 정체확정 금지\\n복수 근거 확보 시 확정 가능',
-            guide:'물증·목격·기록·모순 등 어떤 근거를 사용할지 정하세요.'
+            v:'증거 필요',
+            prompt:'의심만으로 정체확정 금지\n복수 근거 확보 시 확정 가능',
+            guide:'예:물증/목격/기록/증언/모순.'
           },
           {
-            label:'빠른 공개',
-            prompt:'핵심정체=초반 공개 가능\\n긴장감=동기·과정·결과에서 확보',
-            guide:'범인을 숨기는 대신 이유나 과정 자체를 미스터리로 사용할 수 있습니다.'
+            v:'빠른 공개',
+            prompt:'핵심정체=초반 공개 가능\n긴장=동기·과정·결과에서 확보',
+            guide:'범인을 숨기는 대신 이유나 과정 자체를 미스터리로 만들 수 있습니다.'
           }
         ]
       }
@@ -944,40 +957,40 @@ world:{
 
   memory:{
     label:'기억·정체성',
-    desc:'기억상실·봉인·왜곡 등을 사용하는 작품용 범용 항목입니다.',
+    desc:'기억상실·봉인·왜곡처럼 기억을 서사 요소로 사용할 때 참고합니다.',
     features:[
       {
         label:'기억 상태',
-        options:[
+        opts:[
           {
-            label:'기억상실',
-            prompt:'일부 과거기억=접근 불가\\n현재 기억범위 준수',
+            v:'기억상실',
+            prompt:'일부 과거기억=접근 불가\n현재 기억범위 준수',
             guide:'잃어버린 시기와 현재 알고 있는 정보를 정하세요.'
           },
           {
-            label:'봉인 기억',
+            v:'기억봉인',
             prompt:'특정 기억=현재 접근 제한',
             guide:'봉인 원인과 기억을 떠올리는 계기를 작품에 맞게 정하세요.'
           },
           {
-            label:'기억 왜곡',
+            v:'기억왜곡',
             prompt:'일부 기억=사실과 다를 가능성 유지',
             guide:'어떤 기억이 왜곡되었는지와 진실을 확인할 방법을 정하세요.'
           }
         ]
       },
       {
-        label:'회복 방식',
-        options:[
+        label:'회복',
+        opts:[
           {
-            label:'점진 회복',
+            v:'점진 회복',
             prompt:'기억회복=단서·사건을 통해 점진 진행',
-            guide:'사진·장소·대화·감각 자극처럼 회복 계기를 몇 가지 정할 수 있습니다.'
+            guide:'예:사진/장소/대화/감각 자극.'
           },
           {
-            label:'사건 회복',
+            v:'사건 회복',
             prompt:'기억회복=특정 사건을 계기로 발생 가능',
-            guide:'회복 전후에 캐릭터의 판단이나 관계가 어떻게 달라질지 정하세요.'
+            guide:'회복 전후에 판단이나 관계가 어떻게 달라질지 정하세요.'
           }
         ]
       }
@@ -989,37 +1002,37 @@ world:{
     desc:'강한 능력과 그 한계를 간단히 설계합니다.',
     features:[
       {
-        label:'능력 자원',
-        options:[
+        label:'사용 제한',
+        opts:[
           {
-            label:'소모형',
-            prompt:'능력사용→자원 소모\\n한계초과 시 부담 발생 가능',
+            v:'소모형',
+            prompt:'능력사용→자원 소모\n한계초과 시 부담 발생 가능',
             guide:'소모 자원을 정하세요. 예:마력/체력/정신력/특수자원.'
           },
           {
-            label:'쿨다운형',
+            v:'쿨다운형',
             prompt:'강한 능력=연속사용 제한 가능',
-            guide:'재사용까지 필요한 시간이나 회복 조건을 정하세요.'
+            guide:'재사용 시간이나 회복 조건을 정하세요.'
           },
           {
-            label:'조건형',
+            v:'조건형',
             prompt:'능력발동=설정된 조건 충족 시 가능',
-            guide:'발동 조건을 정하세요. 예:접촉/시야/장소/시간/매개체.'
+            guide:'예:접촉/시야/장소/시간/매개체.'
           }
         ]
       },
       {
-        label:'권한 성장',
-        options:[
+        label:'성장',
+        opts:[
           {
-            label:'단계 해금',
+            v:'단계 해금',
             prompt:'성장에 따라 신규 기능·접근범위 해금 가능',
             guide:'어떤 성장이나 사건을 기준으로 새로운 능력을 열지 정하세요.'
           },
           {
-            label:'고정 권한',
+            v:'고정 권한',
             prompt:'기본 권한범위=초기 설정 유지',
-            guide:'성장보다는 활용법과 숙련도의 변화를 중심으로 설계합니다.'
+            guide:'새 능력보다 활용법과 숙련도의 변화를 중심으로 설계합니다.'
           }
         ]
       }
@@ -1031,15 +1044,15 @@ world:{
     desc:'세계나 인물이 변화하는 위험 요소를 사용할 때 참고합니다.',
     features:[
       {
-        label:'오염 영향',
-        options:[
+        label:'영향 대상',
+        opts:[
           {
-            label:'환경 오염',
+            v:'환경',
             prompt:'오염도↑→환경·생물·공간 변화 가능',
-            guide:'오염이 무엇을 변화시키는지 정하세요. 예:기후/생물/마력/공간.'
+            guide:'변화 대상을 정하세요. 예:기후/생물/마력/공간.'
           },
           {
-            label:'인물 변이',
+            v:'인물',
             prompt:'오염노출→신체·감각·능력 변화 가능',
             guide:'변화가 일시적인지 영구적인지, 회복 방법이 있는지 정하세요.'
           }
@@ -1050,21 +1063,21 @@ world:{
 },
 
 char:{
-  template:{
+  basic:{
     label:'기본 시트',
-    desc:'캐릭터를 처음 만들 때 필요한 최소 항목입니다.',
+    desc:'캐릭터를 처음 만들 때 필요한 최소 정보입니다.',
     features:[
       {
         label:'정보 범위',
-        options:[
+        opts:[
           {
-            label:'기본형',
-            prompt:'캐릭터정보=정체+목표+성격+관계+행동특징',
-            guide:'이름·나이·직업을 적은 뒤 목표, 성격, 주요 관계, 행동 특징을 추가하세요.'
+            v:'기본형',
+            prompt:'캐릭터=정체+목표+성격+관계+행동특징',
+            guide:'이름·나이·직업에 더해 목표·주요 관계·행동 특징을 작성하세요.'
           },
           {
-            label:'간결형',
-            prompt:'캐릭터정보=핵심목표+성격+대표행동 중심',
+            v:'간결형',
+            prompt:'캐릭터=핵심목표+성격+대표행동 중심',
             guide:'조연이나 단기 등장 인물은 필요한 정보만 간단히 작성하세요.'
           }
         ]
@@ -1074,25 +1087,25 @@ char:{
 
   personality:{
     label:'성격',
-    desc:'성격표는 참고용으로 사용하고 실제 행동 예시를 함께 정하는 편이 좋습니다.',
+    desc:'성격 유형은 참고축으로 사용하고 실제 행동을 함께 설정합니다.',
     features:[
       {
-        label:'성격 표현',
-        options:[
+        label:'표현 방식',
+        opts:[
           {
-            label:'키워드형',
+            v:'키워드',
             prompt:'성격=핵심키워드 3~5개 기준',
-            guide:'예:신중함/다정함/경쟁적/낙관적. 서로 충돌하는 특징이 있다면 언제 어느 쪽이 드러나는지 정하세요.'
+            guide:'예:신중함/다정함/경쟁적/낙관적. 서로 충돌하는 성격이 있다면 상황별 차이를 정하세요.'
           },
           {
-            label:'MBTI 참고',
-            prompt:'MBTI=성격 참고축으로만 사용\\n유형만으로 행동 고정 금지',
-            guide:'MBTI를 사용할 경우 실제 말투·결정 방식·습관을 따로 작성하세요.'
+            v:'MBTI 참고',
+            prompt:'MBTI=성격 참고축\n유형만으로 행동 고정 금지',
+            guide:'실제 말투·결정 방식·습관은 별도로 작성하세요.'
           },
           {
-            label:'에니어그램 참고',
+            v:'에니어그램 참고',
             prompt:'Enneagram=핵심욕구·두려움 참고축',
-            guide:'유형명보다 그 인물이 원하는 것과 피하고 싶은 것을 구체적으로 적는 편이 좋습니다.'
+            guide:'유형명보다 인물이 원하는 것과 피하고 싶은 것을 구체적으로 적어보세요.'
           }
         ]
       }
@@ -1101,35 +1114,35 @@ char:{
 
   role:{
     label:'서사 역할',
-    desc:'이 캐릭터가 이야기에서 수행하는 기능을 정합니다.',
+    desc:'캐릭터가 이야기에서 수행하는 기본 기능을 정합니다.',
     features:[
       {
         label:'역할',
-        options:[
+        opts:[
           {
-            label:'주인공',
+            v:'주인공',
             prompt:'역할=주요 선택·변화의 중심',
-            guide:'이 인물이 무엇을 원하고 어떤 선택으로 변화하는지 정하세요.'
+            guide:'무엇을 원하고 어떤 선택으로 변화하는지 정하세요.'
           },
           {
-            label:'동료',
-            prompt:'역할=주인공과 목표·갈등을 공유하는 주요 동료',
-            guide:'주인공과 같은 목표만 갖게 하지 말고 개인 목표를 하나 추가하세요.'
+            v:'동료',
+            prompt:'역할=주요 목표·갈등을 공유하는 동료',
+            guide:'주인공과 별개의 개인 목표를 하나 추가해보세요.'
           },
           {
-            label:'라이벌',
-            prompt:'역할=경쟁·대립을 통해 주인공 선택에 압력 제공',
+            v:'라이벌',
+            prompt:'역할=경쟁·대립을 통해 선택에 압력 제공',
             guide:'경쟁하는 이유와 서로 인정하거나 충돌하는 지점을 정하세요.'
           },
           {
-            label:'멘토',
-            prompt:'역할=정보·기술·관점 제공\\n모든 문제 대신 해결 금지',
-            guide:'도움을 줄 수 있는 범위와 도울 수 없는 영역을 정하세요.'
+            v:'멘토',
+            prompt:'역할=정보·기술·관점 제공\n모든 문제 대신 해결 금지',
+            guide:'도움을 줄 수 있는 범위와 줄 수 없는 영역을 정하세요.'
           },
           {
-            label:'대립자',
-            prompt:'역할=주요 목표와 충돌하는 인물',
-            guide:'악역이라는 이유만으로 행동하게 하지 말고 자신만의 목적을 정하세요.'
+            v:'대립자',
+            prompt:'역할=주요 목표와 충돌',
+            guide:'대립하는 인물에게도 자신의 목적과 이유를 부여하세요.'
           }
         ]
       }
@@ -1138,25 +1151,25 @@ char:{
 
   motive:{
     label:'동기·목표',
-    desc:'행동 이유를 분명하게 만드는 항목입니다.',
+    desc:'캐릭터가 왜 행동하는지를 정합니다.',
     features:[
       {
         label:'목표 구조',
-        options:[
+        opts:[
           {
-            label:'단일 목표',
+            v:'단일 목표',
             prompt:'현재행동=핵심목표 중심',
             guide:'지금 가장 원하는 것을 한 문장으로 작성하세요.'
           },
           {
-            label:'겉목표+속욕구',
+            v:'겉목표+속욕구',
             prompt:'겉목표와 내적욕구를 구분해 행동에 반영',
             guide:'예:겉목표=승진/속욕구=인정받고 싶음.'
           },
           {
-            label:'갈등 목표',
-            prompt:'복수 목표가 충돌할 경우 상황에 따라 우선순위 변화 가능',
-            guide:'서로 동시에 달성하기 어려운 두 목표를 정하면 선택 장면을 만들기 쉽습니다.'
+            v:'목표 충돌',
+            prompt:'복수 목표 충돌 시 상황에 따라 우선순위 변화 가능',
+            guide:'동시에 달성하기 어려운 두 목표를 설정해보세요.'
           }
         ]
       }
@@ -1165,23 +1178,23 @@ char:{
 
   anchor:{
     label:'행동 앵커',
-    desc:'캐릭터를 장면에서 구별할 수 있는 반복 행동을 정합니다.',
+    desc:'장면에서 캐릭터를 구별할 수 있는 반복 행동을 정합니다.',
     features:[
       {
         label:'행동 특징',
-        options:[
+        opts:[
           {
-            label:'생활 습관',
+            v:'생활 습관',
             prompt:'반복행동=일상습관에 자연스럽게 반영',
             guide:'예:생각할 때 컵 가장자리를 만짐/새 장소에서 출구를 먼저 확인함.'
           },
           {
-            label:'감정 습관',
+            v:'감정 습관',
             prompt:'감정변화→고유한 행동신호로 표현 가능',
             guide:'예:화날수록 말이 짧아짐/당황하면 웃음으로 넘김.'
           },
           {
-            label:'관계 습관',
+            v:'관계 습관',
             prompt:'친밀도에 따라 거리·호칭·시선·행동 변화 가능',
             guide:'가까운 사람에게만 하는 행동을 1~2개 정하세요.'
           }
@@ -1192,28 +1205,28 @@ char:{
 
   speech:{
     label:'말투',
-    desc:'대사의 어휘와 리듬을 구별합니다.',
+    desc:'캐릭터마다 대사의 어휘와 리듬을 구별합니다.',
     features:[
       {
         label:'대사 특징',
-        options:[
+        opts:[
           {
-            label:'간결',
-            prompt:'대사=짧고 직접적\\n불필요한 반복 최소화',
-            guide:'짧게 말하는 이유가 성격 때문인지 직업 습관 때문인지 정할 수 있습니다.'
+            v:'간결',
+            prompt:'대사=짧고 직접적\n불필요한 반복 최소화',
+            guide:'짧게 말하는 이유나 상황별 예외를 정할 수 있습니다.'
           },
           {
-            label:'정중',
+            v:'정중',
             prompt:'대사=존칭·완곡표현 중심',
-            guide:'친밀해져도 존댓말을 유지하는지 여부를 정하세요.'
+            guide:'친밀해진 뒤에도 존댓말을 유지하는지 정하세요.'
           },
           {
-            label:'직설',
+            v:'직설',
             prompt:'대사=의도·평가를 비교적 직접 표현',
-            guide:'직설적이지만 무례하지 않은지, 공격적인 편인지 정도를 추가하세요.'
+            guide:'직설적인 정도와 넘지 않는 선을 정하세요.'
           },
           {
-            label:'우회',
+            v:'우회',
             prompt:'대사=감정을 직접 명명하기보다 상황·행동으로 우회',
             guide:'중요한 감정을 숨길 때 사용하는 말버릇을 하나 정할 수 있습니다.'
           }
@@ -1226,23 +1239,23 @@ char:{
 psych:{
   emotion:{
     label:'감정 처리',
-    desc:'감정을 인식하고 표현하는 방식을 정합니다.',
+    desc:'감정을 인식하고 표현하는 기본 방식을 설정합니다.',
     features:[
       {
         label:'표현 방식',
-        options:[
+        opts:[
           {
-            label:'직접 표현',
+            v:'직접 표현',
             prompt:'감정인식→말·행동으로 비교적 직접 표현',
             guide:'어떤 감정까지 쉽게 말할 수 있는지 정하세요.'
           },
           {
-            label:'내부 처리',
-            prompt:'감정=즉시 말하지 않고 내부에서 정리 후 표현',
-            guide:'혼자 정리하는 시간, 행동 신호, 뒤늦은 표현 방식 등을 정할 수 있습니다.'
+            v:'내부 처리',
+            prompt:'감정=내부에서 정리 후 표현',
+            guide:'혼자 정리하는 시간·행동 신호·뒤늦은 표현 방식을 정할 수 있습니다.'
           },
           {
-            label:'억제',
+            v:'억제',
             prompt:'강한감정→겉표현 억제 경향',
             guide:'억제한 감정이 어떤 상황에서 드러나는지 정하세요.'
           }
@@ -1257,24 +1270,24 @@ psych:{
     features:[
       {
         label:'욕구',
-        options:[
+        opts:[
           {
-            label:'자율성',
+            v:'자율성',
             prompt:'핵심욕구=스스로 선택·통제',
             guide:'통제받는 상황에서 어떤 반응을 보이는지 정하세요.'
           },
           {
-            label:'유능감',
+            v:'유능감',
             prompt:'핵심욕구=능력 인정·성취',
             guide:'실패나 비교 상황에서 어떤 반응을 하는지 정하세요.'
           },
           {
-            label:'관계성',
+            v:'관계성',
             prompt:'핵심욕구=소속감·정서적 연결',
             guide:'어떤 관계에서 안정감을 느끼는지 정하세요.'
           },
           {
-            label:'안정',
+            v:'안정',
             prompt:'핵심욕구=예측가능성·안전',
             guide:'예상 밖의 변화가 생겼을 때 반응을 정하세요.'
           }
@@ -1285,23 +1298,23 @@ psych:{
 
   attachment:{
     label:'관계 패턴',
-    desc:'관계에서 거리를 조절하는 경향을 참고합니다.',
+    desc:'관계에서 친밀감과 거리를 조절하는 경향을 참고합니다.',
     features:[
       {
         label:'거리 조절',
-        options:[
+        opts:[
           {
-            label:'안정형',
+            v:'안정형',
             prompt:'친밀감과 독립성을 비교적 균형 있게 유지',
-            guide:'갈등이 생겼을 때 대화·거리두기 중 어떤 방식을 우선하는지 정하세요.'
+            guide:'갈등 시 대화와 거리두기 중 어느 쪽을 우선하는지 정하세요.'
           },
           {
-            label:'불안형',
-            prompt:'관계불확실성에 민감\\n확인·접근 행동 증가 가능',
-            guide:'어떤 상황에서 불안해지는지 정하세요. 예:답장지연/태도변화/약속취소.'
+            v:'불안형',
+            prompt:'관계불확실성에 민감\n확인·접근 행동 증가 가능',
+            guide:'예:답장지연/태도변화/약속취소.'
           },
           {
-            label:'회피형',
+            v:'회피형',
             prompt:'강한친밀감·압박 상황에서 거리두기 증가 가능',
             guide:'거리두는 방식과 다시 접근하게 되는 계기를 정하세요.'
           }
@@ -1312,28 +1325,28 @@ psych:{
 
   stress:{
     label:'스트레스 반응',
-    desc:'압박 상황에서 평소와 달라지는 행동을 정합니다.',
+    desc:'압박 상황에서 나타나는 행동 경향을 설정합니다.',
     features:[
       {
         label:'반응',
-        options:[
+        opts:[
           {
-            label:'대응',
+            v:'대응',
             prompt:'압박→문제 해결 행동 증가',
-            guide:'정보 수집, 계획, 행동 중 어떤 방식이 먼저 나오는지 정하세요.'
+            guide:'정보수집/계획/행동 중 무엇을 먼저 하는지 정하세요.'
           },
           {
-            label:'회피',
+            v:'회피',
             prompt:'압박→문제·감정에서 일시적으로 거리두기',
-            guide:'회피가 침묵·자리피함·일몰입 중 어떤 형태인지 정하세요.'
+            guide:'예:침묵/자리피함/일에 몰입.'
           },
           {
-            label:'공격',
+            v:'공격',
             prompt:'압박→말투·경계·대립성 증가 가능',
             guide:'어디까지 공격적으로 변하는지 선을 정하세요.'
           },
           {
-            label:'동결',
+            v:'동결',
             prompt:'과도한 압박→판단·행동이 느려질 수 있음',
             guide:'회복에 필요한 시간이나 도움을 정할 수 있습니다.'
           }
@@ -1348,21 +1361,21 @@ psych:{
     features:[
       {
         label:'민감 요소',
-        options:[
+        opts:[
           {
-            label:'거절',
+            v:'거절',
             prompt:'거절가능성 신호에 민감하게 반응 가능',
-            guide:'예:답장지연/약속취소/말투변화. 실제 거절과 오해를 구분할 기준도 정할 수 있습니다.'
+            guide:'예:답장지연/약속취소/말투변화.'
           },
           {
-            label:'유기',
+            v:'유기',
             prompt:'관계단절 가능성에 대한 불안 반응 가능',
             guide:'어떤 관계에서 특히 강하게 나타나는지 정하세요.'
           },
           {
-            label:'평가',
+            v:'평가',
             prompt:'타인의 평가·비교 상황에 민감하게 반응 가능',
-            guide:'칭찬·비판·경쟁 중 어떤 상황에서 가장 영향을 받는지 정하세요.'
+            guide:'칭찬/비판/경쟁 중 어떤 상황에서 영향을 크게 받는지 정하세요.'
           }
         ]
       }
@@ -1371,27 +1384,27 @@ psych:{
 },
 
 consent:{
-  structure:{
-    label:'관계 구조',
-    desc:'관계가 시작되고 발전하는 기본 형태를 정합니다.',
+  start:{
+    label:'관계 시작',
+    desc:'두 인물이 어떤 관계에서 시작하는지 정합니다.',
     features:[
       {
-        label:'관계 시작',
-        options:[
+        label:'시작점',
+        opts:[
           {
-            label:'낯선 사이',
-            prompt:'초기관계=낯선 사이\\n친밀감=상호작용을 통해 형성',
+            v:'낯선 사이',
+            prompt:'초기관계=낯선 사이\n친밀감=상호작용을 통해 형성',
             guide:'첫인상과 처음 가까워지는 계기를 정하세요.'
           },
           {
-            label:'기존 지인',
-            prompt:'초기관계=기존 친분 존재\\n과거사건·현재거리 반영',
+            v:'기존 지인',
+            prompt:'초기관계=기존 친분 존재\n과거사건·현재거리 반영',
             guide:'얼마나 오래 알았고 현재 어느 정도 가까운지 정하세요.'
           },
           {
-            label:'오랜 인연',
+            v:'오랜 인연',
             prompt:'과거부터 누적된 관계경험 반영',
-            guide:'함께 겪은 대표 사건 1~3개를 정하면 관계 표현이 쉬워집니다.'
+            guide:'함께 겪은 대표 사건을 1~3개 정도 정할 수 있습니다.'
           }
         ]
       }
@@ -1400,33 +1413,33 @@ consent:{
 
   progress:{
     label:'관계 진행',
-    desc:'관계 변화의 속도와 단계를 정합니다.',
+    desc:'관계가 변하는 속도와 표현 방식을 정합니다.',
     features:[
       {
-        label:'진행 방식',
-        options:[
+        label:'진행 속도',
+        opts:[
           {
-            label:'점진형',
-            prompt:'관계변화=상호작용+사건 누적\\n충분한 계기 없이 급격한 친밀도 변화 금지',
-            guide:'필요하면 감정 단계를 나눠 작성하세요. 예:경계→관심→친밀→신뢰→애정.'
+            v:'점진형',
+            prompt:'관계변화=상호작용+사건 누적\n충분한 계기 없이 급격한 친밀도 변화 금지',
+            guide:'필요하면 감정 단계를 만드세요. 예:경계→관심→친밀→신뢰→애정.'
           },
           {
-            label:'빠른 전개',
-            prompt:'강한 사건을 계기로 관계변화 속도 증가 가능\\n이후 감정 후속반응 유지',
-            guide:'빠르게 가까워지는 계기와 그 뒤 남는 불안·신뢰·어색함 등을 정하세요.'
+            v:'빠른 전개',
+            prompt:'강한 사건→관계변화 속도 증가 가능\n이후 감정 후속반응 유지',
+            guide:'빠르게 가까워지는 계기와 그 뒤 남는 감정을 정하세요.'
           }
         ]
       },
       {
         label:'단계 관리',
-        options:[
+        opts:[
           {
-            label:'단계 사용',
+            v:'단계 사용',
             prompt:'현재 관계단계에 맞춰 말투·거리·행동 변화',
-            guide:'L1~L5처럼 단계를 만들고 각 단계의 말투·거리감·접촉 수준 등을 직접 작성하세요.'
+            guide:'L1~L5처럼 단계를 만들고 단계별 감정·말투·거리감 등을 직접 작성하세요.'
           },
           {
-            label:'자유 진행',
+            v:'자유 진행',
             prompt:'관계변화=장면·사건의 맥락 중심',
             guide:'명시적인 단계표 없이 이전 사건과 현재 감정을 이어서 관리합니다.'
           }
@@ -1435,22 +1448,22 @@ consent:{
     ]
   },
 
-  boundaries:{
+  boundary:{
     label:'경계·합의',
-    desc:'개인이 원하거나 원하지 않는 행동을 관계에 반영합니다.',
+    desc:'개인이 편안하게 느끼는 행동과 경계를 관계에 반영합니다.',
     features:[
       {
-        label:'경계 표현',
-        options:[
+        label:'경계 확인',
+        opts:[
           {
-            label:'명시적',
-            prompt:'개인경계=말·행동으로 명확히 표현\\n거절·중단 요청 존중',
+            v:'명시적',
+            prompt:'개인경계=말·행동으로 명확히 표현\n거절·중단 요청 존중',
             guide:'캐릭터마다 편안한 행동과 불편한 행동을 간단히 정하세요.'
           },
           {
-            label:'상황 확인',
+            v:'상황 확인',
             prompt:'불확실한 상황→상대 반응 확인 후 진행',
-            guide:'직접 질문, 행동 중단, 거리 조절 등 확인 방식을 정할 수 있습니다.'
+            guide:'직접 질문/행동 중단/거리 조절 등 확인 방식을 정할 수 있습니다.'
           }
         ]
       }
@@ -1459,23 +1472,23 @@ consent:{
 
   conflict:{
     label:'갈등',
-    desc:'관계 갈등이 생겼을 때의 기본 흐름을 정합니다.',
+    desc:'관계에 문제가 생겼을 때의 기본 반응을 설정합니다.',
     features:[
       {
         label:'갈등 방식',
-        options:[
+        opts:[
           {
-            label:'대화형',
+            v:'대화형',
             prompt:'갈등→원인 확인+대화+선택으로 진행',
             guide:'즉시 해결되는지 시간이 필요한지 정하세요.'
           },
           {
-            label:'거리두기',
-            prompt:'갈등→일시적 거리 증가 가능\\n거리두기 이후 감정 변화 유지',
-            guide:'누가 먼저 거리를 두는지와 다시 대화하게 되는 계기를 정하세요.'
+            v:'거리두기',
+            prompt:'갈등→일시적 거리 증가 가능\n거리두기 이후 감정 변화 유지',
+            guide:'누가 먼저 거리를 두는지와 다시 대화하는 계기를 정하세요.'
           },
           {
-            label:'충돌형',
+            v:'충돌형',
             prompt:'갈등→직접적인 의견·감정 충돌 가능',
             guide:'말다툼의 강도와 넘지 않는 선을 정하세요.'
           }
@@ -1486,25 +1499,25 @@ consent:{
 
   recovery:{
     label:'회복·화해',
-    desc:'갈등 후 관계를 회복하는 방법을 설정합니다.',
+    desc:'갈등 뒤 관계가 어떻게 회복되는지 설정합니다.',
     features:[
       {
         label:'회복 방식',
-        options:[
+        opts:[
           {
-            label:'대화',
+            v:'대화',
             prompt:'관계회복=문제 인식+대화+행동 변화 반영',
-            guide:'사과만으로 끝낼지 이후 행동 변화까지 필요한지 정하세요.'
+            guide:'사과만 필요한지 이후 행동 변화까지 필요한지 정하세요.'
           },
           {
-            label:'행동',
+            v:'행동',
             prompt:'관계회복=말보다 행동·선택으로 신뢰 회복 가능',
-            guide:'약속 이행, 도움, 거리 존중 등 관계에 맞는 행동을 정하세요.'
+            guide:'예:약속이행/도움/거리 존중.'
           },
           {
-            label:'시간',
+            v:'시간',
             prompt:'신뢰회복=시간+반복된 상호작용 필요 가능',
-            guide:'큰 갈등일수록 즉시 원상복구하지 않도록 회복 기간을 정할 수 있습니다.'
+            guide:'큰 갈등이라면 회복 기간을 따로 둘 수 있습니다.'
           }
         ]
       }
@@ -1519,21 +1532,21 @@ style:{
     features:[
       {
         label:'POV',
-        options:[
+        opts:[
           {
-            label:'3인칭 제한',
-            prompt:'POV=3인칭제한\\n시점인물의 인지범위 중심\\n타인내면 직접확정 금지\\nPOV전환=장면경계 구분',
+            v:'3인칭 제한',
+            prompt:'POV=3인칭제한\n시점인물의 인지범위 중심\n타인내면 직접확정 금지\nPOV전환=장면경계 구분',
             guide:'한 장면에서 누구의 시점을 사용할지 정하세요.'
           },
           {
-            label:'3인칭 전지',
-            prompt:'POV=3인칭전지\\n복수인물의 내면·정보 서술 가능\\n시점이동 시 독자가 혼동하지 않게 전환 표시',
-            guide:'모든 정보를 즉시 공개하기보다 장면 목적에 필요한 정보만 선택하세요.'
+            v:'3인칭 전지',
+            prompt:'POV=3인칭전지\n복수인물 내면·정보 서술 가능\n시점이동 시 전환 명확히',
+            guide:'모든 정보를 즉시 공개하기보다 장면에 필요한 정보만 선택하세요.'
           },
           {
-            label:'1인칭',
-            prompt:'POV=1인칭\\n화자의 감각·판단·기억 중심\\n화자가 모르는 사실 확정서술 금지',
-            guide:'화자의 말투와 해석 편향을 정하면 목소리가 더 선명해집니다.'
+            v:'1인칭',
+            prompt:'POV=1인칭\n화자의 감각·판단·기억 중심\n화자가 모르는 사실 확정서술 금지',
+            guide:'화자의 말투와 해석 성향을 정하면 목소리가 더 분명해집니다.'
           }
         ]
       }
@@ -1546,15 +1559,15 @@ style:{
     features:[
       {
         label:'시제',
-        options:[
+        opts:[
           {
-            label:'과거형',
-            prompt:'시제=과거형 중심\\n장면 내 시제 일관성 유지',
+            v:'과거형',
+            prompt:'시제=과거형 중심\n장면 내 시제 일관성 유지',
             guide:'회상이나 현재 시점 삽입이 필요하면 구분을 명확히 하세요.'
           },
           {
-            label:'현재형',
-            prompt:'시제=현재형 중심\\n즉시성 유지',
+            v:'현재형',
+            prompt:'시제=현재형 중심\n즉시성 유지',
             guide:'빠른 장면이나 긴장감이 중요한 작품에 활용할 수 있습니다.'
           }
         ]
@@ -1564,25 +1577,25 @@ style:{
 
   description:{
     label:'묘사 밀도',
-    desc:'서술에 어느 정도의 감각 정보와 환경 묘사를 사용할지 정합니다.',
+    desc:'환경과 감각 정보를 어느 정도 사용할지 정합니다.',
     features:[
       {
         label:'밀도',
-        options:[
+        opts:[
           {
-            label:'간결',
-            prompt:'묘사=핵심정보 중심\\n장식적 반복 최소화',
+            v:'간결',
+            prompt:'묘사=핵심정보 중심\n장식적 반복 최소화',
             guide:'행동과 대사가 중심인 빠른 장면에 적합합니다.'
           },
           {
-            label:'중간',
+            v:'중간',
             prompt:'묘사=행동+환경+필요한 감각정보 균형',
-            guide:'대부분의 장면에서 무난하게 사용할 수 있습니다.'
+            guide:'대부분의 장면에서 기본값으로 사용할 수 있습니다.'
           },
           {
-            label:'풍부',
-            prompt:'묘사=공간·감각·미세행동 적극 활용\\n같은 의미 반복 금지',
-            guide:'중요 장면에 집중적으로 사용하고 모든 장면을 같은 밀도로 쓰지 않아도 됩니다.'
+            v:'풍부',
+            prompt:'묘사=공간·감각·미세행동 적극 활용\n같은 의미 반복 금지',
+            guide:'중요 장면에 집중해서 사용하는 편이 좋습니다.'
           }
         ]
       }
@@ -1591,25 +1604,25 @@ style:{
 
   emotion:{
     label:'감정 묘사',
-    desc:'감정을 직접 설명할지 행동으로 보여줄지 정합니다.',
+    desc:'감정을 어떤 방식으로 보여줄지 정합니다.',
     features:[
       {
         label:'표현',
-        options:[
+        opts:[
           {
-            label:'행동 중심',
-            prompt:'감정=표정·시선·말투·행동·감각으로 우선 표현\\n감정명 반복 최소화',
-            guide:'감정이 강할수록 행동 신호를 구체적으로 정할 수 있습니다.'
+            v:'행동 중심',
+            prompt:'감정=표정·시선·말투·행동·감각으로 우선 표현\n감정명 반복 최소화',
+            guide:'강한 감정에 대응하는 행동 신호를 캐릭터별로 정할 수 있습니다.'
           },
           {
-            label:'내면 중심',
-            prompt:'감정=내면생각+감각+행동을 함께 사용',
-            guide:'독백이 지나치게 길어지지 않도록 장면 행동과 섞어 사용하세요.'
+            v:'내면 중심',
+            prompt:'감정=내면생각+감각+행동 함께 사용',
+            guide:'내면 독백이 너무 길어지지 않도록 장면 행동과 섞어 사용하세요.'
           },
           {
-            label:'절제',
-            prompt:'감정설명 최소화\\n독자가 행동·대사에서 추론할 여지 유지',
-            guide:'건조하거나 긴장된 분위기에 사용할 수 있습니다.'
+            v:'절제',
+            prompt:'감정설명 최소화\n행동·대사에서 추론할 여지 유지',
+            guide:'건조하거나 긴장된 분위기에 활용할 수 있습니다.'
           }
         ]
       }
@@ -1617,26 +1630,26 @@ style:{
   },
 
   dialogue:{
-    label:'대사',
-    desc:'대사와 서술의 비중을 정합니다.',
+    label:'대사 비중',
+    desc:'대사와 서술의 비율을 정합니다.',
     features:[
       {
         label:'비중',
-        options:[
+        opts:[
           {
-            label:'대사 높음',
-            prompt:'장면진행=대사·상호작용 중심\\n설명성 대사 최소화',
+            v:'높음',
+            prompt:'장면진행=대사·상호작용 중심\n설명성 대사 최소화',
             guide:'캐릭터마다 어휘·길이·말버릇을 구별하세요.'
           },
           {
-            label:'균형',
+            v:'균형',
             prompt:'대사와 행동·서술 균형 유지',
-            guide:'장면 목적에 따라 비율을 유동적으로 조절합니다.'
+            guide:'장면 목적에 따라 비율을 유동적으로 조절하세요.'
           },
           {
-            label:'서술 높음',
-            prompt:'장면진행=서술·내면·환경 비중 높음\\n필요한 대사만 사용',
-            guide:'관찰이나 분위기가 중요한 장면에 적합합니다.'
+            v:'낮음',
+            prompt:'장면진행=서술·내면·환경 비중 높음',
+            guide:'관찰이나 분위기가 중요한 장면에 활용할 수 있습니다.'
           }
         ]
       }
@@ -1645,23 +1658,23 @@ style:{
 
   pacing:{
     label:'장면 속도',
-    desc:'사건 전개와 장면 체류 시간을 조절합니다.',
+    desc:'장면에 머무르는 시간을 조절합니다.',
     features:[
       {
         label:'속도',
-        options:[
+        opts:[
           {
-            label:'빠름',
-            prompt:'진행속도=빠름\\n반복설명·불필요한 전환 최소화',
+            v:'빠름',
+            prompt:'진행속도=빠름\n반복설명·불필요한 전환 최소화',
             guide:'액션·추격·긴급 상황 등에 사용할 수 있습니다.'
           },
           {
-            label:'보통',
+            v:'보통',
             prompt:'진행속도=사건+대화+묘사 균형',
-            guide:'기본값으로 사용하고 중요 장면에서만 속도를 바꿔도 됩니다.'
+            guide:'기본값으로 사용하고 중요 장면에서 속도를 조절하세요.'
           },
           {
-            label:'느림',
+            v:'느림',
             prompt:'중요장면=행동·감정·환경에 충분한 체류시간 부여',
             guide:'관계 변화나 감정 장면에 활용할 수 있습니다.'
           }
@@ -1671,18 +1684,18 @@ style:{
   }
 },
 
-voice:{
+voicepreset:{
   clean:{
     label:'담백한 서술',
-    desc:'장식적인 표현을 줄이고 상황 전달과 인물 행동을 중심으로 합니다.',
+    desc:'상황 전달과 인물 행동을 중심으로 하는 범용 문체 조합입니다.',
     features:[
       {
         label:'프리셋',
-        options:[
+        opts:[
           {
-            label:'기본',
-            prompt:'POV=3인칭제한\\n문장=간결\\n묘사=필요정보 중심\\n감정=행동·대사 우선\\n비유=절제',
-            guide:'빠른 진행이나 캐릭터 대사가 중요한 작품에 사용할 수 있습니다.'
+            v:'사용',
+            prompt:'POV=3인칭제한\n문장=간결\n묘사=필요정보 중심\n감정=행동·대사 우선\n비유=절제',
+            guide:'빠른 진행이나 캐릭터 대사가 중요한 작품에 활용할 수 있습니다.'
           }
         ]
       }
@@ -1691,15 +1704,15 @@ voice:{
 
   lyrical:{
     label:'서정적',
-    desc:'감각과 분위기를 조금 더 적극적으로 사용하는 일반적인 문체 조합입니다.',
+    desc:'감각과 분위기를 조금 더 적극적으로 사용하는 범용 조합입니다.',
     features:[
       {
         label:'프리셋',
-        options:[
+        opts:[
           {
-            label:'기본',
-            prompt:'POV=3인칭제한\\n리듬=장단문 혼합\\n감각묘사=활용\\n감정=직접설명보다 이미지·행동 우선\\n비유=과잉 금지',
-            guide:'중요 장면에 감각 묘사를 집중하고 평범한 이동 장면은 간결하게 유지하세요.'
+            v:'사용',
+            prompt:'리듬=장단문 혼합\n감각묘사=활용\n감정=이미지·행동 우선\n비유=과잉 금지',
+            guide:'중요 장면에 감각 묘사를 집중하고 이동·설명 장면은 간결하게 유지하세요.'
           }
         ]
       }
@@ -1708,15 +1721,15 @@ voice:{
 
   tension:{
     label:'긴장형',
-    desc:'정보 제한과 짧은 문장으로 긴장감을 만드는 조합입니다.',
+    desc:'정보 제한과 문장 리듬으로 긴장감을 만드는 범용 조합입니다.',
     features:[
       {
         label:'프리셋',
-        options:[
+        opts:[
           {
-            label:'기본',
-            prompt:'정보공개=POV 인지범위 준수\\n긴장장면=짧은 문장 비중↑\\n감각=소리·거리·움직임 우선\\n정답 선공개 금지',
-            guide:'추리·스릴러·추격 장면에서 사용할 수 있습니다.'
+            v:'사용',
+            prompt:'정보공개=POV 인지범위 준수\n긴장장면=짧은 문장 비중↑\n감각=소리·거리·움직임 우선\n정답 선공개 금지',
+            guide:'추리·스릴러·추격 장면 등에 활용할 수 있습니다.'
           }
         ]
       }
@@ -1725,15 +1738,15 @@ voice:{
 
   warm:{
     label:'따뜻한 일상',
-    desc:'인물 간 작은 행동과 생활감을 중심으로 하는 조합입니다.',
+    desc:'작은 행동과 생활감을 중심으로 하는 범용 조합입니다.',
     features:[
       {
         label:'프리셋',
-        options:[
+        opts:[
           {
-            label:'기본',
-            prompt:'분위기=따뜻함\\n생활행동·대화 중심\\n감정=작은 배려·습관으로 표현\\n과도한 사건연속 최소화',
-            guide:'식사·산책·집안일처럼 반복되는 일상에 관계 변화를 섞어보세요.'
+            v:'사용',
+            prompt:'분위기=따뜻함\n생활행동·대화 중심\n감정=작은 배려·습관으로 표현',
+            guide:'식사·산책·집안일 같은 일상에 관계 변화를 섞어보세요.'
           }
         ]
       }
@@ -1742,15 +1755,15 @@ voice:{
 
   witty:{
     label:'경쾌한 대화',
-    desc:'대화 속도와 캐릭터 간 말맛을 중심으로 하는 조합입니다.',
+    desc:'대화 리듬과 캐릭터 간 말맛을 중심으로 하는 범용 조합입니다.',
     features:[
       {
         label:'프리셋',
-        options:[
+        opts:[
           {
-            label:'기본',
-            prompt:'대사비중=높음\\n대화리듬=빠름\\n캐릭터별 어휘 차별화\\n같은 농담·반응 반복 금지',
-            guide:'모든 인물이 같은 방식으로 재치 있게 말하지 않도록 각자의 말버릇을 구별하세요.'
+            v:'사용',
+            prompt:'대사비중=높음\n대화리듬=빠름\n캐릭터별 어휘 차별화\n같은 농담·반응 반복 금지',
+            guide:'모든 인물이 같은 방식으로 재치 있게 말하지 않도록 말버릇을 구별하세요.'
           }
         ]
       }
@@ -1761,25 +1774,25 @@ voice:{
 events:{
   meeting:{
     label:'만남·재회',
-    desc:'관계의 시작이나 재접촉을 위한 가벼운 사건 아이디어입니다.',
+    desc:'관계의 시작이나 재접촉에 사용할 수 있는 사건 예시입니다.',
     features:[
       {
         label:'이벤트',
-        options:[
+        opts:[
           {
-            label:'우연한 만남',
+            v:'우연한 만남',
             prompt:'관계이벤트=예상 밖의 장소에서 재접촉',
-            guide:'왜 그 장소에 각각 있었는지 자연스러운 이유를 하나씩 정하세요.'
+            guide:'왜 두 인물이 그 장소에 있었는지 자연스러운 이유를 정하세요.'
           },
           {
-            label:'오랜만의 재회',
+            v:'오랜만의 재회',
             prompt:'재회장면=과거관계+현재변화 함께 반영',
             guide:'마지막으로 만났을 때와 지금 달라진 점을 정하세요.'
           },
           {
-            label:'공동 업무',
+            v:'공동 업무',
             prompt:'공동목표→반복 상호작용 발생',
-            guide:'둘이 협력해야 하는 이유와 각자의 역할을 정하세요.'
+            guide:'협력해야 하는 이유와 각자의 역할을 정하세요.'
           }
         ]
       }
@@ -1788,25 +1801,25 @@ events:{
 
   friction:{
     label:'균열·오해',
-    desc:'관계에 작은 긴장을 만드는 사건입니다.',
+    desc:'관계에 작은 긴장을 만드는 사건 예시입니다.',
     features:[
       {
         label:'이벤트',
-        options:[
+        opts:[
           {
-            label:'오해',
-            prompt:'불완전한정보→관계오해 발생 가능\\n진실확인 전 확정판단 최소화',
-            guide:'누가 무엇을 잘못 이해했는지와 진실을 알 수 있는 단서를 정하세요.'
+            v:'오해',
+            prompt:'불완전한정보→관계오해 발생 가능',
+            guide:'누가 무엇을 잘못 이해했는지와 진실을 확인할 단서를 정하세요.'
           },
           {
-            label:'약속 문제',
+            v:'약속 문제',
             prompt:'약속불이행→실망·거리변화 반영',
-            guide:'고의인지 불가피한 상황인지에 따라 후속 감정을 다르게 구성하세요.'
+            guide:'고의인지 불가피한 상황인지에 따라 후속 감정을 다르게 구성할 수 있습니다.'
           },
           {
-            label:'가치관 충돌',
+            v:'가치관 충돌',
             prompt:'같은사건에 대한 판단차→갈등 발생 가능',
-            guide:'둘이 중요하게 생각하는 가치가 무엇인지 각각 정하세요.'
+            guide:'두 인물이 중요하게 생각하는 가치를 각각 정하세요.'
           }
         ]
       }
@@ -1815,18 +1828,18 @@ events:{
 
   jealousy:{
     label:'질투·자리 의식',
-    desc:'관계에서 자신의 위치를 의식하게 되는 가벼운 이벤트입니다.',
+    desc:'관계 속 자신의 위치를 의식하게 되는 사건 예시입니다.',
     features:[
       {
         label:'이벤트',
-        options:[
+        opts:[
           {
-            label:'질투',
-            prompt:'제3자상호작용→질투 가능\\n반응강도=성격·현재관계 반영',
-            guide:'질투를 직접 말하는지, 행동으로 드러내는지 정하세요.'
+            v:'질투',
+            prompt:'제3자상호작용→질투 가능\n반응강도=성격·현재관계 반영',
+            guide:'질투를 직접 말하는지 행동으로 드러내는지 정하세요.'
           },
           {
-            label:'자리 의식',
+            v:'자리 의식',
             prompt:'관계내 자신의 위치를 의식하는 장면 가능',
             guide:'다른 사람과 비교하게 되는 계기를 정하세요.'
           }
@@ -1837,25 +1850,25 @@ events:{
 
   trust:{
     label:'신뢰 형성',
-    desc:'관계를 가까워지게 하는 사건입니다.',
+    desc:'관계를 가까워지게 만드는 사건 예시입니다.',
     features:[
       {
         label:'이벤트',
-        options:[
+        opts:[
           {
-            label:'비밀 공유',
+            v:'비밀 공유',
             prompt:'개인정보·비밀공유→신뢰 변화 가능',
-            guide:'왜 이 사람에게만 말하는지 이유를 정하세요.'
+            guide:'왜 이 사람에게 말하는지 이유를 정하세요.'
           },
           {
-            label:'도움',
+            v:'도움',
             prompt:'어려운상황에서 도움→관계평가 변화 가능',
-            guide:'도움을 주는 사람이 감수한 비용이 있으면 관계 변화가 더 선명해질 수 있습니다.'
+            guide:'도움을 주는 사람이 감수한 비용이 있다면 함께 정하세요.'
           },
           {
-            label:'약속 이행',
+            v:'약속 이행',
             prompt:'반복된 약속이행→신뢰 축적 가능',
-            guide:'작은 약속을 여러 번 지키는 방식도 사용할 수 있습니다.'
+            guide:'큰 사건 대신 작은 약속을 여러 번 지키는 방식도 사용할 수 있습니다.'
           }
         ]
       }
@@ -1864,25 +1877,25 @@ events:{
 
   routine:{
     label:'일상 변화',
-    desc:'큰 사건 없이 관계의 온도를 바꾸는 이벤트입니다.',
+    desc:'큰 사건 없이 관계의 온도를 바꾸는 장면 예시입니다.',
     features:[
       {
         label:'이벤트',
-        options:[
+        opts:[
           {
-            label:'호칭 변화',
+            v:'호칭 변화',
             prompt:'관계변화→호칭 변화 가능',
             guide:'초기 호칭과 가까워진 뒤의 호칭을 정하세요.'
           },
           {
-            label:'습관 형성',
+            v:'습관 형성',
             prompt:'반복상호작용→둘만의 생활습관 형성 가능',
             guide:'예:같은 시간에 연락/식사 챙김/귀가 확인.'
           },
           {
-            label:'거리 변화',
+            v:'거리 변화',
             prompt:'친밀도 변화→대화거리·자리선택·접근방식 변화 가능',
-            guide:'가까워지기 전후에 달라지는 행동 하나를 정하세요.'
+            guide:'가까워지기 전후에 달라지는 행동을 하나 정하세요.'
           }
         ]
       }
@@ -1891,20 +1904,20 @@ events:{
 
   reveal:{
     label:'비밀·고백',
-    desc:'숨겨진 사실이 관계에 영향을 주는 이벤트입니다.',
+    desc:'숨겨진 사실이나 감정이 관계에 영향을 주는 사건입니다.',
     features:[
       {
         label:'이벤트',
-        options:[
+        opts:[
           {
-            label:'비밀 공개',
+            v:'비밀 공개',
             prompt:'숨겨진정보 공개→기존사건·관계 재평가',
-            guide:'정보 자체보다 왜 숨겼는지와 상대가 어떻게 받아들이는지가 중요합니다.'
+            guide:'무엇을 숨겼는지보다 왜 숨겼는지도 함께 정하세요.'
           },
           {
-            label:'감정 고백',
+            v:'감정 고백',
             prompt:'감정표현 이후 관계상태 변화 반영',
-            guide:'상대가 즉시 같은 감정을 느끼지 않을 수도 있도록 반응 범위를 정하세요.'
+            guide:'상대가 즉시 같은 감정을 느끼지 않을 가능성도 고려하세요.'
           }
         ]
       }
@@ -1915,20 +1928,20 @@ events:{
 commands:{
   status:{
     label:'상태 확인',
-    desc:'현재 진행 상태를 간단히 확인하는 명령 예시입니다.',
+    desc:'현재 진행 상황을 확인하는 간단한 명령 예시입니다.',
     features:[
       {
         label:'명령',
-        options:[
+        opts:[
           {
-            label:'/상태',
+            v:'/상태',
             prompt:'/상태→현재 장소·시간·주요인물·직전상황 요약',
             guide:'출력하고 싶은 정보만 골라 사용하세요.'
           },
           {
-            label:'/관계',
+            v:'/관계',
             prompt:'/관계→주요인물 간 현재 관계를 짧게 요약',
-            guide:'수치보다 현재 감정과 최근 변화 중심으로 표시해도 됩니다.'
+            guide:'수치보다 현재 감정과 최근 변화 중심으로 표시할 수도 있습니다.'
           }
         ]
       }
@@ -1937,19 +1950,19 @@ commands:{
 
   summary:{
     label:'요약',
-    desc:'긴 대화에서 이전 사건을 확인하기 위한 기본 명령입니다.',
+    desc:'긴 진행에서 이전 사건을 확인하기 위한 명령 예시입니다.',
     features:[
       {
         label:'명령',
-        options:[
+        opts:[
           {
-            label:'/요약',
-            prompt:'/요약→현재까지 핵심사건·결정·미해결문제 정리',
-            guide:'너무 긴 로그 전체 대신 이후 장면에 필요한 사실만 남기세요.'
+            v:'/요약',
+            prompt:'/요약→핵심사건·결정·미해결문제 정리',
+            guide:'이후 장면에 필요한 사실을 중심으로 요약하세요.'
           },
           {
-            label:'/최근',
-            prompt:'/최근→직전 몇 장면의 사건과 감정변화 요약',
+            v:'/최근',
+            prompt:'/최근→직전 장면의 사건·감정변화 요약',
             guide:'필요하면 최근 3장면처럼 범위를 정하세요.'
           }
         ]
@@ -1959,25 +1972,25 @@ commands:{
 
   info:{
     label:'정보',
-    desc:'세계관 정보를 확인할 때 사용할 수 있습니다.',
+    desc:'인물·장소·용어 정보를 확인하는 명령 예시입니다.',
     features:[
       {
         label:'명령',
-        options:[
+        opts:[
           {
-            label:'/인물',
-            prompt:'/인물 [이름]→공개된 인물정보 요약',
-            guide:'아직 공개되지 않은 비밀 정보는 출력하지 않도록 할 수 있습니다.'
+            v:'/인물',
+            prompt:'/인물 [이름]→현재 공개된 인물정보 요약',
+            guide:'아직 공개되지 않은 비밀은 제외하도록 설정할 수 있습니다.'
           },
           {
-            label:'/장소',
+            v:'/장소',
             prompt:'/장소 [이름]→현재 공개된 장소정보 요약',
-            guide:'분위기·위치·관련 인물 정도만 출력하도록 제한할 수 있습니다.'
+            guide:'위치·분위기·관련 인물 정도만 출력해도 충분합니다.'
           },
           {
-            label:'/용어',
+            v:'/용어',
             prompt:'/용어 [단어]→현재 세계관 기준으로 짧게 설명',
-            guide:'고유명사가 많은 작품에 유용합니다.'
+            guide:'고유명사가 많은 작품에 활용할 수 있습니다.'
           }
         ]
       }
@@ -1986,18 +1999,18 @@ commands:{
 
   scene:{
     label:'진행 보조',
-    desc:'장면 진행을 정리하는 간단한 보조 명령입니다.',
+    desc:'현재 장면이나 미해결 목표를 확인하는 명령 예시입니다.',
     features:[
       {
         label:'명령',
-        options:[
+        opts:[
           {
-            label:'/장면',
+            v:'/장면',
             prompt:'/장면→현재 장면의 목표·갈등·등장인물 확인',
-            guide:'막힌 장면에서 무엇을 진행해야 하는지 확인하는 용도로 사용할 수 있습니다.'
+            guide:'장면 진행이 막혔을 때 사용할 수 있습니다.'
           },
           {
-            label:'/할일',
+            v:'/할일',
             prompt:'/할일→현재 미해결 목표·약속·조사 항목 표시',
             guide:'퀘스트형 작품이나 미스터리에 활용할 수 있습니다.'
           }
@@ -2014,28 +2027,28 @@ base:{
     features:[
       {
         label:'기본',
-        options:[
+        opts:[
           {
-            label:'연속성 유지',
-            prompt:'이전사건·대화·결정·부상·소지품 등 이미 확정된 사실 유지\\n변경 필요 시 원인 제시',
-            guide:'작품에서 특히 추적해야 할 상태가 있다면 따로 목록을 만드세요.'
+            v:'유지',
+            prompt:'이전사건·대화·결정·부상·소지품 등 확정된 사실 유지\n변경 필요 시 원인 제시',
+            guide:'특히 추적해야 할 상태가 있다면 별도 목록으로 정리하세요.'
           }
         ]
       }
     ]
   },
 
-  consistency:{
+  character:{
     label:'캐릭터 일관성',
-    desc:'성격을 고정하는 것이 아니라 변화에 이유를 요구하는 기본 지침입니다.',
+    desc:'변화를 막는 것이 아니라 변화에 이유를 부여하는 기본 지침입니다.',
     features:[
       {
         label:'기본',
-        options:[
+        opts:[
           {
-            label:'일관성 유지',
-            prompt:'행동·대사=성격+경험+현재관계+상황 반영\\n이유없는 성격급변 금지',
-            guide:'큰 변화가 필요하면 그 변화를 만든 사건이나 감정 계기를 먼저 설정하세요.'
+            v:'유지',
+            prompt:'행동·대사=성격+경험+현재관계+상황 반영\n이유없는 성격급변 금지',
+            guide:'큰 변화가 필요하면 그 변화를 만든 사건이나 감정 계기를 먼저 정하세요.'
           }
         ]
       }
@@ -2044,49 +2057,49 @@ base:{
 
   canon:{
     label:'설정 우선',
-    desc:'작품에서 이미 정한 사실을 새 임의 설정보다 우선합니다.',
+    desc:'이미 정한 작품 설정을 새 임의 설정보다 우선합니다.',
     features:[
       {
         label:'기본',
-        options:[
+        opts:[
           {
-            label:'설정 준수',
-            prompt:'확정된 세계관·캐릭터설정 우선\\n충돌 시 기존설정 유지\\n불명확한 정보 임의확정 최소화',
-            guide:'중요한 고유명사·규칙은 별도 설정표로 관리하면 좋습니다.'
+            v:'적용',
+            prompt:'확정된 세계관·캐릭터설정 우선\n충돌 시 기존설정 유지\n불명확한 정보 임의확정 최소화',
+            guide:'중요한 고유명사와 규칙은 별도 설정표로 관리할 수 있습니다.'
           }
         ]
       }
     ]
   },
 
-  uncertainty:{
-    label:'정보 제한',
-    desc:'모르는 정보를 아는 것처럼 처리하지 않도록 하는 기본 지침입니다.',
+  knowledge:{
+    label:'정보 범위',
+    desc:'캐릭터가 모르는 정보를 아는 것처럼 처리하지 않도록 합니다.',
     features:[
       {
         label:'기본',
-        options:[
+        opts:[
           {
-            label:'인지 범위',
-            prompt:'캐릭터는 직접 알거나 전달받은 정보만 확정적으로 인지\\n추측과 사실 구분',
-            guide:'비밀·추리·정치물이 아니더라도 시점 오류를 줄이는 데 사용할 수 있습니다.'
+            v:'인지 제한',
+            prompt:'캐릭터=직접 알거나 전달받은 정보만 확정적으로 인지\n추측≠사실',
+            guide:'비밀·추리물이 아니더라도 시점 오류를 줄이는 데 사용할 수 있습니다.'
           }
         ]
       }
     ]
   },
 
-  autonomy:{
+  npc:{
     label:'NPC 자율성',
-    desc:'NPC가 주인공만을 위해 존재하는 느낌을 줄이는 기본 항목입니다.',
+    desc:'NPC가 각자의 목표와 일상을 가진 인물처럼 움직이게 합니다.',
     features:[
       {
         label:'기본',
-        options:[
+        opts:[
           {
-            label:'자율 행동',
-            prompt:'NPC=개인목표·일정·관계 보유 가능\\n항상 주인공 요구에 즉시 동의하지 않음',
-            guide:'주요 NPC에게 개인 목표를 하나씩만 줘도 장면이 자연스러워집니다.'
+            v:'자율 행동',
+            prompt:'NPC=개인목표·일정·관계 보유 가능\n항상 주인공 요구에 즉시 동의하지 않음',
+            guide:'주요 NPC에게 개인 목표를 하나씩 정해보세요.'
           }
         ]
       }
@@ -2095,32 +2108,32 @@ base:{
 
   pacing:{
     label:'진행 관리',
-    desc:'같은 상황이 반복되는 것을 줄이기 위한 기본 항목입니다.',
+    desc:'같은 상황과 설명이 계속 반복되는 것을 줄입니다.',
     features:[
       {
         label:'기본',
-        options:[
+        opts:[
           {
-            label:'반복 최소화',
-            prompt:'같은 설명·질문·감정반응 반복 최소화\\n장면마다 정보·관계·목표 중 하나 이상 변화',
-            guide:'변화가 없는 일상 장면은 분위기나 캐릭터 묘사 목적이 분명할 때만 길게 사용하세요.'
+            v:'반복 최소화',
+            prompt:'같은 설명·질문·감정반응 반복 최소화\n장면마다 정보·관계·목표 중 하나 이상 변화',
+            guide:'변화가 없는 장면은 분위기나 캐릭터 묘사 목적이 있을 때 활용하세요.'
           }
         ]
       }
     ]
   },
 
-  userchoice:{
-    label:'선택 존중',
-    desc:'대화형 작품에서 사용자의 주요 선택을 대신 확정하지 않도록 합니다.',
+  choice:{
+    label:'사용자 선택',
+    desc:'대화형 작품에서 사용자의 중요한 결정을 대신 확정하지 않도록 합니다.',
     features:[
       {
         label:'기본',
-        options:[
+        opts:[
           {
-            label:'사용자 선택',
-            prompt:'사용자 캐릭터의 핵심 결정·발언을 임의확정하지 않음\\nNPC·환경 반응 중심으로 진행',
-            guide:'자동 진행이 필요한 범위와 사용자가 직접 결정할 범위를 구분해두면 좋습니다.'
+            v:'선택 존중',
+            prompt:'사용자 캐릭터의 핵심 결정·발언을 임의확정하지 않음\nNPC·환경 반응 중심으로 진행',
+            guide:'자동 진행 범위와 사용자가 직접 결정할 범위를 구분해두면 좋습니다.'
           }
         ]
       }
@@ -2130,96 +2143,43 @@ base:{
 
 };
 
+/* ============================================================
+   UI CONFIG
+============================================================ */
 
-/* =========================================================
-   TAB CONFIG
-========================================================= */
-
-const TAB_CONFIG={
-  world:{
-    grid:'worldGrid',
-    desc:'worldDesc',
-    features:'worldFeatures',
-    data:DATA.world
-  },
-  char:{
-    grid:'charGrid',
-    desc:'charDesc',
-    features:'charFeatures',
-    data:DATA.char
-  },
-  psych:{
-    grid:'psychGrid',
-    desc:'psychDesc',
-    features:'psychFeatures',
-    data:DATA.psych
-  },
-  consent:{
-    grid:'consentGrid',
-    desc:'consentDesc',
-    features:'consentFeatures',
-    data:DATA.consent
-  },
-  style:{
-    grid:'styleGrid',
-    desc:'styleDesc',
-    features:'styleFeatures',
-    data:DATA.style
-  },
-  voice:{
-    grid:'voiceGrid',
-    desc:'voiceDesc',
-    features:'voiceFeatures',
-    data:DATA.voice
-  },
-  events:{
-    grid:'eventsGrid',
-    desc:'eventsDesc',
-    features:'eventsFeatures',
-    data:DATA.events
-  },
-  commands:{
-    grid:'commandsGrid',
-    desc:'commandsDesc',
-    features:'commandsFeatures',
-    data:DATA.commands
-  },
-  base:{
-    grid:'baseGrid',
-    desc:'baseDesc',
-    features:'baseFeatures',
-    data:DATA.base
-  }
+const CONFIG={
+  world:['worldGrid','worldDesc','worldFeatureList'],
+  char:['charGrid','charDesc','charFeatureList'],
+  psych:['psychGrid','psychDesc','psychFeatureList'],
+  consent:['consentGrid','consentDesc','consentFeatureList'],
+  style:['styleGrid','styleDesc','styleFeatureList'],
+  voicepreset:['voicepresetGrid','voicepresetDesc','voicepresetFeatureList'],
+  events:['eventsGrid','eventsDesc','eventsFeatureList'],
+  commands:['commandsGrid','commandsDesc','commandsFeatureList'],
+  base:['baseGrid','baseDesc','baseFeatureList']
 };
 
-
-/*
-state[tab][category][featureIndex]=optionIndex
-*/
 const state={};
-const currentCategory={};
+const current={};
 
-Object.keys(TAB_CONFIG).forEach(tab=>{
+Object.keys(CONFIG).forEach(tab=>{
   state[tab]={};
-  currentCategory[tab]=null;
+  current[tab]=null;
 });
 
-
-/* =========================================================
-   GENERIC RENDER
-========================================================= */
+/* ============================================================
+   INIT / RENDER
+============================================================ */
 
 function initTab(tab){
-  const cfg=TAB_CONFIG[tab];
-  const grid=document.getElementById(cfg.grid);
+  const [gridId]=CONFIG[tab];
+  const grid=document.getElementById(gridId);
 
-  grid.innerHTML='';
-
-  Object.entries(cfg.data).forEach(([id,item])=>{
+  Object.entries(DATA[tab]).forEach(([id,data])=>{
     const card=document.createElement('div');
     card.className='preset-card';
     card.dataset.id=id;
-    card.innerHTML=`<div class="pname">${escapeHtml(item.label)}</div>`;
+    card.innerHTML=`<div class="pname">${esc(data.label)}</div>`;
 
     card.addEventListener('click',()=>{
       selectCategory(tab,id);
@@ -2227,63 +2187,47 @@ function initTab(tab){
 
     grid.appendChild(card);
   });
-
-  document.getElementById(cfg.desc).textContent='카테고리를 선택하세요.';
-  document.getElementById(cfg.features).innerHTML=
-    '<div style="color:#6f7685;font-size:13px;">선택한 카테고리의 항목이 여기에 표시됩니다.</div>';
 }
 
-
 function selectCategory(tab,id){
-  const cfg=TAB_CONFIG[tab];
-  currentCategory[tab]=id;
+  current[tab]=id;
 
-  document
-    .querySelectorAll(`#${cfg.grid} .preset-card`)
-    .forEach(card=>{
-      card.classList.toggle('active',card.dataset.id===id);
-    });
+  const [gridId,descId]=CONFIG[tab];
 
-  const item=cfg.data[id];
+  document.querySelectorAll(`#${gridId} .preset-card`).forEach(card=>{
+    card.classList.toggle('active',card.dataset.id===id);
+  });
 
-  if(!state[tab][id]){
-    state[tab][id]={};
-  }
+  document.getElementById(descId).textContent=DATA[tab][id].desc;
 
-  document.getElementById(cfg.desc).textContent=item.desc;
+  if(!state[tab][id])state[tab][id]={};
+
   renderFeatures(tab,id);
   renderOutput();
 }
 
-
 function renderFeatures(tab,id){
-  const cfg=TAB_CONFIG[tab];
-  const item=cfg.data[id];
-  const wrap=document.getElementById(cfg.features);
+  const featureId=CONFIG[tab][2];
+  const wrap=document.getElementById(featureId);
+  const category=DATA[tab][id];
 
   wrap.innerHTML='';
 
-  item.features.forEach((feature,fi)=>{
+  category.features.forEach((feature,fi)=>{
     const row=document.createElement('div');
     row.className='feature';
 
-    const options=feature.options.map((opt,oi)=>{
+    const opts=feature.opts.map((opt,oi)=>{
       const selected=state[tab][id][fi]===oi;
       const none=!opt.prompt;
 
-      return `
-        <div
-          class="opt ${selected?'sel':''} ${none?'none-opt':''}"
-          data-fi="${fi}"
-          data-oi="${oi}"
-        >${escapeHtml(opt.label)}</div>
-      `;
+      return `<div class="opt ${selected?'sel':''} ${none?'none-opt':''}"
+        data-fi="${fi}" data-oi="${oi}">${esc(opt.v)}</div>`;
     }).join('');
 
-    row.innerHTML=`
-      <div class="feature-label">${escapeHtml(feature.label)}</div>
-      <div class="opts">${options}</div>
-    `;
+    row.innerHTML=
+      `<div class="feature-label">${esc(feature.label)}</div>
+       <div class="opts">${opts}</div>`;
 
     wrap.appendChild(row);
   });
@@ -2305,16 +2249,15 @@ function renderFeatures(tab,id){
   });
 }
 
-
-/* =========================================================
-   TAB SWITCH
-========================================================= */
+/* ============================================================
+   TABS
+============================================================ */
 
 let activeTab='guide';
 
 document.querySelectorAll('.tabbtn').forEach(btn=>{
   btn.addEventListener('click',()=>{
-    document.querySelectorAll('.tabbtn').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.tabbtn').forEach(x=>x.classList.remove('active'));
     btn.classList.add('active');
 
     activeTab=btn.dataset.tab;
@@ -2323,264 +2266,200 @@ document.querySelectorAll('.tabbtn').forEach(btn=>{
       panel.classList.remove('active');
     });
 
-    document.getElementById('panel-'+activeTab).classList.add('active');
+    document.getElementById(`panel-${activeTab}`).classList.add('active');
     renderOutput();
   });
 });
 
-
-/* =========================================================
+/* ============================================================
    OUTPUT
-========================================================= */
+============================================================ */
 
 function renderOutput(){
   const box=document.getElementById('outputBox');
 
   if(activeTab==='guide'){
-    box.className='empty';
-    box.textContent='// 가이드 탭입니다. 각 제작 탭에서 항목을 선택하세요.';
+    setEmpty('// 각 제작 탭에서 항목을 선택하면 Prompt와 Guide가 표시됩니다.');
     return;
   }
 
   if(activeTab==='checklist'){
-    box.className='empty';
-    box.textContent='// 체크리스트 탭에는 별도 Prompt 출력이 없습니다.';
+    setEmpty('// 체크리스트는 제작자 확인용입니다.');
     return;
   }
 
-  const cfg=TAB_CONFIG[activeTab];
-
-  if(!cfg){
-    box.className='empty';
-    box.textContent='// 출력할 항목이 없습니다.';
-    return;
-  }
-
-  const selectedBlocks=[];
-
-  Object.entries(cfg.data).forEach(([cid,category])=>{
-    const catState=state[activeTab][cid];
-
-    if(!catState)return;
-
-    const items=[];
-
-    category.features.forEach((feature,fi)=>{
-      const oi=catState[fi];
-
-      if(oi===undefined)return;
-
-      const opt=feature.options[oi];
-
-      if(!opt)return;
-
-      items.push({
-        feature:feature.label,
-        label:opt.label,
-        prompt:opt.prompt||'',
-        guide:opt.guide||''
-      });
-    });
-
-    if(items.length){
-      selectedBlocks.push({
-        category:category.label,
-        items
-      });
-    }
-  });
-
-  if(!selectedBlocks.length){
-    box.className='empty';
-    box.textContent='// 버튼을 선택하면 Prompt와 Design Guide가 표시됩니다.';
+  const tabData=DATA[activeTab];
+  if(!tabData){
+    setEmpty('// 출력할 항목이 없습니다.');
     return;
   }
 
   const lines=[];
 
-  selectedBlocks.forEach(block=>{
-    lines.push(`[${block.category}]`);
+  Object.entries(tabData).forEach(([categoryId,category])=>{
+    const categoryState=state[activeTab][categoryId];
+    if(!categoryState)return;
 
-    block.items.forEach(item=>{
+    const selected=[];
+
+    category.features.forEach((feature,fi)=>{
+      const oi=categoryState[fi];
+      if(oi===undefined)return;
+
+      const opt=feature.opts[oi];
+      if(!opt)return;
+
+      selected.push({feature,opt});
+    });
+
+    if(!selected.length)return;
+
+    lines.push(`[${category.label}]`);
+
+    selected.forEach(({feature,opt})=>{
       lines.push('');
-      lines.push(`■ ${item.feature}:${item.label}`);
+      lines.push(`■ ${feature.label}:${opt.v}`);
 
-      if(item.prompt){
+      if(opt.prompt){
         lines.push('[PROMPT]');
-        lines.push(item.prompt);
+        lines.push(opt.prompt);
       }
 
-      if(item.guide){
+      if(opt.guide){
         lines.push('[GUIDE]');
-        lines.push(item.guide);
+        lines.push(opt.guide);
       }
     });
 
     lines.push('');
   });
 
-  box.className='';
+  if(!lines.length){
+    setEmpty('// 버튼을 선택하면 Prompt와 Guide가 표시됩니다.');
+    return;
+  }
+
+  box.classList.remove('empty');
   box.textContent=lines.join('\n').trim();
 }
 
+function setEmpty(text){
+  const box=document.getElementById('outputBox');
+  box.classList.add('empty');
+  box.textContent=text;
+}
 
-/* =========================================================
+/* ============================================================
    COPY / CLEAR
-========================================================= */
+============================================================ */
 
 document.getElementById('copyBtn').addEventListener('click',async()=>{
   const box=document.getElementById('outputBox');
-
   if(box.classList.contains('empty'))return;
+
+  const btn=document.getElementById('copyBtn');
 
   try{
     await navigator.clipboard.writeText(box.textContent);
-
-    const btn=document.getElementById('copyBtn');
-    const old=btn.textContent;
-
-    btn.textContent='복사됨';
-
-    setTimeout(()=>{
-      btn.textContent=old;
-    },1100);
-
-  }catch(err){
-    fallbackCopy(box.textContent);
+  }catch(e){
+    const ta=document.createElement('textarea');
+    ta.value=box.textContent;
+    ta.style.position='fixed';
+    ta.style.opacity='0';
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    ta.remove();
   }
+
+  btn.classList.add('copied');
+  btn.textContent='복사됨';
+
+  setTimeout(()=>{
+    btn.classList.remove('copied');
+    btn.textContent='복사';
+  },1000);
 });
 
-
-function fallbackCopy(text){
-  const area=document.createElement('textarea');
-
-  area.value=text;
-  area.style.position='fixed';
-  area.style.opacity='0';
-
-  document.body.appendChild(area);
-  area.select();
-
-  document.execCommand('copy');
-  area.remove();
-}
-
-
 document.getElementById('clearBtn').addEventListener('click',()=>{
-  if(activeTab==='guide'||activeTab==='checklist')return;
-
-  if(!TAB_CONFIG[activeTab])return;
+  if(!DATA[activeTab])return;
 
   state[activeTab]={};
 
-  const cid=currentCategory[activeTab];
-
-  if(cid){
-    renderFeatures(activeTab,cid);
-  }
+  const id=current[activeTab];
+  if(id)renderFeatures(activeTab,id);
 
   renderOutput();
 });
 
-
-/* =========================================================
+/* ============================================================
    CHECKLIST
-========================================================= */
+============================================================ */
 
 const CHECKLIST=[
-  {
-    title:'세계관',
-    items:[
-      '작품에서 실제로 사용할 세계 규칙만 남겼다.',
-      '서로 충돌하는 설정이 없는지 확인했다.',
-      '능력·마법·기관 등 강한 시스템에는 최소한의 한계가 있다.',
-      '서사에서 사용하지 않는 세부 수치는 과도하게 만들지 않았다.'
-    ]
-  },
-  {
-    title:'캐릭터',
-    items:[
-      '주요 인물마다 원하는 것과 피하고 싶은 것이 구분된다.',
-      '성격 키워드 외에 실제 행동 습관이 있다.',
-      '주요 인물들의 말투·행동·목표가 서로 구별된다.',
-      '캐릭터가 직업이나 성격 유형 하나로만 설명되지 않는다.'
-    ]
-  },
-  {
-    title:'심리·관계',
-    items:[
-      '관계가 시작되는 지점을 정했다.',
-      '관계가 변하는 이유가 장면과 사건에 존재한다.',
-      '갈등 후 바로 이전 상태로 돌아가지 않아도 되도록 후속 감정을 고려했다.',
-      '각 인물의 개인 경계와 관계 반응이 서로 다를 수 있다.'
-    ]
-  },
-  {
-    title:'문체',
-    items:[
-      '기본 POV를 정했다.',
-      '시점 인물이 알 수 없는 정보를 무심코 서술하지 않는지 확인했다.',
-      '묘사와 대사의 비중이 작품 분위기와 맞는다.',
-      '같은 비유·감정 설명·문장 패턴이 과하게 반복되지 않는다.'
-    ]
-  },
-  {
-    title:'이벤트·진행',
-    items:[
-      '모든 관계 이벤트를 넣지 않고 필요한 것만 골랐다.',
-      '큰 사건과 일상 장면의 비율을 조절했다.',
-      '이벤트가 캐릭터 행동보다 우선하지 않는다.',
-      '최근 사건이 다음 장면의 감정과 행동에 이어진다.'
-    ]
-  },
-  {
-    title:'최종 정리',
-    items:[
-      '비슷한 지침이 여러 번 반복되어 있지 않다.',
-      'AI가 반드시 알아야 할 규칙과 제작자 참고 메모를 구분했다.',
-      '빈 설정을 억지로 채우기보다 작품에 필요한 항목만 남겼다.',
-      '공개하지 않아도 되는 개인 제작 규칙이나 내부 메모가 포함되지 않았다.'
-    ]
-  }
+  ['세계관',[
+    '작품에서 실제로 사용할 세계 규칙만 남겼다.',
+    '서로 충돌하는 설정이 없는지 확인했다.',
+    '능력·마법·기관 등 강한 시스템에 최소한의 한계가 있다.',
+    '서사에서 사용하지 않는 세부 설정을 과도하게 만들지 않았다.'
+  ]],
+  ['캐릭터',[
+    '주요 인물마다 원하는 것이 구분된다.',
+    '성격 키워드 외에 실제 행동 특징이 있다.',
+    '주요 인물의 말투·행동·목표가 서로 구별된다.',
+    '직업이나 성격 유형 하나만으로 캐릭터를 설명하지 않았다.'
+  ]],
+  ['심리·관계',[
+    '관계가 시작되는 지점을 정했다.',
+    '관계가 변하는 이유가 장면과 사건에 존재한다.',
+    '갈등 뒤 후속 감정을 고려했다.',
+    '인물별 경계와 관계 반응의 차이를 고려했다.'
+  ]],
+  ['문체',[
+    '기본 POV를 정했다.',
+    '시점 인물이 모르는 정보를 무심코 서술하지 않는지 확인했다.',
+    '묘사와 대사의 비중이 작품 분위기와 맞는다.',
+    '같은 비유·감정 설명·문장 패턴이 지나치게 반복되지 않는다.'
+  ]],
+  ['이벤트·진행',[
+    '모든 이벤트를 넣지 않고 필요한 것만 선택했다.',
+    '큰 사건과 일상 장면의 비율을 조절했다.',
+    '이벤트가 캐릭터의 성격과 행동보다 우선하지 않는다.',
+    '이전 사건의 영향이 다음 장면에 이어진다.'
+  ]],
+  ['최종 정리',[
+    '비슷한 지침이 여러 번 반복되어 있지 않다.',
+    'AI용 지침과 제작자용 메모를 구분했다.',
+    '빈 설정을 억지로 채우지 않았다.',
+    '공개할 필요 없는 개인 제작 규칙이나 내부 메모를 제거했다.'
+  ]]
 ];
 
-
 function renderChecklist(){
-  const wrap=document.getElementById('checklistWrap');
+  const wrap=document.getElementById('checklistBody');
 
-  wrap.innerHTML='';
+  CHECKLIST.forEach(([title,items])=>{
+    const group=document.createElement('div');
+    group.className='check-group';
 
-  CHECKLIST.forEach(group=>{
-    const div=document.createElement('div');
-    div.className='check-group content-card';
+    group.innerHTML=`<h3>${esc(title)}</h3>`;
 
-    const title=document.createElement('div');
-    title.className='check-title';
-    title.textContent=group.title;
-    div.appendChild(title);
-
-    group.items.forEach(item=>{
+    items.forEach(item=>{
       const label=document.createElement('label');
       label.className='check-item';
-
-      label.innerHTML=`
-        <input type="checkbox">
-        <span>${escapeHtml(item)}</span>
-      `;
-
-      div.appendChild(label);
+      label.innerHTML=`<input type="checkbox"><span>${esc(item)}</span>`;
+      group.appendChild(label);
     });
 
-    wrap.appendChild(div);
+    wrap.appendChild(group);
   });
 }
 
-
-/* =========================================================
+/* ============================================================
    UTIL
-========================================================= */
+============================================================ */
 
-function escapeHtml(str){
+function esc(str){
   return String(str)
     .replaceAll('&','&amp;')
     .replaceAll('<','&lt;')
@@ -2589,15 +2468,13 @@ function escapeHtml(str){
     .replaceAll("'",'&#039;');
 }
 
+/* ============================================================
+   START
+============================================================ */
 
-/* =========================================================
-   INIT
-========================================================= */
-
-Object.keys(TAB_CONFIG).forEach(initTab);
+Object.keys(CONFIG).forEach(initTab);
 renderChecklist();
 renderOutput();
-
 </script>
 
 </body>
