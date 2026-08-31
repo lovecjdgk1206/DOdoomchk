@@ -23,6 +23,20 @@ main{max-width:980px;margin:0 auto;padding:22px 24px 48px}
 .card{background:var(--panel);border:1px solid var(--border);border-radius:8px;margin-bottom:10px;overflow:hidden}.card-head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 14px;background:var(--panel2);border-bottom:1px solid var(--border)}.card-title{font-size:12.5px;font-weight:700}.copy-one{font:700 10.5px var(--mono);color:var(--muted);background:transparent;border:1px solid var(--border);border-radius:4px;padding:5px 8px;cursor:pointer}.copy-one:hover{color:var(--amber);border-color:var(--amber-dim)}
 pre{padding:15px;white-space:pre-wrap;word-break:keep-all;overflow-wrap:anywhere;font:12px/1.75 var(--mono);color:var(--text)}mark{background:rgba(201,151,74,.24);color:#f5d79f;border-radius:2px}.status{color:var(--muted)}
 @media(max-width:600px){header,main{padding-left:16px;padding-right:16px}.card-head{padding:9px 11px}pre{padding:12px;font-size:11.2px}}
+
+/* 전체 텍스트 +2pt */
+.eyebrow{font-size:calc(11px + 2pt)}
+h1{font-size:calc(22px + 2pt)}
+.sub{font-size:calc(13px + 2pt)}
+.btn{font-size:calc(11.5px + 2pt)}
+.search{font-size:calc(12.5px + 2pt)}
+.jump{font-size:calc(11px + 2pt)}
+.group-title{font-size:calc(17px + 2pt)}
+.group-note{font-size:calc(12px + 2pt)}
+.card-title{font-size:calc(12.5px + 2pt)}
+.copy-one{font-size:calc(10.5px + 2pt)}
+pre{font-size:calc(12px + 2pt)}
+@media(max-width:600px){pre{font-size:calc(11.2px + 2pt)}}
 </style>
 </head>
 <body>
@@ -42,13 +56,15 @@ let original='';
 const host=document.getElementById('content');
 const search=document.getElementById('search');
 const keywordTitles=['키워드북 공통 LOCK','룬가르드 마탑','룬가르드 자아성물','탈론 용병길드','스카른 설산','정보길드','마족 계통','엘프','드워프','드래곤','봄 역병사건','몬스터 번식기','몬스터 식량부족','마족 계약의식'];
+const mainTitles=['작품','StoryFlow','세계구조','신·신계','세력','칼두스','힘 체계','인간계 존재','마족','폴리모프','몬스터·마족','마족 계약','지역 핵심','이종족·드래곤','유저·NPC·관계','사건','출력','성인 콘텐츠'];
 function esc(s){return s.replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]})}
 function regexEsc(s){return s.replace(/[-\/\\^$*+?.()|[\]{}]/g,'\\$&')}
 function highlight(s,q){const safe=esc(s);if(!q)return safe;return safe.replace(new RegExp(regexEsc(q),'gi'),function(m){return '<mark>'+m+'</mark>'})}
 function makeCard(title,text,q){const card=document.createElement('section');card.className='card';const head=document.createElement('div');head.className='card-head';const label=document.createElement('div');label.className='card-title';label.textContent=title;const btn=document.createElement('button');btn.className='copy-one';btn.textContent='복사';btn.onclick=async function(){await navigator.clipboard.writeText(text);btn.textContent='복사됨';setTimeout(function(){btn.textContent='복사'},900)};const pre=document.createElement('pre');pre.innerHTML=highlight(text,q);head.append(label,btn);card.append(head,pre);return card}
 function splitKeywords(lines){const blocks=[];let title='키워드북';let buf=[];lines.forEach(function(line){if(keywordTitles.includes(line.trim())){if(buf.length)blocks.push([title,buf.join('\n').trim()]);title=line.trim();buf=[]}else{buf.push(line)}});if(buf.length)blocks.push([title,buf.join('\n').trim()]);return blocks.filter(function(x){return x[1]})}
+function formatMain(lines){const out=[];lines.forEach(function(line){const t=line.trim();if(mainTitles.includes(t)){if(out.length&&out[out.length-1]!=='')out.push('');out.push('['+t+']')}else{out.push(line)}});return out.join('\n').replace(/\n{3,}/g,'\n\n').trim()}
 function group(id,title,note){const g=document.createElement('section');g.className='group';g.id=id;const h=document.createElement('h2');h.className='group-title';h.textContent=title;g.appendChild(h);if(note){const p=document.createElement('div');p.className='group-note';p.textContent=note;g.appendChild(p)}return g}
-function render(){if(!original)return;const q=search.value.trim();const lines=original.split(/\r?\n/);const mi=lines.indexOf('메인 프롬프트 통합본');const ki=lines.indexOf('키워드북 통합본');const ri=lines.indexOf('기존 크루보드에서 유지되는 캐릭터·파티 자료');const main=lines.slice(mi+1,ki).join('\n').trim();const keys=lines.slice(ki+1,ri).filter(function(x){return x.trim()});const rest=lines.slice(ri).join('\n').trim();host.innerHTML='';host.className='';const gm=group('mainPrompt','메인 프롬프트','상시 적용되는 핵심 설정');gm.appendChild(makeCard('메인 프롬프트 전체',main,q));host.appendChild(gm);const gk=group('keywordBook','키워드북','호출 항목별 분리');splitKeywords(keys).forEach(function(b){gk.appendChild(makeCard(b[0],b[1],q))});host.appendChild(gk);const gr=group('reference','캐릭터·진행 참고','기존 크루보드 보존자료와 STEP2~5 진행시트');gr.appendChild(makeCard('제작 참고자료',rest,q));host.appendChild(gr)}
+function render(){if(!original)return;const q=search.value.trim();const lines=original.split(/\r?\n/);const mi=lines.indexOf('메인 프롬프트 통합본');const ki=lines.indexOf('키워드북 통합본');const ri=lines.indexOf('기존 크루보드에서 유지되는 캐릭터·파티 자료');const mainLines=lines.slice(mi+1,ki);const workIndex=mainLines.indexOf('작품');const lockLines=workIndex>=0?mainLines.slice(0,workIndex):[];const mainBody=workIndex>=0?mainLines.slice(workIndex):mainLines;const main=formatMain(mainBody);const lock=lockLines.filter(function(x){return x.trim()&&x.trim()!=='LOCK'}).join('\n').trim();const keys=lines.slice(ki+1,ri).filter(function(x){return x.trim()});const rest=lines.slice(ri).join('\n').trim();host.innerHTML='';host.className='';const gm=group('mainPrompt','메인 프롬프트','세계관·서사·시스템·출력에 상시 적용되는 본문');if(lock)gm.appendChild(makeCard('적용 규칙 · 본문 외 관리지침',lock,q));gm.appendChild(makeCard('메인 프롬프트 본문',main,q));host.appendChild(gm);const gk=group('keywordBook','키워드북','호출 항목별 분리');splitKeywords(keys).forEach(function(b){gk.appendChild(makeCard(b[0],b[1],q))});host.appendChild(gk);const gr=group('reference','캐릭터·진행 참고','기존 크루보드 보존자료와 STEP2~5 진행시트');gr.appendChild(makeCard('제작 참고자료',rest,q));host.appendChild(gr)}
 fetch('./크루보드.txt').then(function(r){if(!r.ok)throw new Error('load');return r.text()}).then(function(t){original=t.replace(/^\uFEFF/,'');render()}).catch(function(){host.textContent='크루보드를 불러오지 못했습니다'});
 search.addEventListener('input',render);
 document.getElementById('copyAll').addEventListener('click',async function(e){if(!original)return;await navigator.clipboard.writeText(original);e.target.textContent='복사됨';setTimeout(function(){e.target.textContent='전체 복사'},900)});
