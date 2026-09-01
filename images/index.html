@@ -1,44 +1,13 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>이미지 · 크루 공유</title>
-<style>
-:root{--bg:#0a0c0f;--panel:#12151a;--border:#262b33;--text:#dfe4ea;--muted:#7c8493;--amber:#c9974a;--amber-dim:#8a6b3a;--amber-glow:rgba(201,151,74,.12)}
-*{box-sizing:border-box;margin:0;padding:0}
-body{min-height:100vh;background:radial-gradient(circle at 15% 0%,rgba(201,151,74,.06),transparent 42%),var(--bg);color:var(--text);font-family:"Noto Sans KR","Malgun Gothic",sans-serif}
-header{border-bottom:1px solid var(--border);padding:22px 24px 18px}
-.eyebrow{font-size:11px;letter-spacing:.18em;color:var(--amber);margin-bottom:6px}
-h1{font-size:22px}.sub{color:var(--muted);font-size:13px;margin-top:6px;line-height:1.6}
-nav{display:flex;gap:8px;padding:14px 24px;border-bottom:1px solid var(--border);overflow-x:auto}
-nav a{color:var(--muted);text-decoration:none;font-size:12px;padding:8px 12px;border:1px solid var(--border);border-radius:6px;white-space:nowrap}
-nav a.active{color:var(--amber);border-color:var(--amber-dim);background:var(--amber-glow)}
-main{max-width:1100px;margin:0 auto;padding:28px 24px}
-.empty{min-height:360px;border:1px dashed var(--border);border-radius:10px;background:var(--panel);display:grid;place-items:center;text-align:center;padding:32px}
-.empty strong{display:block;color:var(--amber);font-size:18px;margin-bottom:8px}.empty p{color:var(--muted);font-size:13px;line-height:1.7}
-@media(max-width:600px){header,nav{padding-left:16px;padding-right:16px}main{padding:20px 16px}}
-</style>
-</head>
-<body>
-<header>
-  <div class="eyebrow">DOOMCHIT · CREW IMAGE BOARD</div>
-  <h1>이미지</h1>
-  <div class="sub">크루와 공유할 이미지와 관련 정리 내용을 모아두는 공간입니다.</div>
-</header>
-<nav>
-  <a href="../">제작 가이드</a>
-  <a href="../crewboard/?v=20260901-6">크루보드</a>
-  <a class="active" href="./">이미지</a>
-</nav>
-<main>
-  <section class="empty">
-    <div>
-      <strong>이미지 정리 전</strong>
-      <p>지금부터 상의해 확정한 이미지 자료를 이곳에 순서대로 추가합니다.<br>현재 등록된 이미지는 없습니다.</p>
-    </div>
-  </section>
-</main>
-</body>
-</html>
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>이미지 1차 정리 · 크루보드</title>
+<style>:root{--bg:#0a0c0f;--panel:#12151a;--border:#262b33;--text:#dfe4ea;--muted:#8a929f;--amber:#c9974a;--amber-dim:#8a6b3a;--glow:rgba(201,151,74,.12)}*{box-sizing:border-box;margin:0;padding:0}body{min-height:100vh;background:radial-gradient(circle at 15% 0%,rgba(201,151,74,.06),transparent 42%),var(--bg);color:var(--text);font-family:"Noto Sans KR","Malgun Gothic",sans-serif}header{border-bottom:1px solid var(--border);padding:22px 24px 18px}.eyebrow{font-size:11px;letter-spacing:.18em;color:var(--amber);margin-bottom:6px}h1{font-size:24px}.sub{color:var(--muted);font-size:13px;margin-top:7px;line-height:1.65}nav{display:flex;gap:8px;padding:14px 24px;border-bottom:1px solid var(--border)}nav a{color:var(--muted);text-decoration:none;font-size:12px;padding:8px 12px;border:1px solid var(--border);border-radius:6px}nav a.active{color:var(--amber);border-color:var(--amber-dim);background:var(--glow)}main{max-width:1180px;margin:0 auto;padding:26px 24px 52px}.notice{border-left:3px solid var(--amber-dim);background:var(--glow);padding:12px 14px;color:var(--muted);font-size:12.5px;line-height:1.65;margin-bottom:20px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.card{display:grid;grid-template-columns:minmax(210px,42%) 1fr;background:var(--panel);border:1px solid var(--border);border-radius:10px;overflow:hidden;min-height:360px}.visual{background:#0e1115;display:flex;align-items:center;justify-content:center;min-height:340px}.visual img{display:block;width:100%;height:100%;max-height:520px;object-fit:contain}.no-image{color:#626a76;text-align:center;font-size:13px;line-height:1.7;padding:30px}.body{padding:18px}.head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;padding-bottom:12px;margin-bottom:12px;border-bottom:1px solid var(--border)}h2{font-size:19px}.badge{font-size:10px;color:var(--amber);border:1px solid var(--amber-dim);border-radius:999px;padding:5px 8px;white-space:nowrap}.spec{display:grid;grid-template-columns:72px 1fr;gap:8px 10px;font-size:13px;line-height:1.55}.spec dt{color:var(--amber)}.spec dd{color:var(--text)}.foot{margin-top:14px;padding-top:12px;border-top:1px solid var(--border);font-size:11.5px;color:var(--muted);line-height:1.6}@media(max-width:920px){.grid{grid-template-columns:1fr}}@media(max-width:600px){header,nav{padding-left:16px;padding-right:16px}main{padding:20px 16px}.card{grid-template-columns:1fr}.visual{min-height:260px;max-height:430px}.spec{grid-template-columns:64px 1fr}}</style></head>
+<body><header><div class="eyebrow">DOOMCHIT · CREW IMAGE BOARD</div><h1>캐릭터 이미지 1차 정리</h1><div class="sub">크루 공유용 외형 확정·참고 자료. 이후 상의 내용에 따라 갱신합니다.</div></header><nav><a href="../crewboard/크루보드.html">크루보드</a><a class="active" href="./">이미지</a></nav><main><div class="notice">첨부 이미지의 문구·성격 설명·해시태그는 설정에 포함하지 않음. 아래에는 사용자가 지정한 외형 정보만 반영.</div><div class="grid">
+<article class="card"><div class="visual"><img src="./assets/06_demon_king.webp" alt="마왕 참고 이미지"></div><div class="body"><div class="head"><h2>마왕</h2><span class="badge">이미지 #6</span></div><dl class="spec"><dt>머리</dt><dd>흑발 장발</dd><dt>눈</dt><dd>호박색 금안</dd><dt>체형</dt><dd>탄탄한 체형</dd><dt>뿔</dt><dd>램형 대형 뿔. 암색이며 뒤로 휘어지고 골이 잡힌 질감</dd><dt>귀</dt><dd>길고 끝이 뾰족함</dd><dt>인간형</dt><dd>폴리모프 시 뿔 소실·귀는 일반 인간형</dd></dl><div class="foot">본신 외형에 뿔+귀 반영.</div></div></article>
+<article class="card"><div class="visual"><div class="no-image">참고 이미지 미첨부</div></div><div class="body"><div class="head"><h2>용사</h2><span class="badge">외형 1차</span></div><dl class="spec"><dt>머리</dt><dd>밝은 골든 브라운 커트. 깔끔하지만 자연스럽게 흐트러짐. 뒷머리에 약간의 길이감</dd><dt>눈</dt><dd>밝은 녹안</dd><dt>피부</dt><dd>보통 톤</dd><dt>체형</dt><dd>단단하고 균형 잡힌 전사 체형</dd><dt>인상</dt><dd>밝고 정의로운 전형적인 영웅상</dd></dl></div></article>
+<article class="card"><div class="visual"><div class="no-image">참고 이미지 미첨부</div></div><div class="body"><div class="head"><h2>암살자</h2><span class="badge">외형 1차</span></div><dl class="spec"><dt>외견 나이</dt><dd>20대 중반</dd><dt>머리</dt><dd>실버블론드. 숏컷 기조이며 윗머리에 볼륨</dd><dt>눈</dt><dd>진보라색</dd><dt>피부</dt><dd>어두운 갈색</dd><dt>체형</dt><dd>유연한 근육질. 덩치보다 밀도 있는 체형</dd><dt>특징</dt><dd>팔과 손에 자잘한 상처·흉터가 다수 있음</dd></dl></div></article>
+<article class="card"><div class="visual"><img src="./assets/02_mage_female.webp" alt="여성 법사 참고 이미지"></div><div class="body"><div class="head"><h2>법사 · 여성</h2><span class="badge">이미지 #2</span></div><dl class="spec"><dt>외견 나이</dt><dd>20대 중반 이상</dd><dt>머리</dt><dd>진 라벤더색 중장발. 깊은 레이어드와 볼륨감 있는 거친 질감. 제멋대로 흩날리는 형태</dd><dt>눈</dt><dd>채도 높은 진 라벤더·자색 계열</dd><dt>피부</dt><dd>혈색 없이 창백함</dd><dt>체형</dt><dd>키가 크고 마름. 가슴은 매우 큼</dd><dt>인상</dt><dd>창백하고 병약하며 차갑고 감정이 희박해 보임. 온기가 없는 사람</dd></dl><div class="foot">기존 연한 라벤더·회색 계열에서 진 라벤더로 변경.</div></div></article>
+<article class="card"><div class="visual"><img src="./assets/01_mage_male.webp" alt="남성 법사 참고 이미지"></div><div class="body"><div class="head"><h2>법사 · 남성</h2><span class="badge">이미지 #1</span></div><dl class="spec"><dt>머리</dt><dd>빨간 장발</dd><dt>눈</dt><dd>붉은 눈동자</dd><dt>키</dt><dd>183cm</dd><dt>체형</dt><dd>슬렌더 체형</dd></dl><div class="foot">외형 구도·의상 분위기는 첨부 이미지 참고.</div></div></article>
+<article class="card"><div class="visual"><img src="./assets/03_healer_male.webp" alt="남성 힐러 참고 이미지"></div><div class="body"><div class="head"><h2>힐러 · 남성</h2><span class="badge">이미지 #3</span></div><dl class="spec"><dt>외견 나이</dt><dd>30대 초반</dd><dt>머리</dt><dd>밀빛 백발. 금빛이 도는 백발이며 짧은 중단발. 부드럽고 자연스러운 형태</dd><dt>눈</dt><dd>금안</dd><dt>피부</dt><dd>어두운 톤</dd><dt>체형</dt><dd>단단한 근육질. 우락부락하지 않은 정제된 체격</dd><dt>인상</dt><dd>신성하고 단정함. 겉모습은 정통 치유 사제</dd></dl></div></article>
+<article class="card"><div class="visual"><img src="./assets/04_healer_female.webp" alt="여성 힐러 참고 이미지"></div><div class="body"><div class="head"><h2>힐러 · 여성</h2><span class="badge">이미지 #4</span></div><dl class="spec"><dt>머리</dt><dd>금발 장발</dd><dt>눈</dt><dd>녹안</dd><dt>키</dt><dd>160cm</dd><dt>체형</dt><dd>글래머러스</dd><dt>의상</dt><dd>수녀복 개조 의상</dd></dl></div></article>
+<article class="card"><div class="visual"><img src="./assets/05_archer_male.webp" alt="남성 궁수 참고 이미지"></div><div class="body"><div class="head"><h2>궁수 · 남성</h2><span class="badge">이미지 #5</span></div><dl class="spec"><dt>머리</dt><dd>녹발</dd><dt>눈</dt><dd>갈안</dd><dt>키</dt><dd>183cm</dd><dt>체형</dt><dd>탄탄한 중간 체형</dd><dt>의상</dt><dd>경갑옷·가벼운 차림. 낡은 상태</dd></dl></div></article>
+</div></main></body></html>
 
