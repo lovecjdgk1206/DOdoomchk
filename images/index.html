@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>이미지 · 크루 공유</title>
+<style>
+:root{--bg:#0a0c0f;--panel:#12151a;--border:#262b33;--text:#dfe4ea;--muted:#7c8493;--amber:#c9974a;--amber-dim:#8a6b3a;--amber-glow:rgba(201,151,74,.12)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{min-height:100vh;background:radial-gradient(circle at 15% 0%,rgba(201,151,74,.06),transparent 42%),var(--bg);color:var(--text);font-family:"Noto Sans KR","Malgun Gothic",sans-serif}
+header{border-bottom:1px solid var(--border);padding:22px 24px 18px}
+.eyebrow{font-size:11px;letter-spacing:.18em;color:var(--amber);margin-bottom:6px}
+h1{font-size:22px}.sub{color:var(--muted);font-size:13px;margin-top:6px;line-height:1.6}
+nav{display:flex;gap:8px;padding:14px 24px;border-bottom:1px solid var(--border);overflow-x:auto}
+nav a{color:var(--muted);text-decoration:none;font-size:12px;padding:8px 12px;border:1px solid var(--border);border-radius:6px;white-space:nowrap}
+nav a.active{color:var(--amber);border-color:var(--amber-dim);background:var(--amber-glow)}
+main{max-width:1100px;margin:0 auto;padding:28px 24px}
+.empty{min-height:360px;border:1px dashed var(--border);border-radius:10px;background:var(--panel);display:grid;place-items:center;text-align:center;padding:32px}
+.empty strong{display:block;color:var(--amber);font-size:18px;margin-bottom:8px}.empty p{color:var(--muted);font-size:13px;line-height:1.7}
+@media(max-width:600px){header,nav{padding-left:16px;padding-right:16px}main{padding:20px 16px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="eyebrow">DOOMCHIT · CREW IMAGE BOARD</div>
+  <h1>이미지</h1>
+  <div class="sub">크루와 공유할 이미지와 관련 정리 내용을 모아두는 공간입니다.</div>
+</header>
+<nav>
+  <a href="../">제작 가이드</a>
+  <a href="../crewboard/?v=20260901-6">크루보드</a>
+  <a class="active" href="./">이미지</a>
+</nav>
+<main>
+  <section class="empty">
+    <div>
+      <strong>이미지 정리 전</strong>
+      <p>지금부터 상의해 확정한 이미지 자료를 이곳에 순서대로 추가합니다.<br>현재 등록된 이미지는 없습니다.</p>
+    </div>
+  </section>
+</main>
+</body>
+</html>
+
