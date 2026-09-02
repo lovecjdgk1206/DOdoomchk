@@ -440,6 +440,24 @@ pre.output.empty{
   body{padding-bottom:235px}
   pre.output{max-height:175px}
 }
+
+/* 통합 제작 워크스페이스 */
+.workspace-head{margin-bottom:18px;padding:16px 18px;border:1px solid var(--line);border-radius:12px;background:var(--panel)}
+.workspace-head h2{font-size:18px;margin-bottom:7px}.workspace-head p{font-size:12.5px;line-height:1.7;color:var(--muted)}
+.subtabbar{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px;padding:10px;background:var(--panel);border:1px solid var(--line);border-radius:10px}
+.subtabbtn{border:1px solid var(--line);background:var(--bg2);color:var(--muted);border-radius:7px;padding:9px 13px;font-weight:700;cursor:pointer}
+.subtabbtn:hover,.subtabbtn.active{color:var(--amber);border-color:var(--amber-dim);background:var(--amber-glow)}
+.common-module{display:none}.common-module.active{display:block}
+.module-title{font-size:14px;color:var(--amber);margin:4px 0 10px}.module-split{height:1px;background:var(--line);margin:24px 0}
+.inline-field{display:grid;gap:7px;margin:0 0 18px}.inline-field label,.keyword-field label{font-size:11px;font-weight:800;color:var(--amber);letter-spacing:.04em}
+.inline-field input,.keyword-field input,.keyword-field textarea{width:100%;border:1px solid var(--line);background:var(--bg2);color:var(--text);border-radius:8px;padding:11px 12px;font:13px/1.6 inherit;outline:none}
+.inline-field input:focus,.keyword-field input:focus,.keyword-field textarea:focus{border-color:var(--amber-dim)}
+.keyword-builder{display:grid;gap:14px}.keyword-field{display:grid;gap:7px}.keyword-field textarea{min-height:260px;resize:vertical}
+.modebtn{border:1px solid var(--line);background:transparent;color:var(--muted);border-radius:6px;padding:6px 9px;font-size:11px;font-weight:700;cursor:pointer}
+.modebtn.active{color:var(--amber);border-color:var(--amber-dim);background:var(--amber-glow)}
+.output-modes{display:flex;gap:6px;margin-right:auto}
+@media(max-width:700px){.subtabbar{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.subtabbtn{padding:9px 7px}.output-modes{width:100%;order:2}.output-head{flex-wrap:wrap}}
+
 </style>
 </head>
 
@@ -455,18 +473,15 @@ pre.output.empty{
 </header>
 
 <nav class="tabbar">
-  <button class="tabbtn active" data-tab="guide"><span class="n">01</span>가이드</button>
+  <button class="tabbtn active" data-tab="guide"><span class="n">01</span>콘솔가이드</button>
   <button class="tabbtn" data-tab="world"><span class="n">02</span>세계관</button>
-  <button class="tabbtn" data-tab="char"><span class="n">03</span>캐릭터</button>
-  <button class="tabbtn" data-tab="psych"><span class="n">04</span>심리</button>
-  <button class="tabbtn" data-tab="consent"><span class="n">05</span>관계·합의</button>
-  <button class="tabbtn" data-tab="style"><span class="n">06</span>문체</button>
-  <button class="tabbtn" data-tab="voicepreset"><span class="n">07</span>문체프리셋</button>
-  <button class="tabbtn" data-tab="events"><span class="n">08</span>관계이벤트</button>
-  <button class="tabbtn" data-tab="commands"><span class="n">09</span>커맨드</button>
-  <button class="tabbtn" data-tab="base"><span class="n">10</span>공통베이스</button>
-  <button class="tabbtn" data-tab="checklist"><span class="n">11</span>체크리스트</button>
-  <a class="crew-nav-link" href="./crewboard/?v=20260901-6"><span class="n">12</span>크루보드</a>\n  \n</nav>
+  <button class="tabbtn" data-tab="common"><span class="n">03</span>공통</button>
+  <button class="tabbtn" data-tab="char"><span class="n">04</span>캐릭터</button>
+  <button class="tabbtn" data-tab="keyword"><span class="n">05</span>키워드북</button>
+  <button class="tabbtn" data-tab="commands"><span class="n">06</span>커맨드북</button>
+  <button class="tabbtn" data-tab="checklist"><span class="n">07</span>체크리스트</button>
+  <a class="crew-nav-link" href="./crewboard/?v=20260903-1">크루보드</a>
+</nav>
 
 <main>
 
@@ -539,52 +554,61 @@ pre.output.empty{
   <div id="worldFeatureList"></div>
 </section>
 
+
+<section class="panel-view" id="panel-common">
+  <div class="workspace-head"><h2>작품 공통 설정</h2><p>심리·관계·합의·문체·공통 규칙·관계 이벤트를 한 페이지에서 선택합니다. 소분류를 오가도 선택은 유지되며 하단 결과에 모두 통합됩니다.</p></div>
+  <div class="subtabbar" id="commonSubtabs">
+    <button class="subtabbtn active" data-common="psych">심리</button>
+    <button class="subtabbtn" data-common="consent">관계·합의</button>
+    <button class="subtabbtn" data-common="writing">문체</button>
+    <button class="subtabbtn" data-common="base">공통베이스</button>
+    <button class="subtabbtn" data-common="events">관계이벤트</button>
+  </div>
+  <div class="common-module active" id="common-psych"><div class="preset-grid" id="psychGrid"></div>
+  <div class="preset-desc" id="psychDesc">심리 항목을 선택하세요. 하나의 성향으로 모든 행동을 결정하지 않는 것을 권장합니다.</div>
+  <div id="psychFeatureList"></div></div>
+  <div class="common-module" id="common-consent"><div class="preset-grid" id="consentGrid"></div>
+  <div class="preset-desc" id="consentDesc">관계 진행·경계·갈등·회복 방식을 선택하세요.</div>
+  <div id="consentFeatureList"></div></div>
+  <div class="common-module" id="common-writing">
+    <div class="module-title">세부 문체</div><div class="preset-grid" id="styleGrid"></div>
+  <div class="preset-desc" id="styleDesc">POV·시제·묘사 등 기본 서술 지침을 선택하세요.</div>
+  <div id="styleFeatureList"></div>
+    <div class="module-split"></div>
+    <div class="module-title">문체 프리셋</div><div class="preset-grid" id="voicepresetGrid"></div>
+  <div class="preset-desc" id="voicepresetDesc">일반적인 분위기 조합을 선택하세요.</div>
+  <div id="voicepresetFeatureList"></div>
+  </div>
+  <div class="common-module" id="common-base"><div class="preset-grid" id="baseGrid"></div>
+  <div class="preset-desc" id="baseDesc">장르와 무관하게 사용할 수 있는 기본적인 일관성 지침입니다.</div>
+  <div id="baseFeatureList"></div></div>
+  <div class="common-module" id="common-events"><div class="preset-grid" id="eventsGrid"></div>
+  <div class="preset-desc" id="eventsDesc">관계 변화에 사용할 가벼운 사건 아이디어를 선택하세요.</div>
+  <div id="eventsFeatureList"></div></div>
+</section>
+
 <section class="panel-view" id="panel-char">
+  <div class="workspace-head"><h2>캐릭터 통합 설계</h2><p>기본 시트·성격·서사 역할·동기·행동 앵커·말투를 한 캐릭터 기준으로 선택합니다. 소분류 선택 결과는 하단에서 하나의 시트로 합쳐집니다.</p></div>
+  <div class="inline-field"><label for="characterName">캐릭터 이름</label><input id="characterName" type="text" placeholder="현재 제작할 캐릭터 이름"></div>
   <div class="preset-grid" id="charGrid"></div>
   <div class="preset-desc" id="charDesc">캐릭터 제작 항목을 선택하세요.</div>
   <div id="charFeatureList"></div>
 </section>
 
-<section class="panel-view" id="panel-psych">
-  <div class="preset-grid" id="psychGrid"></div>
-  <div class="preset-desc" id="psychDesc">심리 항목을 선택하세요. 하나의 성향으로 모든 행동을 결정하지 않는 것을 권장합니다.</div>
-  <div id="psychFeatureList"></div>
-</section>
-
-<section class="panel-view" id="panel-consent">
-  <div class="preset-grid" id="consentGrid"></div>
-  <div class="preset-desc" id="consentDesc">관계 진행·경계·갈등·회복 방식을 선택하세요.</div>
-  <div id="consentFeatureList"></div>
-</section>
-
-<section class="panel-view" id="panel-style">
-  <div class="preset-grid" id="styleGrid"></div>
-  <div class="preset-desc" id="styleDesc">POV·시제·묘사 등 기본 서술 지침을 선택하세요.</div>
-  <div id="styleFeatureList"></div>
-</section>
-
-<section class="panel-view" id="panel-voicepreset">
-  <div class="preset-grid" id="voicepresetGrid"></div>
-  <div class="preset-desc" id="voicepresetDesc">일반적인 분위기 조합을 선택하세요.</div>
-  <div id="voicepresetFeatureList"></div>
-</section>
-
-<section class="panel-view" id="panel-events">
-  <div class="preset-grid" id="eventsGrid"></div>
-  <div class="preset-desc" id="eventsDesc">관계 변화에 사용할 가벼운 사건 아이디어를 선택하세요.</div>
-  <div id="eventsFeatureList"></div>
+<section class="panel-view" id="panel-keyword">
+  <div class="workspace-head"><h2>키워드북 항목 작성</h2><p>항목 이름·호출 키워드·본문을 한 화면에서 작성하고 하단에서 복사용 형식을 확인합니다. 일반명사만으로 과도하게 호출되지 않도록 고유명사를 우선하세요.</p></div>
+  <div class="keyword-builder">
+    <div class="keyword-field"><label for="keywordTitle">항목 이름</label><input id="keywordTitle" type="text" placeholder="예: 룬가르드 자아성물"></div>
+    <div class="keyword-field"><label for="keywordTriggers">호출 키워드</label><input id="keywordTriggers" type="text" placeholder="예: 룬가르드 자아성물·자아성물·고유명"></div>
+    <div class="keyword-field"><label for="keywordBody">키워드북 본문</label><textarea id="keywordBody" placeholder="호출될 때만 필요한 상세 규칙을 입력하세요."></textarea></div>
+  </div>
 </section>
 
 <section class="panel-view" id="panel-commands">
+  <div class="workspace-head"><h2>커맨드북</h2><p>명령어 트리거와 출력 범위를 설계합니다. 작품 설정과 캐릭터가 완성된 뒤 마지막 단계에서 작성하세요.</p></div>
   <div class="preset-grid" id="commandsGrid"></div>
   <div class="preset-desc" id="commandsDesc">대화형 작품에서 사용할 수 있는 보조 명령 예시입니다.</div>
   <div id="commandsFeatureList"></div>
-</section>
-
-<section class="panel-view" id="panel-base">
-  <div class="preset-grid" id="baseGrid"></div>
-  <div class="preset-desc" id="baseDesc">장르와 무관하게 사용할 수 있는 기본적인 일관성 지침입니다.</div>
-  <div id="baseFeatureList"></div>
 </section>
 
 <section class="panel-view" id="panel-checklist">
@@ -598,10 +622,11 @@ pre.output.empty{
 
 <div class="output-wrap">
   <div class="output-head">
-    <div class="lbl">
-      <span class="dot"></span>PROMPT / DESIGN GUIDE
+    <div class="lbl"><span class="dot"></span>통합 선택 결과</div>
+    <div class="output-modes">
+      <button class="modebtn active" data-mode="prompt">프롬프트만</button>
+      <button class="modebtn" data-mode="guide">가이드 포함</button>
     </div>
-
     <div class="output-actions">
       <button class="clearbtn" id="clearBtn">초기화</button>
       <button class="copybtn" id="copyBtn">복사</button>
@@ -2161,6 +2186,9 @@ const CONFIG={
 
 const state={};
 const current={};
+const COMMON_TABS=['psych','consent','style','voicepreset','base','events'];
+const COMMON_LABELS={psych:'심리',consent:'관계·합의',style:'문체',voicepreset:'문체 프리셋',base:'공통베이스',events:'관계이벤트'};
+let outputMode='prompt';
 
 Object.keys(CONFIG).forEach(tab=>{
   state[tab]={};
@@ -2275,70 +2303,72 @@ document.querySelectorAll('.tabbtn').forEach(btn=>{
    OUTPUT
 ============================================================ */
 
-function renderOutput(){
-  const box=document.getElementById('outputBox');
-
-  if(activeTab==='guide'){
-    setEmpty('// 각 제작 탭에서 항목을 선택하면 Prompt와 Guide가 표시됩니다.');
-    return;
-  }
-
-  if(activeTab==='checklist'){
-    setEmpty('// 체크리스트는 제작자 확인용입니다.');
-    return;
-  }
-
-  const tabData=DATA[activeTab];
-  if(!tabData){
-    setEmpty('// 출력할 항목이 없습니다.');
-    return;
-  }
-
-  const lines=[];
+function appendTabOutput(tab,lines,showGroup){
+  const tabData=DATA[tab];
+  if(!tabData)return;
+  const groupLines=[];
 
   Object.entries(tabData).forEach(([categoryId,category])=>{
-    const categoryState=state[activeTab][categoryId];
+    const categoryState=state[tab][categoryId];
     if(!categoryState)return;
 
     const selected=[];
-
     category.features.forEach((feature,fi)=>{
       const oi=categoryState[fi];
       if(oi===undefined)return;
-
       const opt=feature.opts[oi];
-      if(!opt)return;
-
-      selected.push({feature,opt});
+      if(opt)selected.push({feature,opt});
     });
-
     if(!selected.length)return;
 
-    lines.push(`[${category.label}]`);
-
+    groupLines.push('['+category.label+']');
     selected.forEach(({feature,opt})=>{
-      lines.push('');
-      lines.push(`■ ${feature.label}:${opt.v}`);
-
-      if(opt.prompt){
-        lines.push('[PROMPT]');
-        lines.push(opt.prompt);
-      }
-
-      if(opt.guide){
-        lines.push('[GUIDE]');
-        lines.push(opt.guide);
-      }
+      groupLines.push('');
+      groupLines.push('■ '+feature.label+':'+opt.v);
+      if(opt.prompt){groupLines.push('[PROMPT]');groupLines.push(opt.prompt)}
+      if(outputMode==='guide'&&opt.guide){groupLines.push('[GUIDE]');groupLines.push(opt.guide)}
     });
-
-    lines.push('');
+    groupLines.push('');
   });
 
-  if(!lines.length){
-    setEmpty('// 버튼을 선택하면 Prompt와 Guide가 표시됩니다.');
-    return;
+  if(groupLines.length){
+    if(showGroup)lines.push('=== '+COMMON_LABELS[tab]+' ===','');
+    lines.push(...groupLines);
+  }
+}
+
+function renderKeywordOutput(){
+  const title=document.getElementById('keywordTitle')?.value.trim();
+  const triggers=document.getElementById('keywordTriggers')?.value.trim();
+  const body=document.getElementById('keywordBody')?.value.trim();
+  if(!title&&!triggers&&!body){setEmpty('// 항목 이름·호출 키워드·본문을 입력하면 키워드북 형식으로 표시됩니다.');return}
+  const lines=[];
+  lines.push('['+(title||'항목 이름')+']');
+  if(triggers)lines.push('호출키='+triggers);
+  if(body)lines.push(body);
+  const box=document.getElementById('outputBox');
+  box.classList.remove('empty');
+  box.textContent=lines.join('\n');
+}
+
+function renderOutput(){
+  const box=document.getElementById('outputBox');
+  if(activeTab==='guide'){setEmpty('// 제작할 주요 항목을 선택하세요.');return}
+  if(activeTab==='checklist'){setEmpty('// 체크리스트는 제작자 확인용입니다.');return}
+  if(activeTab==='keyword'){renderKeywordOutput();return}
+
+  const lines=[];
+  if(activeTab==='common'){
+    COMMON_TABS.forEach(tab=>appendTabOutput(tab,lines,true));
+  }else if(activeTab==='char'){
+    const name=document.getElementById('characterName')?.value.trim();
+    if(name)lines.push('[캐릭터:'+name+']','');
+    appendTabOutput('char',lines,false);
+  }else{
+    appendTabOutput(activeTab,lines,false);
   }
 
+  if(!lines.length){setEmpty('// 버튼을 선택하면 현재 페이지의 통합 결과가 표시됩니다.');return}
   box.classList.remove('empty');
   box.textContent=lines.join('\n').trim();
 }
@@ -2382,15 +2412,46 @@ document.getElementById('copyBtn').addEventListener('click',async()=>{
 });
 
 document.getElementById('clearBtn').addEventListener('click',()=>{
-  if(!DATA[activeTab])return;
-
-  state[activeTab]={};
-
-  const id=current[activeTab];
-  if(id)renderFeatures(activeTab,id);
-
+  if(activeTab==='common'){
+    COMMON_TABS.forEach(tab=>{
+      state[tab]={};
+      const id=current[tab];
+      if(id)renderFeatures(tab,id);
+    });
+  }else if(activeTab==='keyword'){
+    ['keywordTitle','keywordTriggers','keywordBody'].forEach(id=>document.getElementById(id).value='');
+  }else if(DATA[activeTab]){
+    state[activeTab]={};
+    const id=current[activeTab];
+    if(id)renderFeatures(activeTab,id);
+  }
   renderOutput();
 });
+
+
+/* 통합 공통 소분류 */
+document.querySelectorAll('.subtabbtn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.subtabbtn').forEach(x=>x.classList.remove('active'));
+    document.querySelectorAll('.common-module').forEach(x=>x.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('common-'+btn.dataset.common).classList.add('active');
+    renderOutput();
+  });
+});
+
+/* 결과 보기 방식 */
+document.querySelectorAll('.modebtn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.modebtn').forEach(x=>x.classList.remove('active'));
+    btn.classList.add('active');
+    outputMode=btn.dataset.mode;
+    renderOutput();
+  });
+});
+
+document.getElementById('characterName').addEventListener('input',renderOutput);
+['keywordTitle','keywordTriggers','keywordBody'].forEach(id=>document.getElementById(id).addEventListener('input',renderOutput));
 
 /* ============================================================
    CHECKLIST
