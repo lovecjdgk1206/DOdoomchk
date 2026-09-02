@@ -504,6 +504,19 @@ pre.output{font-size:calc(12.5px + 2pt)}
 .common-section-head p{font-size:calc(12.5px + 2pt);line-height:1.6;color:var(--muted)}
 #panel-common .common-module .feature:last-child{border-bottom:0}
 
+
+/* 공통 하위 항목 전체 펼침 */
+.common-all{display:grid;gap:24px}
+.common-group{display:grid;gap:13px}
+.common-group-head{padding:2px 2px 7px;border-bottom:2px solid var(--amber-dim)}
+.common-group-head h3{font-size:calc(18px + 2pt);color:var(--amber);margin-bottom:5px}
+.common-group-head p{font-size:calc(12.5px + 2pt);line-height:1.6;color:var(--muted)}
+.common-category{border:1px solid var(--border);background:var(--panel);border-radius:11px;padding:15px 18px}
+.common-category-head{padding-bottom:10px;border-bottom:1px solid var(--border)}
+.common-category-title{font-size:calc(15px + 2pt);font-weight:900;color:var(--text)}
+.common-category-desc{font-size:calc(12.5px + 2pt);line-height:1.6;color:var(--muted);margin-top:4px}
+.common-category .feature:last-child{border-bottom:0}
+
 </style>
 </head>
 
@@ -562,28 +575,8 @@ pre.output{font-size:calc(12.5px + 2pt)}
 
 
 <section class="panel-view" id="panel-common">
-  <div class="workspace-head"><h2>작품 공통 설정</h2><p>심리·관계·합의·문체·공통 규칙·관계 이벤트를 위에서 아래로 훑으며 한 페이지에서 선택합니다. 모든 선택은 하단 결과에 통합됩니다.</p></div>
-  <section class="common-module common-expanded" id="common-psych"><div class="common-section-head"><h3>심리</h3><p>감정 처리·핵심 욕구·관계 패턴·스트레스 반응·민감성을 설정합니다.</p></div><div class="preset-grid" id="psychGrid"></div>
-  <div class="preset-desc" id="psychDesc">심리 항목을 선택하세요. 하나의 성향으로 모든 행동을 결정하지 않는 것을 권장합니다.</div>
-  <div id="psychFeatureList"></div></section>
-  <section class="common-module common-expanded" id="common-consent"><div class="common-section-head"><h3>관계·합의</h3><p>관계 시작·진행·경계·갈등·회복 방식을 설정합니다.</p></div><div class="preset-grid" id="consentGrid"></div>
-  <div class="preset-desc" id="consentDesc">관계 진행·경계·갈등·회복 방식을 선택하세요.</div>
-  <div id="consentFeatureList"></div></section>
-  <section class="common-module common-expanded" id="common-writing"><div class="common-section-head"><h3>문체</h3><p>세부 문체와 문체 프리셋을 같은 영역에서 함께 비교합니다.</p></div>
-    <div class="module-title">세부 문체</div><div class="preset-grid" id="styleGrid"></div>
-  <div class="preset-desc" id="styleDesc">POV·시제·묘사 등 기본 서술 지침을 선택하세요.</div>
-  <div id="styleFeatureList"></div>
-    <div class="module-split"></div>
-    <div class="module-title">문체 프리셋</div><div class="preset-grid" id="voicepresetGrid"></div>
-  <div class="preset-desc" id="voicepresetDesc">일반적인 분위기 조합을 선택하세요.</div>
-  <div id="voicepresetFeatureList"></div>
-  </section>
-  <section class="common-module common-expanded" id="common-base"><div class="common-section-head"><h3>공통베이스</h3><p>장르와 무관하게 상시 적용할 일관성 규칙을 선택합니다.</p></div><div class="preset-grid" id="baseGrid"></div>
-  <div class="preset-desc" id="baseDesc">장르와 무관하게 사용할 수 있는 기본적인 일관성 지침입니다.</div>
-  <div id="baseFeatureList"></div></section>
-  <section class="common-module common-expanded" id="common-events"><div class="common-section-head"><h3>관계이벤트</h3><p>관계 변화를 일으킬 장면 소재와 사건 유형을 선택합니다.</p></div><div class="preset-grid" id="eventsGrid"></div>
-  <div class="preset-desc" id="eventsDesc">관계 변화에 사용할 가벼운 사건 아이디어를 선택하세요.</div>
-  <div id="eventsFeatureList"></div></section>
+  <div class="workspace-head"><h2>작품 공통 설정</h2><p>심리·관계·합의·문체·공통 규칙·관계 이벤트의 모든 항목을 위에서 아래로 훑으며 선택합니다. 함께 적용할 수 있는 항목은 복수 선택되며 모든 결과가 하단에 통합됩니다.</p></div>
+  <div id="commonAllSections" class="common-all"></div>
 </section>
 
 <section class="panel-view" id="panel-char">
@@ -2211,6 +2204,10 @@ function initTab(tab){
     renderAllCharacterSections();
     return;
   }
+  if(COMMON_TABS.includes(tab)){
+    if(tab===COMMON_TABS[0])renderAllCommonSections();
+    return;
+  }
   const [gridId]=CONFIG[tab];
   const grid=document.getElementById(gridId);
   if(!grid)return;
@@ -2223,6 +2220,37 @@ function initTab(tab){
     card.addEventListener('click',()=>selectCategory(tab,id));
     grid.appendChild(card);
   });
+}
+
+function renderAllCommonSections(){
+  const wrap=document.getElementById('commonAllSections');
+  if(!wrap)return;
+  wrap.innerHTML='';
+
+  COMMON_TABS.forEach(tab=>{
+    const group=document.createElement('section');
+    group.className='common-group';
+    const descriptions={
+      psych:'감정 처리·핵심 욕구·관계 패턴·스트레스 반응·민감성',
+      consent:'관계 시작·진행·경계·갈등·회복',
+      style:'시점·시제·묘사·대사·장면 운용',
+      voicepreset:'선택한 세부 문체와 함께 적용할 분위기 조합',
+      base:'장르와 무관하게 적용할 일관성·인지·진행 규칙',
+      events:'관계 변화에 활용할 장면 소재'
+    };
+    group.innerHTML='<div class="common-group-head"><h3>'+esc(COMMON_LABELS[tab])+'</h3><p>'+esc(descriptions[tab])+'</p></div>';
+
+    Object.entries(DATA[tab]).forEach(([id,category])=>{
+      if(!state[tab][id])state[tab][id]={};
+      const section=document.createElement('section');
+      section.className='common-category';
+      section.innerHTML='<div class="common-category-head"><div class="common-category-title">'+esc(category.label)+'</div><div class="common-category-desc">'+esc(category.desc)+'</div></div><div id="commonFeature-'+tab+'-'+id+'"></div>';
+      group.appendChild(section);
+    });
+    wrap.appendChild(group);
+  });
+
+  COMMON_TABS.forEach(tab=>Object.keys(DATA[tab]).forEach(id=>renderFeatures(tab,id)));
 }
 
 function renderAllCharacterSections(){
@@ -2265,7 +2293,8 @@ function selectCategory(tab,id){
 }
 
 function renderFeatures(tab,id){
-  const featureId=tab==='char'?'charFeature-'+id:CONFIG[tab][2];
+  const commonFeatureId='commonFeature-'+tab+'-'+id;
+  const featureId=tab==='char'?'charFeature-'+id:(document.getElementById(commonFeatureId)?commonFeatureId:CONFIG[tab][2]);
   const wrap=document.getElementById(featureId);
   const category=DATA[tab][id];
   if(!wrap||!category)return;
@@ -2456,11 +2485,8 @@ document.getElementById('copyBtn').addEventListener('click',async()=>{
 
 document.getElementById('clearBtn').addEventListener('click',()=>{
   if(activeTab==='common'){
-    COMMON_TABS.forEach(tab=>{
-      state[tab]={};
-      const id=current[tab];
-      if(id)renderFeatures(tab,id);
-    });
+    COMMON_TABS.forEach(tab=>{state[tab]={}});
+    renderAllCommonSections();
   }else if(activeTab==='keyword'){
     ['keywordTitle','keywordTriggers','keywordBody'].forEach(id=>document.getElementById(id).value='');
   }else if(DATA[activeTab]){
