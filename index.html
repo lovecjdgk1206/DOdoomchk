@@ -483,6 +483,17 @@ pre.output{font-size:calc(12.5px + 2pt)}
 .subtabbtn{font-size:calc(13px + 2pt)}
 .sub,.guide-intro,.guide-card p,.guide-note,.preset-desc,.opt,.check-item,.workspace-head p,pre.output.empty{color:var(--muted)}
 
+
+/* 캐릭터 전체 펼침·복수선택 */
+.char-all{display:grid;gap:18px}
+.char-section{border:1px solid var(--border);background:var(--panel);border-radius:11px;padding:16px 18px}
+.char-section-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding-bottom:11px;border-bottom:1px solid var(--border);margin-bottom:2px}
+.char-section-title{font-size:calc(16px + 2pt);font-weight:900;color:var(--text)}
+.char-section-desc{font-size:calc(12.5px + 2pt);line-height:1.6;color:var(--muted);margin-top:4px}
+.multi-badge{font-size:calc(10px + 2pt);font-weight:800;color:var(--amber);border:1px solid var(--amber-dim);background:var(--amber-glow);border-radius:999px;padding:5px 8px;white-space:nowrap}
+.char-section .feature:last-child{border-bottom:0}
+.char-note{font-size:calc(11px + 2pt);color:var(--muted);line-height:1.6;margin-top:8px}
+
 </style>
 </head>
 
@@ -573,11 +584,9 @@ pre.output{font-size:calc(12.5px + 2pt)}
 </section>
 
 <section class="panel-view" id="panel-char">
-  <div class="workspace-head"><h2>캐릭터 통합 설계</h2><p>기본 시트·성격·서사 역할·동기·행동 앵커·말투를 한 캐릭터 기준으로 선택합니다. 소분류 선택 결과는 하단에서 하나의 시트로 합쳐집니다.</p></div>
+  <div class="workspace-head"><h2>캐릭터 통합 설계</h2><p>기본 시트·성격·서사 역할·동기·행동 앵커·말투를 한 페이지에서 위부터 훑으며 선택합니다. 함께 적용할 수 있는 항목은 복수 선택되며 하단에서 하나의 시트로 합쳐집니다.</p></div>
   <div class="inline-field"><label for="characterName">캐릭터 이름</label><input id="characterName" type="text" placeholder="현재 제작할 캐릭터 이름"></div>
-  <div class="preset-grid" id="charGrid"></div>
-  <div class="preset-desc" id="charDesc">캐릭터 제작 항목을 선택하세요.</div>
-  <div id="charFeatureList"></div>
+  <div id="charAllSections" class="char-all"></div>
 </section>
 
 <section class="panel-view" id="panel-keyword">
@@ -2159,7 +2168,7 @@ base:{
 
 const CONFIG={
   world:['worldGrid','worldDesc','worldFeatureList'],
-  char:['charGrid','charDesc','charFeatureList'],
+  char:[null,null,'charAllSections'],
   psych:['psychGrid','psychDesc','psychFeatureList'],
   consent:['consentGrid','consentDesc','consentFeatureList'],
   style:['styleGrid','styleDesc','styleFeatureList'],
@@ -2174,6 +2183,16 @@ const current={};
 const COMMON_TABS=['psych','consent','style','voicepreset','base','events'];
 const COMMON_LABELS={psych:'심리',consent:'관계·합의',style:'문체',voicepreset:'문체 프리셋',base:'공통베이스',events:'관계이벤트'};
 let outputMode='prompt';
+const CHAR_SELECT_RULES={
+  basic:{0:'single'},
+  personality:{0:'multi'},
+  role:{0:'multi'},
+  motive:{0:'mixed'},
+  anchor:{0:'multi'},
+  speech:{0:'multi'}
+};
+function charRule(id,fi){return CHAR_SELECT_RULES[id]?.[fi]||'single'}
+function selectedIndices(value){return Array.isArray(value)?value:(value===undefined?[]:[value])}
 
 Object.keys(CONFIG).forEach(tab=>{
   state[tab]={};
@@ -2185,20 +2204,43 @@ Object.keys(CONFIG).forEach(tab=>{
 ============================================================ */
 
 function initTab(tab){
+  if(tab==='char'){
+    renderAllCharacterSections();
+    return;
+  }
   const [gridId]=CONFIG[tab];
   const grid=document.getElementById(gridId);
+  if(!grid)return;
 
   Object.entries(DATA[tab]).forEach(([id,data])=>{
     const card=document.createElement('div');
     card.className='preset-card';
     card.dataset.id=id;
     card.innerHTML=`<div class="pname">${esc(data.label)}</div>`;
-
-    card.addEventListener('click',()=>{
-      selectCategory(tab,id);
-    });
-
+    card.addEventListener('click',()=>selectCategory(tab,id));
     grid.appendChild(card);
+  });
+}
+
+function renderAllCharacterSections(){
+  const wrap=document.getElementById('charAllSections');
+  if(!wrap)return;
+  wrap.innerHTML='';
+
+  Object.entries(DATA.char).forEach(([id,category])=>{
+    if(!state.char[id])state.char[id]={};
+    const section=document.createElement('section');
+    section.className='char-section';
+    const rules=category.features.map((_,fi)=>charRule(id,fi));
+    const allowsMulti=rules.some(x=>x==='multi'||x==='mixed');
+    section.innerHTML=
+      '<div class="char-section-head"><div><div class="char-section-title">'+esc(category.label)+'</div><div class="char-section-desc">'+esc(category.desc)+'</div></div>'+
+      (allowsMulti?'<span class="multi-badge">복수 선택 가능</span>':'<span class="multi-badge">1개 선택</span>')+
+      '</div><div id="charFeature-'+id+'"></div>'+
+      (id==='motive'?'<div class="char-note">단일 목표는 다른 구조와 동시 선택되지 않으며, 겉목표+속욕구와 목표 충돌은 함께 선택할 수 있습니다.</div>':'')+
+      (id==='speech'?'<div class="char-note">서로 다른 말투를 함께 고르면 친밀도·상황·상대에 따른 적용 조건을 최종 시트에서 구분하세요.</div>':'');
+    wrap.appendChild(section);
+    renderFeatures('char',id);
   });
 }
 
@@ -2220,28 +2262,27 @@ function selectCategory(tab,id){
 }
 
 function renderFeatures(tab,id){
-  const featureId=CONFIG[tab][2];
+  const featureId=tab==='char'?'charFeature-'+id:CONFIG[tab][2];
   const wrap=document.getElementById(featureId);
   const category=DATA[tab][id];
-
+  if(!wrap||!category)return;
   wrap.innerHTML='';
 
   category.features.forEach((feature,fi)=>{
     const row=document.createElement('div');
     row.className='feature';
+    const rule=tab==='char'?charRule(id,fi):'single';
+    const currentValue=state[tab][id][fi];
+    const selectedSet=selectedIndices(currentValue);
 
     const opts=feature.opts.map((opt,oi)=>{
-      const selected=state[tab][id][fi]===oi;
+      const selected=selectedSet.includes(oi);
       const none=!opt.prompt;
-
       return `<div class="opt ${selected?'sel':''} ${none?'none-opt':''}"
         data-fi="${fi}" data-oi="${oi}">${esc(opt.v)}</div>`;
     }).join('');
 
-    row.innerHTML=
-      `<div class="feature-label">${esc(feature.label)}</div>
-       <div class="opts">${opts}</div>`;
-
+    row.innerHTML='<div class="feature-label">'+esc(feature.label)+(rule!=='single'?' · 복수선택':'')+'</div><div class="opts">'+opts+'</div>';
     wrap.appendChild(row);
   });
 
@@ -2249,11 +2290,23 @@ function renderFeatures(tab,id){
     btn.addEventListener('click',()=>{
       const fi=Number(btn.dataset.fi);
       const oi=Number(btn.dataset.oi);
+      const rule=tab==='char'?charRule(id,fi):'single';
 
-      if(state[tab][id][fi]===oi){
-        delete state[tab][id][fi];
+      if(rule==='single'){
+        if(state[tab][id][fi]===oi)delete state[tab][id][fi];
+        else state[tab][id][fi]=oi;
       }else{
-        state[tab][id][fi]=oi;
+        let arr=selectedIndices(state[tab][id][fi]);
+        if(arr.includes(oi)){
+          arr=arr.filter(x=>x!==oi);
+        }else if(rule==='mixed'){
+          if(oi===0)arr=[0];
+          else arr=arr.filter(x=>x!==0).concat(oi);
+        }else{
+          arr=arr.concat(oi);
+        }
+        if(arr.length)state[tab][id][fi]=arr;
+        else delete state[tab][id][fi];
       }
 
       renderFeatures(tab,id);
@@ -2299,10 +2352,12 @@ function appendTabOutput(tab,lines,showGroup){
 
     const selected=[];
     category.features.forEach((feature,fi)=>{
-      const oi=categoryState[fi];
-      if(oi===undefined)return;
-      const opt=feature.opts[oi];
-      if(opt)selected.push({feature,opt});
+      const value=categoryState[fi];
+      if(value===undefined)return;
+      selectedIndices(value).forEach(oi=>{
+        const opt=feature.opts[oi];
+        if(opt)selected.push({feature,opt});
+      });
     });
     if(!selected.length)return;
 
@@ -2407,8 +2462,11 @@ document.getElementById('clearBtn').addEventListener('click',()=>{
     ['keywordTitle','keywordTriggers','keywordBody'].forEach(id=>document.getElementById(id).value='');
   }else if(DATA[activeTab]){
     state[activeTab]={};
-    const id=current[activeTab];
-    if(id)renderFeatures(activeTab,id);
+    if(activeTab==='char')renderAllCharacterSections();
+    else{
+      const id=current[activeTab];
+      if(id)renderFeatures(activeTab,id);
+    }
   }
   renderOutput();
 });
