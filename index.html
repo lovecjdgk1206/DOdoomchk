@@ -1,12 +1,11 @@
 <!DOCTYPE html>
-<html lang="ko">
-<head>
+<html lang="ko"><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>PROMPT BUILDER · 작품 제작 가이드</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet">
 
 <style>
 :root{
@@ -555,8 +554,8 @@ pre.output{font-size:calc(12.5px + 2pt)}
     <div class="guide-card"><div class="num">01</div><strong>세계관</strong><p>세계 구조·사회·능력·기관·종족처럼 작품의 기반이 되는 규칙을 나눠 선택합니다.</p></div>
     <div class="guide-card"><div class="num">02</div><strong>공통</strong><p>심리·관계·합의·문체·공통베이스·관계이벤트를 한 페이지에서 함께 검토합니다.</p></div>
     <div class="guide-card"><div class="num">03</div><strong>캐릭터</strong><p>캐릭터 한 명의 기본 시트·성격·서사·동기·행동 앵커·말투를 통합해 확인합니다.</p></div>
-    <div class="guide-card"><div class="num">04</div><strong>키워드북</strong><p>고유명사·조건부 설정의 항목명·호출키·본문을 복사용 형식으로 조립합니다.</p></div>
-    <div class="guide-card"><div class="num">05</div><strong>커맨드북</strong><p>세계관·캐릭터·키워드북이 완성된 뒤 마지막 단계에서 명령어를 설계합니다.</p></div>
+    <div class="guide-card"><div class="num">04</div><strong>키워드북</strong><p>메인에 상시 둘 필요가 없는 사건·지역·기관·인물 등의 상세 규칙을 골라 사용합니다.</p></div>
+    <div class="guide-card"><div class="num">05</div><strong>커맨드북</strong><p>요약·오류 점검처럼 대화형 작품에 공통으로 쓰는 명령 프롬프트를 골라 사용합니다.</p></div>
     <div class="guide-card"><div class="num">06</div><strong>통합 결과</strong><p>현재 페이지의 모든 선택을 합쳐 보고 프롬프트만 또는 가이드 포함 형식으로 복사합니다.</p></div>
     <div class="guide-card"><div class="num">07</div><strong>체크리스트</strong><p>설정 충돌·중복·누락·불필요한 규칙을 최종 점검합니다.</p></div>
   </div>
@@ -568,7 +567,7 @@ pre.output{font-size:calc(12.5px + 2pt)}
 </section>
 
 <section class="panel-view" id="panel-world">
-  <div class="preset-grid" id="worldGrid"></div>
+  <div class="preset-grid" id="worldGrid"><div class="preset-card" data-id="omega"><div class="pname">오메가버스</div></div><div class="preset-card" data-id="fantasy"><div class="pname">판타지</div></div><div class="preset-card" data-id="hunter"><div class="pname">헌터·게이트</div></div><div class="preset-card" data-id="modern"><div class="pname">현대</div></div><div class="preset-card" data-id="mystery"><div class="pname">미스터리</div></div><div class="preset-card" data-id="memory"><div class="pname">기억·정체성</div></div><div class="preset-card" data-id="power"><div class="pname">능력·권한</div></div><div class="preset-card" data-id="corruption"><div class="pname">오염·변이</div></div></div>
   <div class="preset-desc" id="worldDesc">장르 또는 세계 시스템을 선택하세요.</div>
   <div id="worldFeatureList"></div>
 </section>
@@ -576,28 +575,26 @@ pre.output{font-size:calc(12.5px + 2pt)}
 
 <section class="panel-view" id="panel-common">
   <div class="workspace-head"><h2>작품 공통 설정</h2><p>심리·관계·합의·문체·공통 규칙·관계 이벤트의 모든 항목을 위에서 아래로 훑으며 선택합니다. 함께 적용할 수 있는 항목은 복수 선택되며 모든 결과가 하단에 통합됩니다.</p></div>
-  <div id="commonAllSections" class="common-all"></div>
+  <div id="commonAllSections" class="common-all"><section class="common-group"><div class="common-group-head"><h3>심리</h3><p>감정 처리·핵심 욕구·관계 패턴·스트레스 반응·민감성</p></div><section class="common-category"><div class="common-category-head"><div class="common-category-title">감정 처리</div><div class="common-category-desc">감정을 인식하고 표현하는 기본 방식을 설정합니다.</div></div><div id="commonFeature-psych-emotion"><div class="feature"><div class="feature-label">표현 방식</div><div class="opts"><div class="opt  " data-fi="0" data-oi="0">직접 표현</div><div class="opt  " data-fi="0" data-oi="1">내부 처리</div><div class="opt  " data-fi="0" data-oi="2">억제</div></div></div></div></section><section class="common-category"><div class="common-category-head"><div class="common-category-title">핵심 욕구</div><div class="common-category-desc">캐릭터가 반복적으로 원하는 심리적 방향을 정합니다.</div></div><div id="commonFeature-psych-needs"><div class="feature"><div class="feature-label">욕구</div><div class="opts"><div class="opt  " data-fi="0" data-oi="0">자율성</div><div class="opt  " data-fi="0" data-oi="1">유능감</div><div class="opt  " data-fi="0" data-oi="2">관계성</div><div class="opt  " data-fi="0" data-oi="3">안정</div></div></div></div></section><section class="common-category"><div class="common-category-head"><div class="common-category-title">관계 패턴</div><div class="common-category-desc">관계에서 친밀감과 거리를 조절하는 경향을 참고합니다.</div></div><div id="commonFeature-psych-attachment"><div class="feature"><div class="feature-label">거리 조절</div><div class="opts"><div class="opt  " data-fi="0" data-oi="0">안정형</div><div class="opt  " data-fi="0" data-oi="1">불안형</div><div class="opt  " data-fi="0" data-oi="2">회피형</div></div></div></div></section><section class="common-category"><div class="common-category-head"><div class="common-category-title">스트레스 반응</div><div class="common-category-desc">압박 상황에서 나타나는 행동 경향을 설정합니다.</div></div><div id="commonFeature-psych-stress"><div class="feature"><div class="feature-label">반응</div><div class="opts"><div class="opt  " data-fi="0" data-oi="0">대응</div><div class="opt  " data-fi="0" data-oi="1">회피</div><div class="opt  " data-fi="0" data-oi="2">공격</div><div class="opt  " data-fi="0" data-oi="3">동결</div></div></div></div></section><section class="common-category"><div class="common-category-head"><div class="common-category-title">민감성</div><div class="common-category-desc">특정 관계 신호에 얼마나 민감한지 설정합니다.</div></div><div id="commonFeature-psych-sensitivity"><div class="feature"><div class="feature-label">민감 요소</div><div class="opts"><div class="opt  " data-fi="0" data-oi="0">거절</div><div class="opt  " data-fi="0" data-oi="1">유기</div><div class="opt  " data-fi="0" data-oi="2">평가</div></div></div></div></section></section><section class="common-group"><div class="common-group-head"><h3>관계·합의</h3><p>관계 시작·진행·경계·갈등·회복</p></div><section class="common-category"><div class="common-category-head"><div class="common-category-title">관계 시작</div><div class="common-category-desc">두 인물이 어떤 관계에서 시작하는지 정합니다.</div></div><div id="commonFeature-consent-start"><div class="feature"><div class="feature-label">시작점</div><div class="opts"><div class="opt  " data-fi="0" data-oi="0">낯선 사이</div><div class="opt  " data-fi="0" data-oi="1">기존 지인</div><div class="opt  " data-fi="0" data-oi="2">오랜 인연</div></div></div></div></section><section class="common-category"><div class="common-category-head"><div class="common-category-title">관계 진행</div><div class="common-category-desc">관계가 변하는 속도와 표현 방식을 정합니다.</div></div><div id="commonFeature-consent-progress"><div class="feature"><div class="feature-label">진행 속도</div><div class="opts"><div class="opt  " data-fi="0" data-oi="0">점진형</div><div class="opt  " data-fi="0" data-oi="1">빠른 전개</div></div></div><div class="feature"><div class="feature-label">단계 관리</div><div class="opts"><div class="opt  " data-fi="1" data-oi="0">단계 사용</div><div class="opt  " data-fi="1" data-oi="1">자유 진행</div></div></div></div></section><section class="common-category"><div class="common-category-head"><div class="common-category-title">경계·합의</div><div class="common-category-desc">개인이 편안하게 느끼는 행동과 경계를 관계에 반영합니다.</div></div><div id="commonFeature-consent-boundary"><div class="feature"><div class="feature-label">경계 확인</div><div class="opts"><div class="opt  " data-fi="0" data-oi="0">명시적</div><div class="opt  " data-fi="0" data-oi="1">상황 확인</div></div></div></div></section><section class="common-category"><div class="common-category-head"><div class="common-category-title">갈등</div><div class="common-category-desc">관계에 문제가 생겼을 때의 기본 반응을 설정합니다.</div></div><div id="commonFeature-consent-conflict"><div class="feature"><div class="feature-label">갈등 방식</div><div class="opts"><div class="opt  " data-fi="0" data-oi="0">대화형</div><div class="opt  " data-fi="0" data-oi="1">거리두기</div><div class="opt  " data-fi="0" data-oi="2">충돌형</div></div></div></div></section><section class="common-category"><div class="common-category-head"><div class="common-category-title">회복·화해</div><div class="common-category-desc">갈등 뒤 관계가 어떻게 회복되는지 설정합니다.</div></div><div id="commonFeature-consent-recovery"><div class="feature"><div class="feature-label">회복 방식</div><div class="opts"><div class="opt  " data-fi="0" data-oi="0">대화</div><div class="opt  " data-fi="0" data-oi="1">행동</div><div class="opt  " data-fi="0" data-oi="2">시간</div></div></div></div></section></section><section class="common-group"><div class="common-group-head"><h3>문체</h3><p>시점·시제·묘사·대사·장면 운용</p></div><section class="common-category"><div class="common-category-head"><div class="common-category-title">서술 시점</div><div class="common-category-desc">AI에 바로 사용할 수 있는 기본 POV 지침입니다.</div></div><div id="commonFeature-style-pov"><div class="feature"><div class="feature-label">POV</div><div class="opts"><div class="opt  " data-fi="0" data-oi="0">3인칭 제한</div><div class="opt  " data-fi="0" data-oi="1">3인칭 전지</div><div class="opt  " data-fi="0" data-oi="2">1인칭</div></div></div></div></section><section class="common-category"><div class="common-category-head"><div class="common-category-title">시제</div><div class="common-category-desc">장면의 기본 시제를 정합니다.</div></div><div id="commonFeature-style-tense"><div class="feature"><div class="feature-label">시제</div><div class="opts"><div class="opt  " data-fi="0" data-oi="0">과거형</div><div class="opt  " data-fi="0" data-oi="1">현재형</div></div></div></div></section><section class="common-category"><div class="common-category-head"><div class="common-category-title">묘사 밀도</div><div class="common-category-desc">환경과 감각 정보를 어느 정도 사용할지 정합니다.</div></div><div id="commonFeature-style-description"><div class="feature"><div class="feature-label">밀도</div><div class="opts"><div class="opt  " data-fi="0" data-oi="0">간결</div><div class="opt  " data-fi="0" data-oi="1">중간</div><div class="opt  " data-fi="0" data-oi="2">풍부</div></div></div></div></section><section class="common-category"><div class="common-category-head"><div class="common-category-title">감정 묘사</div><div class="common-category-desc">감정을 어떤 방식으로 보여줄지 정합니다.</div></div><div id="commonFeature-style-emotion"><div class="feature"><div class="feature-label">표현</div><div class="opts"><div class="opt  " data-fi="0" data-oi="0">행동 중심</div><div class="opt  " data-fi="0" data-oi="1">내면 중심</div><div class="opt  " data-fi="0" data-oi="2">절제</div></div></div></div></section><section class="common-category"><div class="common-category-head"><div class="common-category-title">대사 비중</div><div class="common-category-desc">대사와 서술의 비율을 정합니다.</div></div><div id="commonFeature-style-dialogue"><div class="feature"><div class="feature-label">비중</div><div class="opts"><div class="opt  " data-fi="0" data-oi="0">높음</div><div class="opt  " data-fi="0" data-oi="1">균형</div><div class="opt  " data-fi="0" data-oi="2">낮음</div></div></div></div></section><section class="common-category"><div class="common-category-head"><div class="common-category-title">장면 속도</div><div class="common-category-desc">장면에 머무르는 시간을 조절합니다.</div></div><div id="commonFeature-style-pacing"><div class="feature"><div class="feature-label">속도</div><div class="opts"><div class="opt  " data-fi="0" data-oi="0">빠름</div><div class="opt  " data-fi="0" data-oi="1">보통</div><div class="opt  " data-fi="0" data-oi="2">느림</div></div></div></div></section></section><section class="common-group"><div class="common-group-head"><h3>문체 프리셋</h3><p>선택한 세부 문체와 함께 적용할 분위기 조합</p></div><section class="common-category"><div class="common-category-head"><div class="common-category-title">담백한 서술</div><div class="common-category-desc">상황 전달과 인물 행동을 중심으로 하는 범용 문체 조합입니다.</div></div><div id="commonFeature-voicepreset-clean"><div class="feature"><div class="feature-label">프리셋</div><div class="opts"><div class="opt  " data-fi="0" data-oi="0">사용</div></div></div></div></section><section class="common-category"><div class="common-category-head"><div class="common-category-title">서정적</div><div class="common-category-desc">감각과 분위기를 조금 더 적극적으로 사용하는 범용 조합입니다.</div></div><div id="commonFeature-voicepreset-lyrical"><div class="feature"><div class="feature-label">프리셋</div><div class="opts"><div class="opt  " data-fi="0" data-oi="0">사용</div></div></div></div></section><section class="common-category"><div class="common-category-head"><div class="common-category-title">긴장형</div><div class="common-category-desc">정보 제한과 문장 리듬으로 긴장감을 만드는 범용 조합입니다.</div></div><div id="commonFeature-voicepreset-tension"><div class="feature"><div class="feature-label">프리셋</div><div class="opts"><div class="opt  " data-fi="0" data-oi="0">사용</div></div></div></div></section><section class="common-category"><div class="common-category-head"><div class="common-category-title">따뜻한 일상</div><div class="common-category-desc">작은 행동과 생활감을 중심으로 하는 범용 조합입니다.</div></div><div id="commonFeature-voicepreset-warm"><div class="feature"><div class="feature-label">프리셋</div><div class="opts"><div class="opt  " data-fi="0" data-oi="0">사용</div></div></div></div></section><section class="common-category"><div class="common-category-head"><div class="common-category-title">경쾌한 대화</div><div class="common-category-desc">대화 리듬과 캐릭터 간 말맛을 중심으로 하는 범용 조합입니다.</div></div><div id="commonFeature-voicepreset-witty"><div class="feature"><div class="feature-label">프리셋</div><div class="opts"><div class="opt  " data-fi="0" data-oi="0">사용</div></div></div></div></section></section><section class="common-group"><div class="common-group-head"><h3>공통베이스</h3><p>장르와 무관하게 적용할 일관성·인지·진행 규칙</p></div><section class="common-category"><div class="common-category-head"><div class="common-category-title">연속성</div><div class="common-category-desc">이전 장면의 사실과 현재 장면을 자연스럽게 연결합니다.</div></div><div id="commonFeature-base-continuity"><div class="feature"><div class="feature-label">기본</div><div class="opts"><div class="opt  " data-fi="0" data-oi="0">유지</div></div></div></div></section><section class="common-category"><div class="common-category-head"><div class="common-category-title">캐릭터 일관성</div><div class="common-category-desc">변화를 막는 것이 아니라 변화에 이유를 부여하는 기본 지침입니다.</div></div><div id="commonFeature-base-character"><div class="feature"><div class="feature-label">기본</div><div class="opts"><div class="opt  " data-fi="0" data-oi="0">유지</div></div></div></div></section><section class="common-category"><div class="common-category-head"><div class="common-category-title">설정 우선</div><div class="common-category-desc">이미 정한 작품 설정을 새 임의 설정보다 우선합니다.</div></div><div id="commonFeature-base-canon"><div class="feature"><div class="feature-label">기본</div><div class="opts"><div class="opt  " data-fi="0" data-oi="0">적용</div></div></div></div></section><section class="common-category"><div class="common-category-head"><div class="common-category-title">정보 범위</div><div class="common-category-desc">캐릭터가 모르는 정보를 아는 것처럼 처리하지 않도록 합니다.</div></div><div id="commonFeature-base-knowledge"><div class="feature"><div class="feature-label">기본</div><div class="opts"><div class="opt  " data-fi="0" data-oi="0">인지 제한</div></div></div></div></section><section class="common-category"><div class="common-category-head"><div class="common-category-title">NPC 자율성</div><div class="common-category-desc">NPC가 각자의 목표와 일상을 가진 인물처럼 움직이게 합니다.</div></div><div id="commonFeature-base-npc"><div class="feature"><div class="feature-label">기본</div><div class="opts"><div class="opt  " data-fi="0" data-oi="0">자율 행동</div></div></div></div></section><section class="common-category"><div class="common-category-head"><div class="common-category-title">진행 관리</div><div class="common-category-desc">같은 상황과 설명이 계속 반복되는 것을 줄입니다.</div></div><div id="commonFeature-base-pacing"><div class="feature"><div class="feature-label">기본</div><div class="opts"><div class="opt  " data-fi="0" data-oi="0">반복 최소화</div></div></div></div></section><section class="common-category"><div class="common-category-head"><div class="common-category-title">사용자 선택</div><div class="common-category-desc">대화형 작품에서 사용자의 중요한 결정을 대신 확정하지 않도록 합니다.</div></div><div id="commonFeature-base-choice"><div class="feature"><div class="feature-label">기본</div><div class="opts"><div class="opt  " data-fi="0" data-oi="0">선택 존중</div></div></div></div></section></section><section class="common-group"><div class="common-group-head"><h3>관계이벤트</h3><p>관계 변화에 활용할 장면 소재</p></div><section class="common-category"><div class="common-category-head"><div class="common-category-title">만남·재회</div><div class="common-category-desc">관계의 시작이나 재접촉에 사용할 수 있는 사건 예시입니다.</div></div><div id="commonFeature-events-meeting"><div class="feature"><div class="feature-label">이벤트</div><div class="opts"><div class="opt  " data-fi="0" data-oi="0">우연한 만남</div><div class="opt  " data-fi="0" data-oi="1">오랜만의 재회</div><div class="opt  " data-fi="0" data-oi="2">공동 업무</div></div></div></div></section><section class="common-category"><div class="common-category-head"><div class="common-category-title">균열·오해</div><div class="common-category-desc">관계에 작은 긴장을 만드는 사건 예시입니다.</div></div><div id="commonFeature-events-friction"><div class="feature"><div class="feature-label">이벤트</div><div class="opts"><div class="opt  " data-fi="0" data-oi="0">오해</div><div class="opt  " data-fi="0" data-oi="1">약속 문제</div><div class="opt  " data-fi="0" data-oi="2">가치관 충돌</div></div></div></div></section><section class="common-category"><div class="common-category-head"><div class="common-category-title">질투·자리 의식</div><div class="common-category-desc">관계 속 자신의 위치를 의식하게 되는 사건 예시입니다.</div></div><div id="commonFeature-events-jealousy"><div class="feature"><div class="feature-label">이벤트</div><div class="opts"><div class="opt  " data-fi="0" data-oi="0">질투</div><div class="opt  " data-fi="0" data-oi="1">자리 의식</div></div></div></div></section><section class="common-category"><div class="common-category-head"><div class="common-category-title">신뢰 형성</div><div class="common-category-desc">관계를 가까워지게 만드는 사건 예시입니다.</div></div><div id="commonFeature-events-trust"><div class="feature"><div class="feature-label">이벤트</div><div class="opts"><div class="opt  " data-fi="0" data-oi="0">비밀 공유</div><div class="opt  " data-fi="0" data-oi="1">도움</div><div class="opt  " data-fi="0" data-oi="2">약속 이행</div></div></div></div></section><section class="common-category"><div class="common-category-head"><div class="common-category-title">일상 변화</div><div class="common-category-desc">큰 사건 없이 관계의 온도를 바꾸는 장면 예시입니다.</div></div><div id="commonFeature-events-routine"><div class="feature"><div class="feature-label">이벤트</div><div class="opts"><div class="opt  " data-fi="0" data-oi="0">호칭 변화</div><div class="opt  " data-fi="0" data-oi="1">습관 형성</div><div class="opt  " data-fi="0" data-oi="2">거리 변화</div></div></div></div></section><section class="common-category"><div class="common-category-head"><div class="common-category-title">비밀·고백</div><div class="common-category-desc">숨겨진 사실이나 감정이 관계에 영향을 주는 사건입니다.</div></div><div id="commonFeature-events-reveal"><div class="feature"><div class="feature-label">이벤트</div><div class="opts"><div class="opt  " data-fi="0" data-oi="0">비밀 공개</div><div class="opt  " data-fi="0" data-oi="1">감정 고백</div></div></div></div></section></section></div>
 </section>
 
 <section class="panel-view" id="panel-char">
   <div class="workspace-head"><h2>캐릭터 통합 설계</h2><p>기본 시트·성격·서사 역할·동기·행동 앵커·말투를 한 페이지에서 위부터 훑으며 선택합니다. 함께 적용할 수 있는 항목은 복수 선택되며 하단에서 하나의 시트로 합쳐집니다.</p></div>
   <div class="inline-field"><label for="characterName">캐릭터 이름</label><input id="characterName" type="text" placeholder="현재 제작할 캐릭터 이름"></div>
-  <div id="charAllSections" class="char-all"></div>
+  <div id="charAllSections" class="char-all"><section class="char-section"><div class="char-section-head"><div><div class="char-section-title">기본 시트</div><div class="char-section-desc">캐릭터를 처음 만들 때 필요한 최소 정보입니다.</div></div><span class="multi-badge">1개 선택</span></div><div id="charFeature-basic"><div class="feature"><div class="feature-label">정보 범위</div><div class="opts"><div class="opt  " data-fi="0" data-oi="0">기본형</div><div class="opt  " data-fi="0" data-oi="1">간결형</div></div></div></div></section><section class="char-section"><div class="char-section-head"><div><div class="char-section-title">성격</div><div class="char-section-desc">성격 유형은 참고축으로 사용하고 실제 행동을 함께 설정합니다.</div></div><span class="multi-badge">복수 선택 가능</span></div><div id="charFeature-personality"><div class="feature"><div class="feature-label">표현 방식 · 복수선택</div><div class="opts"><div class="opt  " data-fi="0" data-oi="0">키워드</div><div class="opt  " data-fi="0" data-oi="1">MBTI 참고</div><div class="opt  " data-fi="0" data-oi="2">에니어그램 참고</div></div></div></div></section><section class="char-section"><div class="char-section-head"><div><div class="char-section-title">서사 역할</div><div class="char-section-desc">캐릭터가 이야기에서 수행하는 기본 기능을 정합니다.</div></div><span class="multi-badge">복수 선택 가능</span></div><div id="charFeature-role"><div class="feature"><div class="feature-label">역할 · 복수선택</div><div class="opts"><div class="opt  " data-fi="0" data-oi="0">주인공</div><div class="opt  " data-fi="0" data-oi="1">동료</div><div class="opt  " data-fi="0" data-oi="2">라이벌</div><div class="opt  " data-fi="0" data-oi="3">멘토</div><div class="opt  " data-fi="0" data-oi="4">대립자</div></div></div></div></section><section class="char-section"><div class="char-section-head"><div><div class="char-section-title">동기·목표</div><div class="char-section-desc">캐릭터가 왜 행동하는지를 정합니다.</div></div><span class="multi-badge">복수 선택 가능</span></div><div id="charFeature-motive"><div class="feature"><div class="feature-label">목표 구조 · 복수선택</div><div class="opts"><div class="opt  " data-fi="0" data-oi="0">단일 목표</div><div class="opt  " data-fi="0" data-oi="1">겉목표+속욕구</div><div class="opt  " data-fi="0" data-oi="2">목표 충돌</div></div></div></div><div class="char-note">단일 목표는 다른 구조와 동시 선택되지 않으며, 겉목표+속욕구와 목표 충돌은 함께 선택할 수 있습니다.</div></section><section class="char-section"><div class="char-section-head"><div><div class="char-section-title">행동 앵커</div><div class="char-section-desc">장면에서 캐릭터를 구별할 수 있는 반복 행동을 정합니다.</div></div><span class="multi-badge">복수 선택 가능</span></div><div id="charFeature-anchor"><div class="feature"><div class="feature-label">행동 특징 · 복수선택</div><div class="opts"><div class="opt  " data-fi="0" data-oi="0">생활 습관</div><div class="opt  " data-fi="0" data-oi="1">감정 습관</div><div class="opt  " data-fi="0" data-oi="2">관계 습관</div></div></div></div></section><section class="char-section"><div class="char-section-head"><div><div class="char-section-title">말투</div><div class="char-section-desc">캐릭터마다 대사의 어휘와 리듬을 구별합니다.</div></div><span class="multi-badge">복수 선택 가능</span></div><div id="charFeature-speech"><div class="feature"><div class="feature-label">대사 특징 · 복수선택</div><div class="opts"><div class="opt  " data-fi="0" data-oi="0">간결</div><div class="opt  " data-fi="0" data-oi="1">정중</div><div class="opt  " data-fi="0" data-oi="2">직설</div><div class="opt  " data-fi="0" data-oi="3">우회</div></div></div></div><div class="char-note">서로 다른 말투를 함께 고르면 친밀도·상황·상대에 따른 적용 조건을 최종 시트에서 구분하세요.</div></section></div>
 </section>
 
 <section class="panel-view" id="panel-keyword">
-  <div class="workspace-head"><h2>키워드북 항목 작성</h2><p>항목 이름·호출 키워드·본문을 한 화면에서 작성하고 하단에서 복사용 형식을 확인합니다. 일반명사만으로 과도하게 호출되지 않도록 고유명사를 우선하세요.</p></div>
-  <div class="keyword-builder">
-    <div class="keyword-field"><label for="keywordTitle">항목 이름</label><input id="keywordTitle" type="text" placeholder="예: 룬가르드 자아성물"></div>
-    <div class="keyword-field"><label for="keywordTriggers">호출 키워드</label><input id="keywordTriggers" type="text" placeholder="예: 룬가르드 자아성물·자아성물·고유명"></div>
-    <div class="keyword-field"><label for="keywordBody">키워드북 본문</label><textarea id="keywordBody" placeholder="호출될 때만 필요한 상세 규칙을 입력하세요."></textarea></div>
-  </div>
+  <div class="workspace-head"><h2>키워드북</h2><p>메인에 상시 넣지 않아도 되는 상세 설정만 선택합니다. 작품에 해당 내용이 없으면 선택하지 않아도 됩니다.</p></div>
+  <div class="preset-grid" id="keywordGrid"></div>
+  <div class="preset-desc" id="keywordDesc">사용할 키워드북 항목을 선택하세요.</div>
+  <div id="keywordFeatureList"></div>
 </section>
 
 <section class="panel-view" id="panel-commands">
-  <div class="workspace-head"><h2>커맨드북</h2><p>명령어 트리거와 출력 범위를 설계합니다. 작품 설정과 캐릭터가 완성된 뒤 마지막 단계에서 작성하세요.</p></div>
-  <div class="preset-grid" id="commandsGrid"></div>
-  <div class="preset-desc" id="commandsDesc">대화형 작품에서 사용할 수 있는 보조 명령 예시입니다.</div>
+  <div class="workspace-head"><h2>커맨드북</h2><p>대화형 작품에 공통으로 사용할 실제 명령 프롬프트입니다. 트리거는 !가 붙은 형태와 붙지 않은 형태를 모두 인식합니다.</p></div>
+  <div class="preset-grid" id="commandsGrid"><div class="preset-card" data-id="status"><div class="pname">상태 확인</div></div><div class="preset-card" data-id="summary"><div class="pname">요약</div></div><div class="preset-card" data-id="info"><div class="pname">정보</div></div><div class="preset-card" data-id="scene"><div class="pname">진행 보조</div></div></div>
+  <div class="preset-desc" id="commandsDesc">사용할 공통 명령을 선택하세요.</div>
   <div id="commandsFeatureList"></div>
 </section>
 
@@ -605,7 +602,7 @@ pre.output{font-size:calc(12.5px + 2pt)}
   <div class="preset-desc" style="margin-bottom:18px;">
     작품 설정을 정리한 뒤 마지막으로 확인하는 범용 체크리스트입니다.
   </div>
-  <div id="checklistBody"></div>
+  <div id="checklistBody"><div class="check-group"><h3>세계관</h3><label class="check-item"><input type="checkbox"><span>작품에서 실제로 사용할 세계 규칙만 남겼다.</span></label><label class="check-item"><input type="checkbox"><span>서로 충돌하는 설정이 없는지 확인했다.</span></label><label class="check-item"><input type="checkbox"><span>능력·마법·기관 등 강한 시스템에 최소한의 한계가 있다.</span></label><label class="check-item"><input type="checkbox"><span>서사에서 사용하지 않는 세부 설정을 과도하게 만들지 않았다.</span></label></div><div class="check-group"><h3>캐릭터</h3><label class="check-item"><input type="checkbox"><span>주요 인물마다 원하는 것이 구분된다.</span></label><label class="check-item"><input type="checkbox"><span>성격 키워드 외에 실제 행동 특징이 있다.</span></label><label class="check-item"><input type="checkbox"><span>주요 인물의 말투·행동·목표가 서로 구별된다.</span></label><label class="check-item"><input type="checkbox"><span>직업이나 성격 유형 하나만으로 캐릭터를 설명하지 않았다.</span></label></div><div class="check-group"><h3>심리·관계</h3><label class="check-item"><input type="checkbox"><span>관계가 시작되는 지점을 정했다.</span></label><label class="check-item"><input type="checkbox"><span>관계가 변하는 이유가 장면과 사건에 존재한다.</span></label><label class="check-item"><input type="checkbox"><span>갈등 뒤 후속 감정을 고려했다.</span></label><label class="check-item"><input type="checkbox"><span>인물별 경계와 관계 반응의 차이를 고려했다.</span></label></div><div class="check-group"><h3>문체</h3><label class="check-item"><input type="checkbox"><span>기본 POV를 정했다.</span></label><label class="check-item"><input type="checkbox"><span>시점 인물이 모르는 정보를 무심코 서술하지 않는지 확인했다.</span></label><label class="check-item"><input type="checkbox"><span>묘사와 대사의 비중이 작품 분위기와 맞는다.</span></label><label class="check-item"><input type="checkbox"><span>같은 비유·감정 설명·문장 패턴이 지나치게 반복되지 않는다.</span></label></div><div class="check-group"><h3>이벤트·진행</h3><label class="check-item"><input type="checkbox"><span>모든 이벤트를 넣지 않고 필요한 것만 선택했다.</span></label><label class="check-item"><input type="checkbox"><span>큰 사건과 일상 장면의 비율을 조절했다.</span></label><label class="check-item"><input type="checkbox"><span>이벤트가 캐릭터의 성격과 행동보다 우선하지 않는다.</span></label><label class="check-item"><input type="checkbox"><span>이전 사건의 영향이 다음 장면에 이어진다.</span></label></div><div class="check-group"><h3>최종 정리</h3><label class="check-item"><input type="checkbox"><span>비슷한 지침이 여러 번 반복되어 있지 않다.</span></label><label class="check-item"><input type="checkbox"><span>AI용 지침과 제작자용 메모를 구분했다.</span></label><label class="check-item"><input type="checkbox"><span>빈 설정을 억지로 채우지 않았다.</span></label><label class="check-item"><input type="checkbox"><span>공개할 필요 없는 개인 제작 규칙이나 내부 메모를 제거했다.</span></label></div></div>
 </section>
 
 </main>
@@ -623,7 +620,7 @@ pre.output{font-size:calc(12.5px + 2pt)}
     </div>
   </div>
 
-  <pre class="output empty" id="outputBox">// 항목을 선택하면 여기에 Prompt와 Guide가 표시됩니다.</pre>
+  <pre class="output empty" id="outputBox">// 제작할 주요 항목을 선택하세요.</pre>
 </div>
 
 <script>
@@ -1940,22 +1937,85 @@ events:{
   }
 },
 
+keyword:{
+  events:{
+    label:'조건부 사건',
+    desc:'특정 계절·장소·상태·행동에서만 열리는 사건을 메인과 분리합니다.',
+    features:[{
+      label:'공통 규칙',
+      opts:[{
+        v:'조건 충족 시 호출',
+        prompt:'[조건부 사건]\n호출=명시된 발생조건 충족 시만\n미충족 시 발생·암시 금지\n발생 후 인물·지역·관계에 남은 결과 반영\n확정되지 않은 원인·결말 임의생성 금지',
+        guide:'작품에 조건부 사건이 있을 때만 사용하고, 실제 발생조건과 결과는 작품별 항목에 기재하세요.'
+      }]
+    }]
+  },
+  seasonal:{
+    label:'계절·주기 사건',
+    desc:'계절·축제·번식기·이동철처럼 시기에 묶인 사건을 필요할 때만 호출합니다.',
+    features:[{
+      label:'공통 규칙',
+      opts:[{
+        v:'해당 시기만 호출',
+        prompt:'[계절·주기 사건]\n호출=현재 시기와 발생지역이 모두 일치할 때만\n매년·매회 동일결과 반복 금지\n날씨·생태·교통·물가·지역반응 중 명시된 영향만 적용\n해당 사건이 없는 작품에서는 사용 금지',
+        guide:'고정 행사와 확률 사건을 구분하고, 작품에 없는 계절 사건은 만들지 마세요.'
+      }]
+    }]
+  },
+  location:{
+    label:'지역·국가 상세',
+    desc:'메인에는 체감 핵심만 남기고 지명별 상세를 해당 장소가 등장할 때 호출합니다.',
+    features:[{
+      label:'공통 규칙',
+      opts:[{
+        v:'해당 지역 등장 시 호출',
+        prompt:'[지역·국가 상세]\n호출=해당 고유지명 등장·진입·질문 시\n현재 장면과 관련된 환경·문화·치안·물가·주민반응만 사용\n다른 지역 설정 혼입 금지\n미제공 통치자·역사·제도 임의생성 금지',
+        guide:'국가나 지역 상세가 실제로 작성된 작품에서만 사용하세요.'
+      }]
+    }]
+  },
+  entity:{
+    label:'인물·기관·종족 상세',
+    desc:'특정 고유명사가 등장할 때만 필요한 성격·규율·관계·역할을 호출합니다.',
+    features:[{
+      label:'공통 규칙',
+      opts:[{
+        v:'고유명사 기준 호출',
+        prompt:'[인물·기관·종족 상세]\n호출=등록된 고유명사 직접언급·등장·관련질문 시\n현재 장면에 필요한 정보만 반영\n비공개 정보는 인지 가능한 존재에게만 허용\n미제공 관계·직위·능력·목표 확장 금지',
+        guide:'일반명사보다 실제 등록된 이름을 호출키로 사용하세요.'
+      }]
+    }]
+  },
+  object:{
+    label:'물품·능력·계약 상세',
+    desc:'특정 물품·능력·계약의 조건과 한계를 사용할 때만 불러옵니다.',
+    features:[{
+      label:'공통 규칙',
+      opts:[{
+        v:'사용·조사 시 호출',
+        prompt:'[물품·능력·계약 상세]\n호출=대상 획득·사용·조사·직접질문 시\n명시된 발동조건·소모·한계·대가 적용\n조건 미충족 시 효과 발생 금지\n등록되지 않은 상위능력·숨은효과 임의생성 금지',
+        guide:'실제 상세 항목이 있는 물품·능력·계약에만 적용하세요.'
+      }]
+    }]
+  }
+},
+
 commands:{
   status:{
     label:'상태 확인',
-    desc:'현재 진행 상황을 확인하는 간단한 명령 예시입니다.',
+    desc:'현재 장면과 관계 상태를 설정 범위 안에서 확인합니다.',
     features:[
       {
         label:'명령',
         opts:[
           {
-            v:'/상태',
-            prompt:'/상태→현재 장소·시간·주요인물·직전상황 요약',
+            v:'!상태 또는 상태',
+            prompt:'트리거=!상태|상태\n출력=현재 장소·시간·등장인물·직전상황\n확인되지 않은 정보 추정 금지',
             guide:'출력하고 싶은 정보만 골라 사용하세요.'
           },
           {
-            v:'/관계',
-            prompt:'/관계→주요인물 간 현재 관계를 짧게 요약',
+            v:'!관계 또는 관계',
+            prompt:'트리거=!관계|관계\n출력=주요인물 간 현재 감정·거리·최근 변화\n관계수치 임의생성·비공개 감정 폭로 금지',
             guide:'수치보다 현재 감정과 최근 변화 중심으로 표시할 수도 있습니다.'
           }
         ]
@@ -1965,19 +2025,19 @@ commands:{
 
   summary:{
     label:'요약',
-    desc:'긴 진행에서 이전 사건을 확인하기 위한 명령 예시입니다.',
+    desc:'긴 진행에서 이어가야 할 사실과 미해결 사항을 압축합니다.',
     features:[
       {
         label:'명령',
         opts:[
           {
-            v:'/요약',
-            prompt:'/요약→핵심사건·결정·미해결문제 정리',
+            v:'!요약 또는 요약',
+            prompt:'트리거=!요약|요약\n출력=핵심사건·확정된 결정·관계변화·보유정보·미해결문제\n추측·중복설명 제외',
             guide:'이후 장면에 필요한 사실을 중심으로 요약하세요.'
           },
           {
-            v:'/최근',
-            prompt:'/최근→직전 장면의 사건·감정변화 요약',
+            v:'!최근 또는 최근',
+            prompt:'트리거=!최근|최근\n출력=직전 장면의 사건·행동·대화결과·감정변화\n다음 장면에 불필요한 정보 제외',
             guide:'필요하면 최근 3장면처럼 범위를 정하세요.'
           }
         ]
@@ -1993,18 +2053,18 @@ commands:{
         label:'명령',
         opts:[
           {
-            v:'/인물',
-            prompt:'/인물 [이름]→현재 공개된 인물정보 요약',
+            v:'!인물 또는 인물',
+            prompt:'트리거=!인물 [이름]|인물 [이름]\n출력=현재 공개된 신원·외형·역할·관계·행적\n미공개 비밀 제외',
             guide:'아직 공개되지 않은 비밀은 제외하도록 설정할 수 있습니다.'
           },
           {
-            v:'/장소',
-            prompt:'/장소 [이름]→현재 공개된 장소정보 요약',
+            v:'!장소 또는 장소',
+            prompt:'트리거=!장소 [이름]|장소 [이름]\n출력=현재 공개된 위치·환경·분위기·관련인물·주의사항',
             guide:'위치·분위기·관련 인물 정도만 출력해도 충분합니다.'
           },
           {
-            v:'/용어',
-            prompt:'/용어 [단어]→현재 세계관 기준으로 짧게 설명',
+            v:'!용어 또는 용어',
+            prompt:'트리거=!용어 [단어]|용어 [단어]\n출력=확정된 세계관 기준의 짧은 정의\n미확정 정보 보완 금지',
             guide:'고유명사가 많은 작품에 활용할 수 있습니다.'
           }
         ]
@@ -2013,20 +2073,25 @@ commands:{
   },
 
   scene:{
-    label:'진행 보조',
-    desc:'현재 장면이나 미해결 목표를 확인하는 명령 예시입니다.',
+    label:'오류·진행 보조',
+    desc:'설정 오류를 점검하거나 현재 장면의 진행 항목을 확인합니다.',
     features:[
       {
         label:'명령',
         opts:[
           {
-            v:'/장면',
-            prompt:'/장면→현재 장면의 목표·갈등·등장인물 확인',
+            v:'!오류 또는 오류',
+            prompt:'트리거=!오류|오류\n점검=설정충돌·인물인지범위·시점·시간선·소지품·위치·관계연속성\n오류 발견→항목별로 원문과 충돌지점만 제시\n사용자 확인 전 설정 임의수정 금지',
+            guide:'현재 답변이나 최근 진행에서 생긴 오류를 확인할 때 사용합니다.'
+          },
+          {
+            v:'!장면 또는 장면',
+            prompt:'트리거=!장면|장면\n출력=현재 장면의 목표·갈등·등장인물·남은 행동\n새 사건 임의추가 금지',
             guide:'장면 진행이 막혔을 때 사용할 수 있습니다.'
           },
           {
-            v:'/할일',
-            prompt:'/할일→현재 미해결 목표·약속·조사 항목 표시',
+            v:'!할일 또는 할일',
+            prompt:'트리거=!할일|할일\n출력=현재 미해결 목표·약속·조사·기한 항목\n완료항목 제외',
             guide:'퀘스트형 작품이나 미스터리에 활용할 수 있습니다.'
           }
         ]
@@ -2170,6 +2235,7 @@ const CONFIG={
   style:['styleGrid','styleDesc','styleFeatureList'],
   voicepreset:['voicepresetGrid','voicepresetDesc','voicepresetFeatureList'],
   events:['eventsGrid','eventsDesc','eventsFeatureList'],
+  keyword:['keywordGrid','keywordDesc','keywordFeatureList'],
   commands:['commandsGrid','commandsDesc','commandsFeatureList'],
   base:['baseGrid','baseDesc','baseFeatureList']
 };
@@ -2409,25 +2475,10 @@ function appendTabOutput(tab,lines,showGroup){
   }
 }
 
-function renderKeywordOutput(){
-  const title=document.getElementById('keywordTitle')?.value.trim();
-  const triggers=document.getElementById('keywordTriggers')?.value.trim();
-  const body=document.getElementById('keywordBody')?.value.trim();
-  if(!title&&!triggers&&!body){setEmpty('// 항목 이름·호출 키워드·본문을 입력하면 키워드북 형식으로 표시됩니다.');return}
-  const lines=[];
-  lines.push('['+(title||'항목 이름')+']');
-  if(triggers)lines.push('호출키='+triggers);
-  if(body)lines.push(body);
-  const box=document.getElementById('outputBox');
-  box.classList.remove('empty');
-  box.textContent=lines.join('\n');
-}
-
 function renderOutput(){
   const box=document.getElementById('outputBox');
   if(activeTab==='guide'){setEmpty('// 제작할 주요 항목을 선택하세요.');return}
   if(activeTab==='checklist'){setEmpty('// 체크리스트는 제작자 확인용입니다.');return}
-  if(activeTab==='keyword'){renderKeywordOutput();return}
 
   const lines=[];
   if(activeTab==='common'){
@@ -2487,8 +2538,6 @@ document.getElementById('clearBtn').addEventListener('click',()=>{
   if(activeTab==='common'){
     COMMON_TABS.forEach(tab=>{state[tab]={}});
     renderAllCommonSections();
-  }else if(activeTab==='keyword'){
-    ['keywordTitle','keywordTriggers','keywordBody'].forEach(id=>document.getElementById(id).value='');
   }else if(DATA[activeTab]){
     state[activeTab]={};
     if(activeTab==='char')renderAllCharacterSections();
@@ -2523,7 +2572,6 @@ document.querySelectorAll('.modebtn').forEach(btn=>{
 });
 
 document.getElementById('characterName').addEventListener('input',renderOutput);
-['keywordTitle','keywordTriggers','keywordBody'].forEach(id=>document.getElementById(id).addEventListener('input',renderOutput));
 
 /* ============================================================
    CHECKLIST
@@ -2610,5 +2658,7 @@ renderChecklist();
 renderOutput();
 </script>
 
-</body>
-</html>
+
+
+</body><div id="codex-browser-sidebar-comments-root" style="position: fixed; inset: 0px; pointer-events: none; z-index: 2147483647;"></div></html>
+
