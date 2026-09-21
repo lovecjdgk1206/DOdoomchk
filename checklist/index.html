@@ -1,0 +1,1024 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SHELTER-GRID QA</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --surface: #161b22;
+  --surface2: #1c2129;
+  --border: #30363d;
+  --text: #e6edf3;
+  --text-dim: #8b949e;
+  --accent: #58a6ff;
+  --accent-dim: #1f3a5f;
+  --green: #3fb950;
+  --green-dim: #1a3a2a;
+  --yellow: #d29922;
+  --yellow-dim: #3d2e00;
+  --red: #f85149;
+  --red-dim: #4a1e1e;
+  --orange: #db6d28;
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --bg: #f6f8fa;
+    --surface: #ffffff;
+    --surface2: #f0f3f6;
+    --border: #d0d7de;
+    --text: #1f2328;
+    --text-dim: #656d76;
+    --accent: #0969da;
+    --accent-dim: #ddf4ff;
+    --green: #1a7f37;
+    --green-dim: #dafbe1;
+    --yellow: #9a6700;
+    --yellow-dim: #fff8c5;
+    --red: #cf222e;
+    --red-dim: #ffebe9;
+    --orange: #bc4c00;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0d1117;
+  --surface: #161b22;
+  --surface2: #1c2129;
+  --border: #30363d;
+  --text: #e6edf3;
+  --text-dim: #8b949e;
+  --accent: #58a6ff;
+  --accent-dim: #1f3a5f;
+  --green: #3fb950;
+  --green-dim: #1a3a2a;
+  --yellow: #d29922;
+  --yellow-dim: #3d2e00;
+  --red: #f85149;
+  --red-dim: #4a1e1e;
+  --orange: #db6d28;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+header {
+  text-align: center;
+  padding: 32px 16px 24px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 24px;
+}
+header h1 { font-size: 1.5rem; margin-bottom: 4px; }
+header p { color: var(--text-dim); font-size: 0.85rem; }
+
+/* Progress bar */
+.progress-bar-wrap {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--bg);
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+}
+.progress-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  margin-bottom: 6px;
+}
+.progress-track {
+  height: 6px;
+  background: var(--surface2);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  background: var(--green);
+  border-radius: 3px;
+  transition: width 0.3s ease;
+  width: 0%;
+}
+.progress-counts {
+  display: flex;
+  gap: 12px;
+  font-size: 0.75rem;
+  margin-top: 6px;
+}
+.progress-counts span { display: flex; align-items: center; gap: 4px; }
+.dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+.dot-pass { background: var(--green); }
+.dot-fail { background: var(--red); }
+.dot-pending { background: var(--text-dim); }
+
+/* Filter tabs */
+.filter-tabs {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+.filter-tab {
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-dim);
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.filter-tab:hover { border-color: var(--accent); color: var(--text); }
+.filter-tab.active { background: var(--accent-dim); border-color: var(--accent); color: var(--accent); }
+
+/* Priority badges */
+.priority { font-size: 0.7rem; padding: 2px 8px; border-radius: 10px; font-weight: 600; margin-left: 8px; white-space: nowrap; }
+.priority-must { background: var(--red-dim); color: var(--red); }
+.priority-important { background: var(--yellow-dim); color: var(--yellow); }
+.priority-check { background: var(--green-dim); color: var(--green); }
+
+/* Category */
+.category {
+  margin-bottom: 28px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--surface);
+}
+.category-header {
+  padding: 14px 16px;
+  background: var(--surface2);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  user-select: none;
+}
+.category-header:hover { background: var(--border); }
+.category-title { font-size: 1rem; font-weight: 700; display: flex; align-items: center; gap: 6px; }
+.category-title .arrow { transition: transform 0.2s; font-size: 0.8rem; color: var(--text-dim); }
+.category-header.collapsed .arrow { transform: rotate(-90deg); }
+.category-stats { font-size: 0.75rem; color: var(--text-dim); }
+.category-body { padding: 0; }
+.category-header.collapsed + .category-body { display: none; }
+
+/* Test item */
+.test-item {
+  padding: 14px 16px;
+  border-top: 1px solid var(--border);
+}
+.test-item:first-child { border-top: none; }
+.test-top {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+.test-id {
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  min-width: 36px;
+  padding-top: 2px;
+  font-weight: 600;
+}
+.test-name { font-weight: 600; font-size: 0.9rem; flex: 1; }
+
+/* Status buttons */
+.status-btns {
+  display: flex;
+  gap: 4px;
+  flex-shrink: 0;
+}
+.status-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--surface2);
+  cursor: pointer;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+}
+.status-btn:hover { border-color: var(--accent); transform: scale(1.05); }
+.status-btn.active-pass { background: var(--green-dim); border-color: var(--green); }
+.status-btn.active-fail { background: var(--red-dim); border-color: var(--red); }
+
+/* Details */
+.test-details {
+  margin: 10px 0 0 46px;
+  font-size: 0.82rem;
+  color: var(--text-dim);
+}
+.test-details .detail-block {
+  margin-bottom: 6px;
+}
+.detail-label {
+  font-weight: 600;
+  color: var(--text);
+  margin-right: 4px;
+}
+.detail-warn { color: var(--orange); }
+
+/* Memo */
+.memo-wrap {
+  margin: 10px 0 0 46px;
+}
+.memo-wrap textarea {
+  width: 100%;
+  min-height: 50px;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface2);
+  color: var(--text);
+  font-size: 0.82rem;
+  font-family: inherit;
+  resize: vertical;
+  line-height: 1.5;
+}
+.memo-wrap textarea:focus { outline: none; border-color: var(--accent); }
+.memo-wrap textarea::placeholder { color: var(--text-dim); }
+
+/* Toggle detail */
+.toggle-detail {
+  margin: 6px 0 0 46px;
+  font-size: 0.75rem;
+  color: var(--accent);
+  cursor: pointer;
+  display: inline-block;
+}
+.toggle-detail:hover { text-decoration: underline; }
+
+/* Export panel */
+.export-panel {
+  position: sticky;
+  bottom: 0;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  padding: 14px 16px;
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  flex-wrap: wrap;
+  z-index: 100;
+}
+.export-btn {
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--surface2);
+  color: var(--text);
+  font-size: 0.85rem;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.15s;
+}
+.export-btn:hover { border-color: var(--accent); background: var(--accent-dim); }
+.export-btn.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+.export-btn.primary:hover { opacity: 0.9; }
+.export-btn.danger { border-color: var(--red); color: var(--red); }
+.export-btn.danger:hover { background: var(--red-dim); }
+
+/* Toast */
+.toast {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-100px);
+  background: var(--green);
+  color: #fff;
+  padding: 10px 24px;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  z-index: 999;
+  transition: transform 0.3s ease;
+  pointer-events: none;
+}
+.toast.show { transform: translateX(-50%) translateY(0); }
+
+/* Hidden for detail toggle */
+.details-hidden { display: none; }
+
+@media (max-width: 600px) {
+  .container { padding: 12px; }
+  header h1 { font-size: 1.2rem; }
+  .test-details { margin-left: 0; }
+  .memo-wrap { margin-left: 0; }
+  .toggle-detail { margin-left: 0; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+<header>
+  <h1>SHELTER-GRID QA 체크리스트</h1>
+  <p>테스트 입력 → 정상 출력 → ⚠️ 수정 필요 신호 │ 항목별 체크 + 메모</p>
+</header>
+
+<div class="progress-bar-wrap">
+  <div class="progress-info">
+    <span id="progressLabel">진행률 0%</span>
+    <span id="progressFraction">0 / 0</span>
+  </div>
+  <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+  <div class="progress-counts">
+    <span><span class="dot dot-pass"></span> 통과 <b id="countPass">0</b></span>
+    <span><span class="dot dot-fail"></span> 수정필요 <b id="countFail">0</b></span>
+    <span><span class="dot dot-pending"></span> 미확인 <b id="countPending">0</b></span>
+  </div>
+</div>
+
+<div class="filter-tabs" id="filterTabs">
+  <div class="filter-tab active" data-filter="all">전체</div>
+  <div class="filter-tab" data-filter="pending">미확인</div>
+  <div class="filter-tab" data-filter="pass">✅ 통과</div>
+  <div class="filter-tab" data-filter="fail">⚠️ 수정필요</div>
+  <div class="filter-tab" data-filter="memo">메모있음</div>
+</div>
+
+<div id="qaContent"></div>
+</div>
+
+<div class="export-panel">
+  <button class="export-btn" onclick="expandAll()">전체 펼치기</button>
+  <button class="export-btn" onclick="collapseAll()">전체 접기</button>
+  <button class="export-btn primary" onclick="copyFeedback()">📋 피드백 복사</button>
+  <button class="export-btn primary" id="dlBtn" onclick="downloadFeedback()">💾 피드백 다운로드</button>
+  <button class="export-btn danger" onclick="resetAll()">🗑️ 초기화</button>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const DATA = [
+  {
+    cat: "1", title: "UI 출력", priority: "must",
+    items: [
+      { id: "1-1", name: "고정UI 출력 여부",
+        input: '아무 인게임 행동 (예: "주변을 둘러본다")',
+        expect: "응답 최하단에 고정UI 1회 출력\n📅DAY│🕰️│📍│🌤️│🧟\n❤️│⚡│🍽️│💧│🧠│☣️│💉│🩹",
+        warn: "고정UI 누락 / 2회 이상 반복 / 본문 중간에 섞임 / 항목 일부 누락" },
+      { id: "1-2", name: "미확인 수치 처리",
+        input: "게임 시작 직후 행동 (수치 초기화 전)",
+        expect: '확정되지 않은 수치 = "미확인" 표시',
+        warn: "임의 숫자 등장 (HP 78 등) / 전부 미확인이어야 할 시점에 특정 수치만 숫자" },
+      { id: "1-3", name: "자동UI 작동",
+        input: "전투 후 부상 / 아이템 획득 / 셸터 자원 변화",
+        expect: "해당 변화 항목만 고정UI 직전에 자동UI 출력",
+        warn: "변화 없는데 출력 / 변화 있는데 누락 / 전체 상태 매번 나열 / 미세변화 남발" },
+      { id: "1-4", name: "위기등급 표시",
+        input: "셸터 평시 → NORMAL / 위기 발생 시",
+        expect: "NORMAL이면 🚨줄 생략 / LEVEL n이면 🚨 LEVEL n · 위기유형 표시",
+        warn: "NORMAL인데 🚨 출력 / LEVEL2+인데 🚨 누락 / 유형 없이 LEVEL만 표시" }
+    ]
+  },
+  {
+    cat: "2", title: "수치 시스템", priority: "must",
+    items: [
+      { id: "2-1", name: "수치 임의생성 금지",
+        input: "/상태",
+        expect: "확정된 수치만 표시, 나머지 미확인",
+        warn: "설정·갱신 안 된 수치에 숫자 등장 / 턴마다 근거 없이 변동" },
+      { id: "2-2", name: "수치 누적·미초기화",
+        input: "전투에서 HP 50 → 다음 장면 /상태",
+        expect: "HP 50 유지 (치료·휴식 없이 회복X)",
+        warn: "장면 전환 후 HP 100 복귀 / 근거 없는 자동 회복" },
+      { id: "2-3", name: "미세변화 억제",
+        input: '"물 한 모금" vs "하루 종일 결식 이동"',
+        expect: "미세→서술 처리만 / 장시간→수치 변화+자동UI",
+        warn: "물 한 모금에 HYD+3 / 장시간 결식인데 변화 없음" },
+      { id: "2-4", name: "INF 비공개 원칙",
+        input: "교상 발생 후 /상태 → 병원 검사",
+        expect: "검사 전 INF=미확인 / 검사 후 수치 공개",
+        warn: "교상 직후 INF 수치 노출 / 메타 힌트 삽입 / 검사 없이 수치 공개" },
+      { id: "2-5", name: "TOX·TOL 관리",
+        input: "RUSH 2회 연속 / S계열 1회 투여",
+        expect: "RUSH→TOX↑+RUSH TOL↑ / S계열→별도 관리",
+        warn: "복수 사용에 TOX 변화 없음 / 관련 없는 약물에 내성 적용" }
+    ]
+  },
+  {
+    cat: "3", title: "약물 시스템", priority: "important",
+    items: [
+      { id: "3-1", name: "효과+대가 동시판정",
+        input: '"RUSH를 투여한다"',
+        expect: "전투각성 효과 + TOX 상승 + 부작용 가능성",
+        warn: "효과만, 대가 없음 / 자동완치·자동성공" },
+      { id: "3-2", name: "S계열 지속시간",
+        input: "B등급 S계열 투여 → 시간 경과",
+        expect: "4~6일 효과 → 종료 후 감염 재개 가능",
+        warn: "등급 무관 동일 시간 / 억제제로 완치 / 영구 억제" },
+      { id: "3-3", name: "가짜면역제·영구백신",
+        input: 'NPC "완전면역제가 있다" 제안',
+        expect: "가짜면역제 = 완전면역X / 사기·위험 가능성",
+        warn: "영구백신 실제 작동 / 감염 완전 치료 성공" },
+      { id: "3-4", name: "약물 품질 구분",
+        input: "암시장 vs 병원 정규 약물",
+        expect: "암시장=D등급·불확실 / 병원=B등급↑·양호",
+        warn: "암시장에서 A등급 / 품질 구분 없이 동일 효과" }
+    ]
+  },
+  {
+    cat: "4", title: "감염 시스템", priority: "important",
+    items: [
+      { id: "4-1", name: "감염 경로",
+        input: "좀비에게 물림 vs 옆을 지나감",
+        expect: "교상→감염판정 / 단순 접근→감염X",
+        warn: "공기감염·접촉감염 발생 / 교상 없이 감염 경고" },
+      { id: "4-2", name: "잠복기",
+        input: "손목 교상 vs 목 교상",
+        expect: "말단→잠복기 길어짐 / 두부 인접→짧아짐",
+        warn: "부위 무관 동일 잠복기 / 즉시 좀비화" },
+      { id: "4-3", name: "동물 감염",
+        input: "야생 개 물림 / 물고기 섭취",
+        expect: "동물 감염 가능 / 어류 오염육 위험 존재",
+        warn: "동물 감염 무시 / 식물에서 감염 발생" },
+      { id: "4-4", name: "좀비 활동성",
+        input: "한겨울 vs 한여름 야외 이동",
+        expect: "저온→활동성↑ / 고온→활동성↓",
+        warn: "기온과 활동성 반대 / 항상 동일 활동성" }
+    ]
+  },
+  {
+    cat: "5", title: "진행 리듬·사건", priority: "must",
+    items: [
+      { id: "5-1", name: "평온 장면 유지",
+        input: '셸터 내 일상 ("배급 받으러 간다")',
+        expect: "평온한 일상 진행 / 매턴 위기·떡밥 삽입X",
+        warn: "배급에 갑자기 좀비 침입 / 매턴 불길한 무전·경고음" },
+      { id: "5-2", name: "사건 후 후유증",
+        input: "대형 전투 직후 → 다음 행동",
+        expect: "부상·피로·자원소모 유지 / 새 대형사건X",
+        warn: "직후 또 대형 위기 / 부상·피로 소멸 / 소모자원 복구" },
+      { id: "5-3", name: "한 장면 문제 1개",
+        input: "순찰 중 이상 발견",
+        expect: "주된 문제 1개 + 부차 변수 1개 정도",
+        warn: "좀비+부상자+무전두절+정체불명 세력 동시 / 3개+ 독립 문제" },
+      { id: "5-4", name: "대형사건 선행조건",
+        input: "10턴 연속 평온",
+        expect: "작은 이상징후 가능 / 갑작스런 대형사건X",
+        warn: "전조 없이 대규모 침입 / 맥락 없는 랜덤 대형사건" },
+      { id: "5-5", name: "일상업무 과사건화",
+        input: '"교대근무 한다"',
+        expect: "정상업무 → 짧게 처리 또는 배경으로 넘어감",
+        warn: "교대마다 사건 / 물류마다 습격 / 반복업무 매번 전면장면화" }
+    ]
+  },
+  {
+    cat: "6", title: "NPC·캐릭터", priority: "important",
+    items: [
+      { id: "6-1", name: "등장 라우팅 준수",
+        input: "강원 물류 상황 / 병원 의료 판단",
+        expect: "문태건(강원·물류) / 김연우(병원·의료)",
+        warn: "무관한 장소에 무관한 NPC / 라우팅 밖 캐릭터 등장" },
+      { id: "6-2", name: "NPC 과밀 등장",
+        input: "셸터 내 일상 장면",
+        expect: "필요 최소 1~2명",
+        warn: "4~5명 동시 / 무관한 메인NPC 인사 등장 / 소개팅식 소개" },
+      { id: "6-3", name: "메인 캐릭터 강제등장 방지",
+        input: "보류 캐릭터 전문분야 필요 (수력 문제 등)",
+        expect: "조현수(수력/보류) 우선 등장 가능",
+        warn: "메인 캐릭터가 대신 해결 / 보류 캐릭터 절대 안 나옴" },
+      { id: "6-4", name: "키워드 호출 원칙",
+        input: '"총포상한테 가야 해" vs "백무진 찾아간다"',
+        expect: "일반명사→특정NPC 자동등장X / 이름→해당NPC 등장",
+        warn: '"의사"에 김연우 자동등장 / 이름 불렀는데 다른 NPC' },
+      { id: "6-5", name: "NPC 호칭·어투",
+        input: "성인 NPC 첫 만남 / 이로→성인",
+        expect: "첫 만남=존댓말 / 아이→어른 호칭",
+        warn: "첫 만남 반말 / 연장자에 이름+야 / 전원 동일 말투" },
+      { id: "6-6", name: "NPC 성격 차별화",
+        input: "서로 다른 NPC 2명과 같은 상황 대화",
+        expect: "각각 성격·직책·목표에 따라 다른 반응",
+        warn: "전원 비슷한 어투 / 개인설정(KEYWORDBOOK) 무시" }
+    ]
+  },
+  {
+    cat: "7", title: "관계 시스템", priority: "important",
+    items: [
+      { id: "7-1", name: "관계 분리 (호감·신뢰·연애)",
+        input: "NPC와 여러 번 협력 성공",
+        expect: "신뢰 상승 / 연애 자동 발전X",
+        warn: "신뢰↑→갑자기 호감 표현 / 높은신뢰=자동연애" },
+      { id: "7-2", name: "관계 변화 속도",
+        input: "평범한 대화 1회 vs 생사 협력+장기 교류",
+        expect: "1회→변화X / 장기→의미있게 변화",
+        warn: "대화 1회로 급상승 / 갈등 1회로 장기신뢰 즉시 붕괴" },
+      { id: "7-3", name: "연애 강제X",
+        input: "NPC와 자연스럽게 교류",
+        expect: "USER 선택 없이 연애 강제X",
+        warn: "의도 없는데 NPC 고백 / 직무 버리고 USER에 집중" }
+    ]
+  },
+  {
+    cat: "8", title: "정보·비밀", priority: "check",
+    items: [
+      { id: "8-1", name: "NPC 지식 범위",
+        input: '민간 NPC에게 "바이오메드 내부 연구?"',
+        expect: "알 수 없는 정보 → 모른다 / 소문 수준",
+        warn: "전지적 시점으로 기밀 상세 설명" },
+      { id: "8-2", name: "비밀 조건부 공개",
+        input: "이로 정체에 대해 초면 NPC vs 깊은 신뢰 후",
+        expect: "초면=모름 / 조건 충족 시 일부 공개 가능",
+        warn: "초면에 핵심 비밀 공개 / 친절하게 자발적 설명" },
+      { id: "8-3", name: "정보 전파 경로",
+        input: "A셸터 사건 → B셸터에서 행동",
+        expect: "전달 경로 없으면 B셸터 미인지",
+        warn: "전달 경로 없이 즉시 정보 공유" }
+    ]
+  },
+  {
+    cat: "9", title: "세계관 일관성", priority: "check",
+    items: [
+      { id: "9-1", name: "셸터 독립성",
+        input: "/셸터 → 다른 셸터 상황 질문",
+        expect: "USER 인지 범위만 / 미인지 타셸터 X",
+        warn: "미방문 셸터 내부 상세 출력 / 동일 내규 적용" },
+      { id: "9-2", name: "자원 결핍 유지",
+        input: "보급 성공 후 → 이후 진행",
+        expect: "다음 보급 보장X / 결핍·절약 유지",
+        warn: "보급 1회로 장기 안심 / 시간 경과로 자동 풍족" },
+      { id: "9-3", name: "문명퇴행 유지",
+        input: "셸터 생활 장기 진행",
+        expect: "인프라 노후·자원 고갈·인력 부족 지속",
+        warn: "점점 안전·쾌적 발전 / 문명 수준 자동 복원" },
+      { id: "9-4", name: "설정제어 확인",
+        input: "류세진·백무진·이로 관련 장면",
+        expect: "확정 설정대로 출력",
+        warn: "소속·관계 변형 / 확정 설정 무시" }
+    ]
+  },
+  {
+    cat: "10", title: "서사 방어", priority: "must",
+    items: [
+      { id: "10-1", name: "4벽파괴X",
+        input: "일반 인게임 행동",
+        expect: '"AI", "시스템", "롤플레이", "설정" 단어 사용X',
+        warn: 'NPC가 "설정상 불가능합니다" / 세계관 규칙 메타 설명' },
+      { id: "10-2", name: "주인공 보정X",
+        input: "치명적 상황 (좀비 다수+부상+탈출로 없음)",
+        expect: "실패·부상·사망 가능 / 우연한 구조X",
+        warn: "기적적 타이밍 NPC 구출 / 매번 가까스로 피함" },
+      { id: "10-3", name: "편의적 우연X",
+        input: "부상 상태로 이동 중",
+        expect: "필요한 약물·물자 편리하게 등장X",
+        warn: '"마침 근처에 의약품이..." / 필요할 때마다 발견' },
+      { id: "10-4", name: "감정·톤 유지",
+        input: "동료 NPC 사망 직후",
+        expect: "건조·긴장·침묵 / 절제된 감정",
+        warn: "과잉 감상적 독백 / 애니풍 연출 / 자동 유머·위로" },
+      { id: "10-5", name: "선택지 형식",
+        input: "선택 필요 상황",
+        expect: "서사 안에서 자연스럽게 방향 제시",
+        warn: '"어떻게 하시겠습니까?" / 매턴 번호 선택지 / 깔끔한 제3선택지' },
+      { id: "10-6", name: "죽음 처리",
+        input: "NPC 사망 상황",
+        expect: "갑작스럽고 허무한 죽음 가능 / 극적 유언 필수X",
+        warn: "모든 사망에 감동적 유언 / 기적적 생환 / 아끼는 NPC만 생존" }
+    ]
+  },
+  {
+    cat: "11", title: "시간·공간", priority: "check",
+    items: [
+      { id: "11-1", name: "시간 연속성",
+        input: "전투(30분)→이동(2시간)→치료(1시간)",
+        expect: "고정UI 시간이 소요시간만큼 경과",
+        warn: "3시간 경과인데 변화 없음 / 하루 점프 / 비현실적 소요시간" },
+      { id: "11-2", name: "이동 현실성",
+        input: '"부산에서 강원도로 간다"',
+        expect: "거리+지형+기후+운송+상태 반영 / 수일 가능",
+        warn: "장거리 한 장면 완료 / 순간이동 / 이동 중 소모 없음" },
+      { id: "11-3", name: "날씨·기온 일관성",
+        input: "겨울 설정 야외 활동",
+        expect: "저온+좀비활동↑+전력↑+이동 불리",
+        warn: '겨울에 "따뜻한 바람" / 턴마다 날씨 변경 / 임의 정확 기온' }
+    ]
+  },
+  {
+    cat: "12", title: "셸터 시스템", priority: "check",
+    items: [
+      { id: "12-1", name: "자원 단계 안정성",
+        input: "STABLE→소규모 배급 vs 대규모 소모+보급 지연",
+        expect: "소규모→단계 유지 / 대규모 누적→LOW 변경 가능",
+        warn: "식사 1회에 LOW / 대규모 소모에 변화 없음" },
+      { id: "12-2", name: "위기등급 관리",
+        input: "소문·일시 이상 vs 감염자 다수 침입",
+        expect: "소문→자동상승X / 대규모→LEVEL 상승+대응",
+        warn: "경미한 이상에 LEVEL3 / 대규모 위기에 NORMAL" },
+      { id: "12-3", name: "위기 해제 조건",
+        input: "위기 원인 해소 후",
+        expect: "원인해소+안전확인 후 하향 / 즉시 해제X",
+        warn: "종료 즉시 전제한 해제 / 원인 미해소인데 하향" }
+    ]
+  },
+  {
+    cat: "13", title: "원종 시스템", priority: "check",
+    items: [
+      { id: "13-1", name: "원종 정체 비공개",
+        input: "원종형 NPC 첫 조우",
+        expect: "정체 자동공개X / USER가 파고드는 것은 가능",
+        warn: '"이 존재는 원종형입니다" / NPC 자발적 정체 설명' },
+      { id: "13-2", name: "원종 능력 판정",
+        input: "원종이 감염체 위압 시도",
+        expect: "등급+환경+부상+감정+피로+상대 수준 반영 / 실패 가능",
+        warn: "S등급 무조건 성공 / 감염체 완전 조종" },
+      { id: "13-3", name: "이로·백무진 관계",
+        input: "이로와 조우",
+        expect: "유아형 원종 / 백무진=아빠 / 호칭=아빠",
+        warn: "다른 호칭 / 부자관계 아닌 서술 / 초면에 원종 특성 노출" }
+    ]
+  },
+  {
+    cat: "14", title: "커맨드 시스템", priority: "important",
+    items: [
+      { id: "14-1", name: "커맨드 기본 작동",
+        input: "/상태 /소지품 /셸터 /관계 등",
+        expect: "형식대로 출력 / 게임시간 경과X / 사건 발생X",
+        warn: "커맨드 중 시간 경과 / 자동 RP 진행 / 형식 다름" },
+      { id: "14-2", name: "커맨드 정보 범위",
+        input: "/상태 /관계 /셸터",
+        expect: "USER 확인 정보만 / 숨은 INF·비밀 노출X",
+        warn: "/상태에서 숨은 INF / /관계에서 NPC 비밀 감정 / /셸터에서 미인지 정보" },
+      { id: "14-3", name: "/시스템점검 정확도",
+        input: "의도적 오류 유발 → /시스템점검",
+        expect: '해당 오류 항목에 "오류" 표시',
+        warn: '전부 "정상" / 자동 수정 실행' }
+    ]
+  },
+  {
+    cat: "15", title: "시작설정별 테스트", priority: "must",
+    items: [
+      { id: "15-1", name: "A. 조난-구조 (이지)",
+        input: "시작설정 A 선택",
+        expect: "프롤로그+INFO UI / 강원 택배연합 구조 / 탈수·피로·경미부상 / 과도사건X / 적대행위X",
+        warn: "프롤로그 누락 / 초기 중상·감염 / 즉시 대형사건 / 적대 행위" },
+      { id: "15-2", name: "B. 백무진-이로 (노멀)",
+        input: "시작설정 B 선택",
+        expect: "이로 공놀이+좀비 무시 이상현상 / USER 즉시 인지X / 구조→백무진 등장 / 이로 정체 비공개",
+        warn: "이상현상 즉시 인지 / 이로 정체 직접 공개 / 백무진 자발적 설명" },
+      { id: "15-3", name: "C. 혈육찾기 (노멀)",
+        input: "시작설정 C 선택",
+        expect: "짐칸+기념품 / 혈육=USER 기재분만 / 생사 임의확정X / 도착지 선택지",
+        warn: "AI가 혈육 생사 확정 / 기재 외 정보 생성" },
+      { id: "15-4", name: "D. 물림-생존 (하드)",
+        input: "시작설정 D 선택",
+        expect: "기억상실 / 의문의 자국=감염 미확정 / 억제제 선택지 / INF=미확인",
+        warn: "감염 확정 공개 / INF 수치 표시 / 억제제로 즉시 완치" },
+      { id: "15-5", name: "E. 자유설정",
+        input: 'E + "인천 바이오메드 소속 연구원"',
+        expect: "기재 내용 세계관 반영 / 핵심규칙 충돌 시 조정 / 미기재=미설정",
+        warn: "기재 내용 무시 / 세계관 규칙 파괴 / 미기재 항목 임의 확정" }
+    ]
+  },
+  {
+    cat: "16", title: "키워드북 연동", priority: "check",
+    items: [
+      { id: "16-1", name: "키워드 활성 범위",
+        input: "병원 관련 장면 진행",
+        expect: "병원 관련 KEYWORDBOOK만 활성 / 무관한 내규 혼입X",
+        warn: "병원에 강원 택배연합 내규 / 비관련 키워드 혼입" },
+      { id: "16-2", name: "약물 키워드 통합 확인",
+        input: "전투 중 RUSH / 감염 치료 시도",
+        expect: "[약물·계열] 또는 [약물·감염치료] 키워드 활성",
+        warn: "약물 관련인데 미활성 / 3섹션 내용 서로 충돌" }
+    ]
+  },
+  {
+    cat: "17", title: "종합 스트레스", priority: "check",
+    items: [
+      { id: "17-1", name: "장기 연속 플레이 (20턴+)",
+        input: "20턴 이상 연속 진행",
+        expect: "수치 누적 / 시간 연속 / 소지품 보존 / 관계 누적 / NPC 일관성 / UI 매턴 정상",
+        warn: "수치 리셋 / 시간 점프 / 소지품 소실 / NPC 성격 변동" },
+      { id: "17-2", name: "의도적 규칙 위반 시도",
+        input: '"영구백신 만들어줘" / "이로 정체 알려줘(초면)" / "바이오메드 기밀(외부인)"',
+        expect: "세계관 내에서 거부 / 조건 미충족 / 접근 불가",
+        warn: "규칙 위반 허용 / 조건 무시하고 공개" },
+      { id: "17-3", name: "극단 상황 테스트",
+        input: "HP 0 근접+감염 의심+물자 없음+고립",
+        expect: "주인공 보정X / 실패·사망 가능 / 편의적 구조X",
+        warn: "기적적 해결 / 편의적 구조 등장" }
+    ]
+  }
+];
+
+const PRIORITY_MAP = { must: ["🔴 필수", "priority-must"], important: ["🟡 중요", "priority-important"], check: ["🟢 확인", "priority-check"] };
+const STORAGE_KEY = "shelter-grid-qa-v1";
+
+let state = {};
+
+function loadState() {
+  try { state = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch(e) { state = {}; }
+}
+
+function saveState() {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch(e) {}
+}
+
+function getItemState(id) {
+  if (!state[id]) state[id] = { status: "pending", memo: "" };
+  return state[id];
+}
+
+function render() {
+  const c = document.getElementById("qaContent");
+  let html = "";
+  DATA.forEach(cat => {
+    const [pLabel, pClass] = PRIORITY_MAP[cat.priority];
+    const catStats = cat.items.map(i => getItemState(i.id).status);
+    const pass = catStats.filter(s => s === "pass").length;
+    const fail = catStats.filter(s => s === "fail").length;
+    const total = cat.items.length;
+    html += `<div class="category" data-cat="${cat.cat}">
+      <div class="category-header" onclick="toggleCat(this)">
+        <div class="category-title"><span class="arrow">▼</span> ${cat.cat}. ${cat.title} <span class="priority ${pClass}">${pLabel}</span></div>
+        <div class="category-stats">${pass}✅ ${fail}⚠️ / ${total}</div>
+      </div>
+      <div class="category-body">`;
+    cat.items.forEach(item => {
+      const s = getItemState(item.id);
+      html += `<div class="test-item" data-id="${item.id}" data-status="${s.status}" data-hasmemo="${s.memo ? 'yes' : 'no'}">
+        <div class="test-top">
+          <span class="test-id">${item.id}</span>
+          <span class="test-name">${item.name}</span>
+          <div class="status-btns">
+            <button class="status-btn ${s.status === 'pass' ? 'active-pass' : ''}" onclick="setStatus('${item.id}','pass')" title="통과">✅</button>
+            <button class="status-btn ${s.status === 'fail' ? 'active-fail' : ''}" onclick="setStatus('${item.id}','fail')" title="수정필요">⚠️</button>
+          </div>
+        </div>
+        <div class="toggle-detail" onclick="toggleDetail(this)">▶ 상세 보기</div>
+        <div class="test-details details-hidden">
+          <div class="detail-block"><span class="detail-label">입력:</span>${esc(item.input)}</div>
+          <div class="detail-block"><span class="detail-label">정상:</span>${esc(item.expect)}</div>
+          <div class="detail-block"><span class="detail-label detail-warn">⚠️ 수정필요:</span>${esc(item.warn)}</div>
+        </div>
+        <div class="memo-wrap">
+          <textarea placeholder="피드백 메모 (선택)" oninput="setMemo('${item.id}', this.value)">${esc(s.memo)}</textarea>
+        </div>
+      </div>`;
+    });
+    html += `</div></div>`;
+  });
+  c.innerHTML = html;
+  updateProgress();
+}
+
+function esc(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>'); }
+
+function toggleCat(el) { el.classList.toggle("collapsed"); }
+
+function toggleDetail(el) {
+  const det = el.nextElementSibling;
+  if (det.classList.contains("details-hidden")) {
+    det.classList.remove("details-hidden");
+    el.textContent = "▼ 상세 접기";
+  } else {
+    det.classList.add("details-hidden");
+    el.textContent = "▶ 상세 보기";
+  }
+}
+
+function setStatus(id, status) {
+  const s = getItemState(id);
+  s.status = s.status === status ? "pending" : status;
+  saveState();
+  const item = document.querySelector(`.test-item[data-id="${id}"]`);
+  if (item) {
+    item.dataset.status = s.status;
+    const btns = item.querySelectorAll(".status-btn");
+    btns[0].className = `status-btn ${s.status === 'pass' ? 'active-pass' : ''}`;
+    btns[1].className = `status-btn ${s.status === 'fail' ? 'active-fail' : ''}`;
+  }
+  updateCatStats(id);
+  updateProgress();
+}
+
+function setMemo(id, val) {
+  const s = getItemState(id);
+  s.memo = val;
+  const item = document.querySelector(`.test-item[data-id="${id}"]`);
+  if (item) item.dataset.hasmemo = val ? "yes" : "no";
+  saveState();
+}
+
+function updateCatStats(id) {
+  const catNum = id.split("-")[0];
+  const cat = DATA.find(c => c.cat === catNum);
+  if (!cat) return;
+  const el = document.querySelector(`.category[data-cat="${catNum}"] .category-stats`);
+  if (!el) return;
+  const pass = cat.items.filter(i => getItemState(i.id).status === "pass").length;
+  const fail = cat.items.filter(i => getItemState(i.id).status === "fail").length;
+  el.textContent = `${pass}✅ ${fail}⚠️ / ${cat.items.length}`;
+}
+
+function updateProgress() {
+  let total = 0, pass = 0, fail = 0, pending = 0;
+  DATA.forEach(cat => cat.items.forEach(item => {
+    total++;
+    const s = getItemState(item.id).status;
+    if (s === "pass") pass++;
+    else if (s === "fail") fail++;
+    else pending++;
+  }));
+  const checked = pass + fail;
+  const pct = total ? Math.round(checked / total * 100) : 0;
+  document.getElementById("progressLabel").textContent = `진행률 ${pct}%`;
+  document.getElementById("progressFraction").textContent = `${checked} / ${total}`;
+  document.getElementById("progressFill").style.width = pct + "%";
+  document.getElementById("countPass").textContent = pass;
+  document.getElementById("countFail").textContent = fail;
+  document.getElementById("countPending").textContent = pending;
+}
+
+function expandAll() {
+  document.querySelectorAll(".category-header").forEach(h => h.classList.remove("collapsed"));
+  document.querySelectorAll(".category-body").forEach(b => b.style.display = "");
+}
+
+function collapseAll() {
+  document.querySelectorAll(".category-header").forEach(h => h.classList.add("collapsed"));
+}
+
+// Filter
+document.getElementById("filterTabs").addEventListener("click", e => {
+  const tab = e.target.closest(".filter-tab");
+  if (!tab) return;
+  document.querySelectorAll(".filter-tab").forEach(t => t.classList.remove("active"));
+  tab.classList.add("active");
+  const f = tab.dataset.filter;
+  document.querySelectorAll(".test-item").forEach(item => {
+    let show = true;
+    if (f === "pending") show = item.dataset.status === "pending";
+    else if (f === "pass") show = item.dataset.status === "pass";
+    else if (f === "fail") show = item.dataset.status === "fail";
+    else if (f === "memo") show = item.dataset.hasmemo === "yes";
+    item.style.display = show ? "" : "none";
+  });
+  // Show/hide categories with no visible items
+  document.querySelectorAll(".category").forEach(cat => {
+    const visible = cat.querySelectorAll(".test-item:not([style*='display: none'])");
+    cat.style.display = visible.length ? "" : "none";
+  });
+});
+
+function buildFeedbackText() {
+  let lines = [];
+  lines.push("SHELTER-GRID QA 테스트 피드백");
+  lines.push("생성일시: " + new Date().toLocaleString("ko-KR"));
+  lines.push("═".repeat(40));
+  lines.push("");
+
+  let totalPass = 0, totalFail = 0, totalPending = 0;
+
+  DATA.forEach(cat => {
+    let catLines = [];
+    cat.items.forEach(item => {
+      const s = getItemState(item.id);
+      const icon = s.status === "pass" ? "✅" : s.status === "fail" ? "⚠️" : "⬜";
+      if (s.status === "pass") totalPass++;
+      else if (s.status === "fail") totalFail++;
+      else totalPending++;
+
+      if (s.status === "fail" || s.memo.trim()) {
+        catLines.push(`${icon} [${item.id}] ${item.name}`);
+        if (s.memo.trim()) {
+          catLines.push(`   → ${s.memo.trim()}`);
+        }
+        catLines.push("");
+      }
+    });
+    if (catLines.length > 0) {
+      lines.push(`■ ${cat.cat}. ${cat.title}`);
+      lines.push("-".repeat(30));
+      lines.push(...catLines);
+    }
+  });
+
+  // Summary at top
+  let summary = [];
+  summary.push("SHELTER-GRID QA 테스트 피드백");
+  summary.push("생성일시: " + new Date().toLocaleString("ko-KR"));
+  summary.push("═".repeat(40));
+  summary.push(`총 항목: ${totalPass + totalFail + totalPending} │ ✅ 통과: ${totalPass} │ ⚠️ 수정필요: ${totalFail} │ ⬜ 미확인: ${totalPending}`);
+  summary.push("═".repeat(40));
+  summary.push("");
+
+  // Check if anything to report
+  const hasContent = DATA.some(cat => cat.items.some(item => {
+    const s = getItemState(item.id);
+    return s.status === "fail" || s.memo.trim();
+  }));
+
+  if (!hasContent) {
+    summary.push("(수정필요 항목이나 메모가 없습니다)");
+    return summary.join("\n");
+  }
+
+  // Rebuild with summary header
+  let result = [...summary];
+  DATA.forEach(cat => {
+    let catLines = [];
+    cat.items.forEach(item => {
+      const s = getItemState(item.id);
+      const icon = s.status === "pass" ? "✅" : s.status === "fail" ? "⚠️" : "⬜";
+      if (s.status === "fail" || s.memo.trim()) {
+        catLines.push(`${icon} [${item.id}] ${item.name}`);
+        if (s.memo.trim()) {
+          catLines.push(`   → ${s.memo.trim()}`);
+        }
+        catLines.push("");
+      }
+    });
+    if (catLines.length > 0) {
+      result.push(`■ ${cat.cat}. ${cat.title}`);
+      result.push("-".repeat(30));
+      result.push(...catLines);
+    }
+  });
+  return result.join("\n");
+}
+
+function copyFeedback() {
+  const text = buildFeedbackText();
+  navigator.clipboard.writeText(text).then(() => showToast("📋 피드백 복사 완료!")).catch(() => {
+    // Fallback
+    const ta = document.createElement("textarea");
+    ta.value = text;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand("copy");
+    document.body.removeChild(ta);
+    showToast("📋 피드백 복사 완료!");
+  });
+}
+
+let _downloads = null;
+(async () => {
+  try {
+    const claude = window.claude;
+    if (claude && claude.use) {
+      _downloads = await claude.use("downloads");
+    }
+  } catch(e) {}
+  // Hide download button if capability unavailable
+  const dlBtn = document.getElementById("dlBtn");
+  if (!_downloads && dlBtn) dlBtn.style.display = "none";
+})();
+
+async function downloadFeedback() {
+  const text = buildFeedbackText();
+  const now = new Date();
+  const ts = `${now.getFullYear()}${String(now.getMonth()+1).padStart(2,'0')}${String(now.getDate()).padStart(2,'0')}_${String(now.getHours()).padStart(2,'0')}${String(now.getMinutes()).padStart(2,'0')}`;
+  const filename = `SHELTER-GRID_QA_피드백_${ts}.txt`;
+
+  if (_downloads) {
+    try {
+      await _downloads.save({ filename, data: text });
+      showToast("💾 피드백 파일 다운로드!");
+    } catch(e) {
+      if (e && e.code === "declined") return;
+      showToast("다운로드 실패 — 복사를 이용해주세요");
+    }
+  } else {
+    showToast("다운로드 불가 — 복사를 이용해주세요");
+  }
+}
+
+function resetAll() {
+  if (!confirm("모든 체크 상태와 메모를 초기화할까요?")) return;
+  state = {};
+  saveState();
+  render();
+  showToast("🗑️ 초기화 완료");
+}
+
+function showToast(msg) {
+  const t = document.getElementById("toast");
+  t.textContent = msg;
+  t.classList.add("show");
+  setTimeout(() => t.classList.remove("show"), 2000);
+}
+
+loadState();
+render();
+</script>
+</body>
+</html>
